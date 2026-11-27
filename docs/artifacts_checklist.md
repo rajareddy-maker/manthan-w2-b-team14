@@ -39,7 +39,7 @@ Status as of 27-Nov-2026 · `main` @ `dc5b11f` on GitHub (`rajareddy-maker/manth
 | Evidence | `docs/evidence/sprint_0…3/` |
 
 ## Open items
-1. **Failure e-mails:** code is ready and tested; needs SMTP settings in `.env` (see the question to the team).
+1. **Failure e-mails:** decision 27-Nov-2026 (Sagar Kalthiya) is to keep e-mail disabled (assumption A9). Failures alert through `ops.alerts` (CRITICAL `task_failed`), the dashboard's Pipeline health tab and the Airflow logs. The SMTP path is coded and unit-tested; to enable it, set `SMTP_HOST`/`SMTP_USER`/`SMTP_PASSWORD` in `.env` and run `docker compose up -d`.
 2. **CI/CD on GitHub:** run `gh auth refresh -h github.com -s workflow`, then push `ci.yml` and `cd.yml`.
 3. Performance test at 10×.
 4. UI designs: wireframe + screenshots.
