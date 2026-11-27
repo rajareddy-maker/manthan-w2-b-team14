@@ -117,9 +117,8 @@ def main(argv: list[str] | None = None) -> int:
         raise SystemExit(f"database {DATABASE_NAME!r} not registered (superset-init)")
     ds = api.find("dataset", "table_name", TABLE)
     if ds is None:
-        ds = api.call(
-            "POST", "/api/v1/dataset/", {"database": db["id"], "schema": SCHEMA, "table_name": TABLE}
-        )
+        body = {"database": db["id"], "schema": SCHEMA, "table_name": TABLE}
+        ds = api.call("POST", "/api/v1/dataset/", body)
     ds_id = ds["id"]
     print(f"dataset: {SCHEMA}.{TABLE} id={ds_id}")
 
