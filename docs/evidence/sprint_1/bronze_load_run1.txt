@@ -1,0 +1,12 @@
+INFO landing_to_bronze bronze loaded landing_dt=2026-11-20 files=141 rows=455398 invalid_json=1 partitions=6 seconds=4.47
+INFO landing_to_bronze bronze loaded landing_dt=2026-11-21 files=145 rows=485334 invalid_json=0 partitions=6 seconds=4.80
+INFO landing_to_bronze bronze loaded landing_dt=2026-11-22 files=144 rows=475484 invalid_json=0 partitions=6 seconds=5.98
+INFO landing_to_bronze bronze loaded landing_dt=2026-11-23 files=145 rows=482931 invalid_json=0 partitions=6 seconds=6.73
+INFO landing_to_bronze bronze loaded landing_dt=2026-11-24 files=147 rows=493001 invalid_json=1 partitions=6 seconds=4.64
+INFO landing_to_bronze bronze loaded landing_dt=2026-11-25 files=143 rows=475028 invalid_json=1 partitions=6 seconds=4.97
+INFO landing_to_bronze bronze loaded landing_dt=2026-11-26 files=150 rows=498021 invalid_json=0 partitions=6 seconds=4.07
+INFO landing_to_bronze bronze loaded landing_dt=2026-11-27 files=8 rows=26939 invalid_json=0 partitions=6 seconds=0.26
+
+real	0m37.654s
+user	0m0.031s
+sys	0m0.016s

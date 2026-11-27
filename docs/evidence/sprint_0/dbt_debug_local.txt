@@ -1,0 +1,6 @@
+[0m10:15:17    plugins: None
+[0m10:15:17    disable_transactions: False
+[0m10:15:17  Registered adapter: duckdb=1.11.1
+[0m10:15:17    Connection test: [[32mOK connection ok[0m]
+
+[0m10:15:17  [32mAll checks passed![0m

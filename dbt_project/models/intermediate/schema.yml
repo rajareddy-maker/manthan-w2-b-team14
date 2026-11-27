@@ -1,0 +1,52 @@
+version: 2
+
+models:
+  - name: int_meter_intervals
+    description: >
+      Meter × 15-min grid for the window (every meter in the master, every slot). is_gap marks
+      slots no valid reading closes; never filled. delta_kwh = register delta (ROLLOVER-aware);
+      NULL with dq_flag = register_decrease when the register drops without ROLLOVER. A delta that
+      spans missing slots is kept once on the closing slot with gap_intervals = n.
+    columns:
+      - name: meter_id
+        data_tests: [not_null]
+      - name: interval_start_ts
+        data_tests: [not_null]
+      - name: interval_date_ist
+        data_tests: [not_null]
+      - name: hour_start_ts
+        data_tests: [not_null]
+      - name: is_gap
+        data_tests: [not_null]
+      - name: dq_flag
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ["no_previous_reading", "register_decrease"]
+
+  - name: int_anomalies_spike_detected
+    description: >
+      SPIKE events (FR-11, ADR-006): z > spike_z_threshold vs the meter's trailing 30 days
+      (>= 96 clean points) and kWh >= spike_min_multiple × trailing mean; consecutive intervals
+      merged into one event.
+    columns:
+      - name: meter_id
+        data_tests: [not_null]
+      - name: metric_value
+        data_tests: [not_null]
+
+  - name: int_anomalies_tamper_detected
+    description: >
+      Suspected TAMPER (FR-12): register flat for >= 192 intervals while >= 70% of feeder peers
+      consumed energy in the same window.
+    columns:
+      - name: meter_id
+        data_tests: [not_null]
+
+  - name: int_anomalies_outage_detected
+    description: >
+      OUTAGE (FR-13): >= 30% of a feeder's meters missing the same interval for >= 2 consecutive
+      intervals; one event per contiguous run.
+    columns:
+      - name: feeder_id
+        data_tests: [not_null]

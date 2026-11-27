@@ -1,0 +1,4 @@
+chart query: status=success rows=42 total_kwh=445848.1140
+  sample: {'interval_date_ist': 1795132800000.0, 'zone_name': 'Bhawarkua', 'kWh': 9151.16}
+  sample: {'interval_date_ist': 1795132800000.0, 'zone_name': 'Palasia', 'kWh': 9501.665}
+  sample: {'interval_date_ist': 1795132800000.0, 'zone_name': 'Rajwada', 'kWh': 12894.413}

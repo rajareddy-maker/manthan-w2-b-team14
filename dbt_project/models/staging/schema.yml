@@ -1,0 +1,63 @@
+version: 2
+
+models:
+  - name: stg_meter__readings_validated
+    description: >
+      Every bronze row mapped to the canonical reading contract (ADR-005): kWh register, IST
+      timestamp snapped to the 15-min grid (±2 min), reject_reason (NULL = valid) and dup_rank
+      among valid rows (1 = kept: earliest ingested_at, then arrival, file, line).
+    columns:
+      - name: reject_reason
+        description: NULL for valid rows, otherwise the first failed rule.
+        data_tests:
+          - accepted_values:
+              arguments:
+                values:
+                  - invalid_json
+                  - unknown_schema
+                  - missing_or_unparseable_field
+                  - unknown_unit
+                  - negative_energy
+                  - off_grid
+                  - unknown_meter
+      - name: raw_payload
+        data_tests: [not_null]
+      - name: source_file
+        data_tests: [not_null]
+
+  - name: stg_meter__readings
+    description: >
+      Valid, de-duplicated readings. One row per (meter_id, reading_ts); register in kWh
+      (DECIMAL(18,4)); reading_ts is on the 15-min grid; interval_date_ist is the IST date of the
+      interval the reading closes (reading at 00:00 belongs to the previous day).
+    columns:
+      - name: meter_id
+        data_tests: [not_null]
+      - name: feeder_id
+        data_tests: [not_null]
+      - name: zone_id
+        data_tests: [not_null]
+      - name: reading_ts
+        data_tests: [not_null]
+      - name: interval_date_ist
+        data_tests: [not_null]
+      - name: register_kwh
+        data_tests: [not_null]
+      - name: status
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ["OK", "ROLLOVER", "POWER_FAIL", "ERROR"]
+      - name: schema_version
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: [1, 2]
+
+  - name: stg_meter__quarantine
+    description: Rejected rows with reason code and original payload (FR-29), replayable.
+    columns:
+      - name: reject_reason
+        data_tests: [not_null]
+      - name: raw_payload
+        data_tests: [not_null]

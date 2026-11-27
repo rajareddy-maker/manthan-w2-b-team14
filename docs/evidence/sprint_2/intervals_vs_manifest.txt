@@ -1,0 +1,19 @@
+== grid size: rows, meters, slots per meter, window
+[(3360000, 5000, 672.0, '2026-11-20', '2026-11-26')]
+
+== gaps, register_decrease, no_previous_reading, deltas spanning gaps
+[(17823, 3, 0, 16817)]
+
+== register_decrease meters vs manifest
+got      ['MTR-00832', 'MTR-00975', 'MTR-00998']
+expected ['MTR-00832', 'MTR-00975', 'MTR-00998']
+
+== rollover meters: ROLLOVER rows (prev, current, delta)
+('MTR-00113', '2026-11-21 07:45:00+05:30', '99999.9420', '0.0260', '0.0840')
+('MTR-01097', '2026-11-20 07:00:00+05:30', '99999.6870', '0.0460', '0.3590')
+('MTR-02686', '2026-11-20 11:15:00+05:30', '99999.9590', '0.1240', '0.1650')
+('MTR-03864', '2026-11-20 18:30:00+05:30', '99999.8450', '0.0970', '0.2520')
+('MTR-04332', '2026-11-20 23:00:00+05:30', '99999.8850', '0.0000', '0.1150')
+
+== US-11 AC1: delta spanning 3 gaps -> gap_intervals=3 and 3 gap rows before it
+[('MTR-02686', 3, 3)]

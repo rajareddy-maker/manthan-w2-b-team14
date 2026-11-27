@@ -1,0 +1,114 @@
+version: 2
+
+models:
+  - name: fct_consumption_hourly
+    description: >
+      Hourly kWh per meter from register deltas (FR-08). A delta spanning gaps lands in the hour
+      of its closing reading. Lake-only (13-month retention, ADR-003).
+    columns:
+      - name: meter_id
+        data_tests: [not_null]
+      - name: hour_start_ts
+        data_tests: [not_null]
+      - name: consumption_kwh
+        data_tests: [not_null]
+
+  - name: fct_consumption_daily
+    description: >
+      Daily kWh per meter with completeness % and quality_flag = LOW_COMPLETENESS when fewer than
+      90% of the 96 intervals were received (DQ-4, FR-22).
+    columns:
+      - name: meter_id
+        data_tests: [not_null]
+      - name: interval_date_ist
+        data_tests: [not_null]
+      - name: consumption_kwh
+        data_tests: [not_null]
+      - name: quality_flag
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ["OK", "LOW_COMPLETENESS"]
+
+  - name: mart_feeder_consumption_hourly
+    description: Hourly kWh and reporting meters per feeder (FR-09).
+    columns:
+      - name: feeder_id
+        data_tests: [not_null]
+      - name: consumption_kwh
+        data_tests: [not_null]
+
+  - name: mart_feeder_consumption_daily
+    description: Daily kWh, completeness and low-completeness meters per feeder (FR-09, FR-18).
+    columns:
+      - name: feeder_id
+        data_tests: [not_null]
+      - name: consumption_kwh
+        data_tests: [not_null]
+
+  - name: mart_zone_consumption_daily
+    description: Daily kWh per zone (FR-09).
+    columns:
+      - name: zone_id
+        data_tests: [not_null]
+      - name: consumption_kwh
+        data_tests: [not_null]
+
+  - name: mart_zone_completeness_daily
+    description: >
+      Completeness % per zone per IST day over every master meter × 96 slots (silent meters count
+      as missing); low_completeness_meter_days = meters below 90% (FR-18, FR-22).
+    columns:
+      - name: interval_date_ist
+        data_tests: [not_null]
+      - name: zone_id
+        data_tests: [not_null]
+      - name: completeness_pct
+        data_tests: [not_null]
+      - name: intervals_expected
+        data_tests: [not_null]
+
+  - name: mart_billing_monthly
+    description: >
+      Billing-ready kWh per meter per IST month (FR-10): billed_kwh DECIMAL(18,4), completeness,
+      gap intervals and quality_flag (REGISTER_DECREASE > LOW_COMPLETENESS > OK).
+      is_partial_month = the data window does not cover the whole month.
+    columns:
+      - name: billing_month_ist
+        data_tests: [not_null]
+      - name: meter_id
+        data_tests: [not_null]
+      - name: billed_kwh
+        data_tests: [not_null]
+      - name: quality_flag
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ["OK", "LOW_COMPLETENESS", "REGISTER_DECREASE"]
+
+  - name: mart_anomalies
+    description: >
+      One row per anomaly event (SPIKE / TAMPER / OUTAGE) with window, metric vs threshold and
+      affected meters. meter_id is NULL for OUTAGE (feeder-level). Dashboard anomaly list (FR-18).
+    columns:
+      - name: anomaly_id
+        data_tests: [unique, not_null]
+      - name: anomaly_type
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ["SPIKE", "TAMPER", "OUTAGE"]
+      - name: feeder_id
+        data_tests: [not_null]
+      - name: start_ts
+        data_tests: [not_null]
+
+  - name: mart_feeder_voltage_daily
+    description: Min / avg / max voltage and reporting v2 meters per feeder per IST day (FR-30).
+    columns:
+      - name: feeder_id
+        data_tests: [not_null]
+      - name: interval_date_ist
+        data_tests: [not_null]
+      - name: meters_reporting
+        data_tests: [not_null]

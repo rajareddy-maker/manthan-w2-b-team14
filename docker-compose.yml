@@ -1,0 +1,169 @@
+# GridPulse local stack — LITE profile (14 GB host). See docs/adr/ADR-001, ADR-002.
+# Services: postgres (airflow/superset/warehouse DBs), airflow (api-server, scheduler,
+# dag-processor, init; LocalExecutor), superset (+ init). No Kafka/Spark by design.
+name: gridpulse
+
+x-airflow-common: &airflow-common
+  build:
+    context: .
+    dockerfile: infra/airflow/Dockerfile
+  image: gridpulse-airflow:0.1.0
+  env_file: .env
+  environment: &airflow-common-env
+    AIRFLOW__CORE__EXECUTOR: LocalExecutor
+    AIRFLOW__CORE__PARALLELISM: "4"
+    AIRFLOW__CORE__AUTH_MANAGER: airflow.providers.fab.auth_manager.fab_auth_manager.FabAuthManager
+    AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:${AIRFLOW_DB_PASSWORD}@postgres:5432/airflow
+    AIRFLOW__CORE__FERNET_KEY: ${AIRFLOW_FERNET_KEY}
+    AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION: "true"
+    AIRFLOW__CORE__LOAD_EXAMPLES: "false"
+    AIRFLOW__CORE__DEFAULT_TIMEZONE: Asia/Kolkata
+    AIRFLOW__CORE__EXECUTION_API_SERVER_URL: http://airflow-apiserver:8080/execution/
+    AIRFLOW__API_AUTH__JWT_SECRET: ${AIRFLOW_JWT_SECRET}
+    AIRFLOW__API_AUTH__JWT_ISSUER: gridpulse
+    AIRFLOW__SCHEDULER__ENABLE_HEALTH_CHECK: "true"
+    AIRFLOW__DAG_PROCESSOR__REFRESH_INTERVAL: "30"
+    GRIDPULSE_HOME: /opt/gridpulse
+    GRIDPULSE_PYTHON: /opt/gridpulse-venv/bin/python
+    DUCKDB_PATH: /opt/gridpulse/data/warehouse/gridpulse.duckdb
+    WAREHOUSE_HOST: postgres
+    WAREHOUSE_PORT: "5432"
+    PYTHONPATH: /opt/gridpulse
+  volumes:
+    - ./airflow/dags:/opt/airflow/dags
+    - ./airflow/plugins:/opt/airflow/plugins
+    - airflow-logs:/opt/airflow/logs
+    - .:/opt/gridpulse
+  user: "${AIRFLOW_UID:-50000}:0"
+  depends_on: &airflow-common-depends-on
+    postgres:
+      condition: service_healthy
+
+services:
+  postgres:
+    image: postgres:16.16
+    env_file: .env
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: postgres
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+      - ./infra/postgres/init.sh:/docker-entrypoint-initdb.d/10-init.sh:ro
+    ports:
+      - "127.0.0.1:${POSTGRES_HOST_PORT:-5433}:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d warehouse"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    mem_limit: 1g
+    restart: unless-stopped
+
+  airflow-init:
+    <<: *airflow-common
+    entrypoint: /bin/bash
+    command:
+      - -c
+      - |
+        set -e
+        mkdir -p /opt/gridpulse/data/landing /opt/gridpulse/data/lake /opt/gridpulse/data/warehouse
+        airflow db migrate
+        airflow users create --role Admin --username "$${AIRFLOW_ADMIN_USER}" \
+          --password "$${AIRFLOW_ADMIN_PASSWORD}" --firstname GridPulse --lastname Admin \
+          --email admin@gridpulse.local 2>&1 | grep -v -i "already exist" || true
+        airflow pools set duckdb 1 "DuckDB single-writer lock"
+        echo "airflow-init done"
+    user: "${AIRFLOW_UID:-50000}:0"
+    mem_limit: 1g
+    restart: "no"
+
+  airflow-apiserver:
+    <<: *airflow-common
+    command: api-server
+    ports:
+      - "127.0.0.1:8080:8080"
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "-s", "http://localhost:8080/api/v2/monitor/health"]
+      interval: 15s
+      timeout: 10s
+      retries: 10
+      start_period: 40s
+    mem_limit: 1536m
+    restart: unless-stopped
+    depends_on:
+      <<: *airflow-common-depends-on
+      airflow-init:
+        condition: service_completed_successfully
+
+  airflow-scheduler:
+    <<: *airflow-common
+    command: scheduler
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "-s", "http://localhost:8974/health"]
+      interval: 15s
+      timeout: 10s
+      retries: 10
+      start_period: 40s
+    mem_limit: 3g
+    restart: unless-stopped
+    depends_on:
+      <<: *airflow-common-depends-on
+      airflow-init:
+        condition: service_completed_successfully
+
+  airflow-dag-processor:
+    <<: *airflow-common
+    command: dag-processor
+    healthcheck:
+      test: ["CMD-SHELL", 'airflow jobs check --job-type DagProcessorJob --hostname "$${HOSTNAME}"']
+      interval: 30s
+      timeout: 20s
+      retries: 10
+      start_period: 40s
+    mem_limit: 1g
+    restart: unless-stopped
+    depends_on:
+      <<: *airflow-common-depends-on
+      airflow-init:
+        condition: service_completed_successfully
+
+  superset-init:
+    build:
+      context: .
+      dockerfile: infra/superset/Dockerfile
+    image: gridpulse-superset:0.1.0
+    env_file: .env
+    environment: &superset-env
+      SUPERSET_CONFIG_PATH: /app/pythonpath/superset_config.py
+      WAREHOUSE_HOST: postgres
+    command: ["/bin/bash", "/app/docker/superset_init.sh"]
+    volumes:
+      - ./superset:/app/gridpulse_superset:ro
+    mem_limit: 1536m
+    restart: "no"
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  superset:
+    image: gridpulse-superset:0.1.0
+    env_file: .env
+    environment: *superset-env
+    ports:
+      - "127.0.0.1:8088:8088"
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "-s", "http://localhost:8088/health"]
+      interval: 15s
+      timeout: 10s
+      retries: 10
+      start_period: 40s
+    mem_limit: 1536m
+    restart: unless-stopped
+    depends_on:
+      superset-init:
+        condition: service_completed_successfully
+
+volumes:
+  postgres-data:
+  airflow-logs:

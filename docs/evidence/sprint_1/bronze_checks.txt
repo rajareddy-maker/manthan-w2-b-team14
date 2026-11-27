@@ -1,0 +1,20 @@
+== US-08 reconciliation: bronze rows vs landing manifest lines
+manifest lines = 3392136 | bronze rows = 3392136
+
+== rows by schema_version / is_valid_json
+(1, True, 2020251)
+(2, True, 1371882)
+(None, False, 3)
+
+== US-08 AC2 idempotency: reload dt=2026-11-23 twice
+before (rows, payload hash sum) = (482931, 4451049293925477286056492)
+after  (rows, payload hash sum) = (482931, 4451049293925477286056492)
+IDEMPOTENT = True
+
+== US-08 AC3 files per partition
+(files, partitions) = (48, 48)
+
+== US-06 AC3 partition pruning (predicted query: one landing day [+ one zone])
+full scan  rows= 3392136 ms= 133  plan: Total Files Read: 48
+dt only    rows=  482931 ms=  26  plan: Scanning Files: 6/48 | Total Files Read: 6
+dt + zone  rows=   68841 ms=  21  plan: Scanning Files: 1/48 | Total Files Read: 1

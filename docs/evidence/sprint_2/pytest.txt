@@ -1,0 +1,18 @@
+=============================== tests coverage ================================
+_______________ coverage: platform win32, python 3.14.5-final-0 _______________
+
+Name                                        Stmts   Miss  Cover
+---------------------------------------------------------------
+ingestion\__init__.py                           0      0   100%
+ingestion\extractors\__init__.py                0      0   100%
+ingestion\extractors\landing_to_bronze.py     119     20    83%
+ingestion\generator\__init__.py                 0      0   100%
+ingestion\generator\__main__.py                36     15    58%
+ingestion\generator\config.py                  66     13    80%
+ingestion\generator\simulate.py               141      1    99%
+ingestion\generator\topology.py                62      0   100%
+ingestion\generator\writer.py                 136      0   100%
+scripts\export_backlog.py                      98     18    82%
+---------------------------------------------------------------
+TOTAL                                         658     67    90%
+44 passed in 71.26s (0:01:11)

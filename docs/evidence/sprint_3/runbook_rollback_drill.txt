@@ -1,0 +1,7 @@
+== runbook rollback drill 2026-11-27 17:43:50
+before: billing rows=5000 kwh=445848.1140
+snapshot bytes=371616
+simulated bad publish: billing rows=0
+pg_restore exit=0
+after restore: billing rows=5000 kwh=445848.1140
+bi_reader still reads: 5000

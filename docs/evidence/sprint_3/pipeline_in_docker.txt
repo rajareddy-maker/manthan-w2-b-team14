@@ -1,0 +1,214 @@
+=== 1a generate
+INFO ingestion.generator.simulate simulated meters=5000 readings=673 missing=17778 duplicates=9936 specials=85
+INFO ingestion.generator.writer landing written out_dir=data/landing files=1023 lines=3392136
+INFO generator generator done start=2026-11-20 end=2026-11-26 meters=5000 files=1023 lines=3392136 seconds=39.1
+=== step took 39s
+=== 1b generate again
+INFO ingestion.generator.simulate simulated meters=5000 readings=673 missing=17778 duplicates=9936 specials=85
+INFO ingestion.generator.writer landing written out_dir=data/landing files=1023 lines=3392136
+INFO generator generator done start=2026-11-20 end=2026-11-26 meters=5000 files=1023 lines=3392136 seconds=49.7
+=== step took 51s
+=== determinism: run1=6ff515a431d6f3497bb2bac14b3279b4 cd8ef735ed3448fef956d477945d32fd run2=6ff515a431d6f3497bb2bac14b3279b4 cd8ef735ed3448fef956d477945d32fd identical=yes
+=== 2 landing -> bronze
+INFO landing_to_bronze bronze loaded landing_dt=2026-11-20 files=141 rows=455398 invalid_json=1 partitions=6 seconds=9.43
+INFO landing_to_bronze bronze loaded landing_dt=2026-11-21 files=145 rows=485334 invalid_json=0 partitions=6 seconds=10.95
+INFO landing_to_bronze bronze loaded landing_dt=2026-11-22 files=144 rows=475484 invalid_json=0 partitions=6 seconds=7.57
+INFO landing_to_bronze bronze loaded landing_dt=2026-11-23 files=145 rows=482931 invalid_json=0 partitions=6 seconds=7.28
+INFO landing_to_bronze bronze loaded landing_dt=2026-11-24 files=147 rows=493001 invalid_json=1 partitions=6 seconds=11.74
+INFO landing_to_bronze bronze loaded landing_dt=2026-11-25 files=143 rows=475028 invalid_json=1 partitions=6 seconds=8.23
+INFO landing_to_bronze bronze loaded landing_dt=2026-11-26 files=150 rows=498021 invalid_json=0 partitions=6 seconds=7.77
+INFO landing_to_bronze bronze loaded landing_dt=2026-11-27 files=8 rows=26939 invalid_json=0 partitions=6 seconds=0.89
+=== step took 64s
+=== 3 dbt build
+11:50:20  Running with dbt=1.12.7
+11:50:21  Registered adapter: duckdb=1.11.1
+11:50:24  Found 15 models, 67 data tests, 2 seeds, 513 macros
+11:50:24  
+11:50:24  Concurrency: 2 threads (target='dev')
+11:50:24  
+11:50:25  2 of 84 START seed file main.meter_master ...................................... [RUN]
+11:50:25  1 of 84 START seed file main.feeder_zone ....................................... [RUN]
+11:50:25  1 of 84 OK loaded seed file main.feeder_zone ................................... [INSERT 20 in 0.62s]
+11:50:25  3 of 84 START test not_null_feeder_zone_feeder_id .............................. [RUN]
+11:50:26  2 of 84 OK loaded seed file main.meter_master .................................. [INSERT 5000 in 0.68s]
+11:50:26  4 of 84 START test not_null_feeder_zone_zone_id ................................ [RUN]
+11:50:26  3 of 84 PASS not_null_feeder_zone_feeder_id .................................... [PASS in 0.22s]
+11:50:26  5 of 84 START test unique_feeder_zone_feeder_id ................................ [RUN]
+11:50:26  4 of 84 PASS not_null_feeder_zone_zone_id ...................................... [PASS in 0.19s]
+11:50:26  6 of 84 START test accepted_values_meter_master_schema_version__1__2 ........... [RUN]
+11:50:26  6 of 84 PASS accepted_values_meter_master_schema_version__1__2 ................. [PASS in 0.23s]
+11:50:26  7 of 84 START test accepted_values_meter_master_unit__Wh__kWh .................. [RUN]
+11:50:26  5 of 84 PASS unique_feeder_zone_feeder_id ...................................... [PASS in 0.31s]
+11:50:26  8 of 84 START test not_null_meter_master_feeder_id ............................. [RUN]
+11:50:26  8 of 84 PASS not_null_meter_master_feeder_id ................................... [PASS in 0.20s]
+11:50:26  9 of 84 START test not_null_meter_master_meter_id .............................. [RUN]
+11:50:26  7 of 84 PASS accepted_values_meter_master_unit__Wh__kWh ........................ [PASS in 0.33s]
+11:50:26  10 of 84 START test not_null_meter_master_register_max_kwh ..................... [RUN]
+11:50:27  9 of 84 PASS not_null_meter_master_meter_id .................................... [PASS in 0.25s]
+11:50:27  11 of 84 START test not_null_meter_master_zone_id .............................. [RUN]
+11:50:27  10 of 84 PASS not_null_meter_master_register_max_kwh ........................... [PASS in 0.22s]
+11:50:27  12 of 84 START test relationships_meter_master_feeder_id__feeder_id__ref_feeder_zone_  [RUN]
+11:50:27  11 of 84 PASS not_null_meter_master_zone_id .................................... [PASS in 0.26s]
+11:50:27  13 of 84 START test unique_meter_master_meter_id ............................... [RUN]
+11:50:27  12 of 84 PASS relationships_meter_master_feeder_id__feeder_id__ref_feeder_zone_  [PASS in 0.35s]
+11:50:27  13 of 84 PASS unique_meter_master_meter_id ..................................... [PASS in 0.42s]
+11:50:27  14 of 84 START sql table model main_staging.stg_meter__readings_validated ...... [RUN]
+11:51:04  14 of 84 OK created sql table model main_staging.stg_meter__readings_validated . [OK in 36.79s]
+11:51:04  16 of 84 START test not_null_stg_meter__readings_validated_raw_payload ......... [RUN]
+11:51:04  15 of 84 START test accepted_values_stg_meter__readings_validated_reject_reason__invalid_json__unknown_schema__missing_or_unparseable_field__unknown_unit__negative_energy__off_grid__unknown_meter  [RUN]
+11:51:04  16 of 84 PASS not_null_stg_meter__readings_validated_raw_payload ............... [PASS in 0.26s]
+11:51:04  15 of 84 PASS accepted_values_stg_meter__readings_validated_reject_reason__invalid_json__unknown_schema__missing_or_unparseable_field__unknown_unit__negative_energy__off_grid__unknown_meter  [PASS in 0.27s]
+11:51:04  17 of 84 START test not_null_stg_meter__readings_validated_source_file ......... [RUN]
+11:51:05  17 of 84 PASS not_null_stg_meter__readings_validated_source_file ............... [PASS in 0.11s]
+11:51:05  18 of 84 START sql view model main_staging.stg_meter__quarantine ............... [RUN]
+11:51:05  19 of 84 START sql view model main_staging.stg_meter__readings ................. [RUN]
+11:51:05  18 of 84 OK created sql view model main_staging.stg_meter__quarantine .......... [OK in 0.19s]
+11:51:05  20 of 84 START test not_null_stg_meter__quarantine_raw_payload ................. [RUN]
+11:51:05  19 of 84 OK created sql view model main_staging.stg_meter__readings ............ [OK in 0.20s]
+11:51:05  21 of 84 START test not_null_stg_meter__quarantine_reject_reason ............... [RUN]
+11:51:05  20 of 84 PASS not_null_stg_meter__quarantine_raw_payload ....................... [PASS in 0.10s]
+11:51:05  22 of 84 START test accepted_values_stg_meter__readings_schema_version__1__2 ... [RUN]
+11:51:05  21 of 84 PASS not_null_stg_meter__quarantine_reject_reason ..................... [PASS in 0.10s]
+11:51:05  23 of 84 START test accepted_values_stg_meter__readings_status__OK__ROLLOVER__POWER_FAIL__ERROR  [RUN]
+11:51:05  22 of 84 PASS accepted_values_stg_meter__readings_schema_version__1__2 ......... [PASS in 0.11s]
+11:51:05  24 of 84 START test assert_stg_readings_unique_meter_ts ........................ [RUN]
+11:51:05  23 of 84 PASS accepted_values_stg_meter__readings_status__OK__ROLLOVER__POWER_FAIL__ERROR  [PASS in 0.12s]
+11:51:05  25 of 84 START test not_null_stg_meter__readings_feeder_id ..................... [RUN]
+11:51:05  25 of 84 PASS not_null_stg_meter__readings_feeder_id ........................... [PASS in 0.20s]
+11:51:05  26 of 84 START test not_null_stg_meter__readings_interval_date_ist ............. [RUN]
+11:51:05  26 of 84 PASS not_null_stg_meter__readings_interval_date_ist ................... [PASS in 0.18s]
+11:51:05  27 of 84 START test not_null_stg_meter__readings_meter_id ...................... [RUN]
+11:51:06  24 of 84 PASS assert_stg_readings_unique_meter_ts .............................. [PASS in 0.51s]
+11:51:06  28 of 84 START test not_null_stg_meter__readings_reading_ts .................... [RUN]
+11:51:06  27 of 84 PASS not_null_stg_meter__readings_meter_id ............................ [PASS in 0.15s]
+11:51:06  29 of 84 START test not_null_stg_meter__readings_register_kwh .................. [RUN]
+11:51:06  28 of 84 PASS not_null_stg_meter__readings_reading_ts .......................... [PASS in 0.11s]
+11:51:06  30 of 84 START test not_null_stg_meter__readings_zone_id ....................... [RUN]
+11:51:06  29 of 84 PASS not_null_stg_meter__readings_register_kwh ........................ [PASS in 0.12s]
+11:51:06  30 of 84 PASS not_null_stg_meter__readings_zone_id ............................. [PASS in 0.10s]
+11:51:06  31 of 84 START sql table model main_intermediate.int_meter_intervals ........... [RUN]
+11:51:11  31 of 84 OK created sql table model main_intermediate.int_meter_intervals ...... [OK in 5.50s]
+11:51:11  33 of 84 START test assert_deltas_non_negative ................................. [RUN]
+11:51:11  32 of 84 START test accepted_values_int_meter_intervals_dq_flag__no_previous_reading__register_decrease  [RUN]
+11:51:12  33 of 84 PASS assert_deltas_non_negative ....................................... [PASS in 0.17s]
+11:51:12  32 of 84 PASS accepted_values_int_meter_intervals_dq_flag__no_previous_reading__register_decrease  [PASS in 0.18s]
+11:51:12  34 of 84 START test assert_intervals_unique_meter_slot ......................... [RUN]
+11:51:12  35 of 84 START test assert_register_span_reconciles ............................ [RUN]
+11:51:12  35 of 84 PASS assert_register_span_reconciles .................................. [PASS in 0.27s]
+11:51:12  36 of 84 START test not_null_int_meter_intervals_hour_start_ts ................. [RUN]
+11:51:12  34 of 84 PASS assert_intervals_unique_meter_slot ............................... [PASS in 0.36s]
+11:51:12  37 of 84 START test not_null_int_meter_intervals_interval_date_ist ............. [RUN]
+11:51:12  36 of 84 PASS not_null_int_meter_intervals_hour_start_ts ....................... [PASS in 0.19s]
+11:51:12  38 of 84 START test not_null_int_meter_intervals_interval_start_ts ............. [RUN]
+11:51:12  37 of 84 PASS not_null_int_meter_intervals_interval_date_ist ................... [PASS in 0.15s]
+11:51:12  39 of 84 START test not_null_int_meter_intervals_is_gap ........................ [RUN]
+11:51:12  38 of 84 PASS not_null_int_meter_intervals_interval_start_ts ................... [PASS in 0.13s]
+11:51:12  39 of 84 PASS not_null_int_meter_intervals_is_gap .............................. [PASS in 0.11s]
+11:51:12  40 of 84 START test not_null_int_meter_intervals_meter_id ...................... [RUN]
+11:51:12  40 of 84 PASS not_null_int_meter_intervals_meter_id ............................ [PASS in 0.10s]
+11:51:12  41 of 84 START sql table model main_marts.fct_consumption_daily ................ [RUN]
+11:51:12  42 of 84 START sql table model main_marts.fct_consumption_hourly ............... [RUN]
+11:51:13  41 of 84 OK created sql table model main_marts.fct_consumption_daily ........... [OK in 0.65s]
+11:51:13  43 of 84 START sql table model main_intermediate.int_anomalies_outage_detected . [RUN]
+11:51:13  43 of 84 OK created sql table model main_intermediate.int_anomalies_outage_detected  [OK in 0.26s]
+11:51:13  44 of 84 START sql table model main_intermediate.int_anomalies_spike_detected .. [RUN]
+11:51:13  42 of 84 OK created sql table model main_marts.fct_consumption_hourly .......... [OK in 1.02s]
+11:51:13  45 of 84 START sql table model main_intermediate.int_anomalies_tamper_detected . [RUN]
+11:51:17  44 of 84 OK created sql table model main_intermediate.int_anomalies_spike_detected  [OK in 4.15s]
+11:51:17  46 of 84 START test accepted_values_fct_consumption_daily_quality_flag__OK__LOW_COMPLETENESS  [RUN]
+11:51:18  46 of 84 PASS accepted_values_fct_consumption_daily_quality_flag__OK__LOW_COMPLETENESS  [PASS in 0.25s]
+11:51:18  47 of 84 START test not_null_fct_consumption_daily_consumption_kwh ............. [RUN]
+11:51:18  45 of 84 OK created sql table model main_intermediate.int_anomalies_tamper_detected  [OK in 4.41s]
+11:51:18  48 of 84 START test not_null_fct_consumption_daily_interval_date_ist ........... [RUN]
+11:51:18  47 of 84 PASS not_null_fct_consumption_daily_consumption_kwh ................... [PASS in 0.12s]
+11:51:18  49 of 84 START test not_null_fct_consumption_daily_meter_id .................... [RUN]
+11:51:18  48 of 84 PASS not_null_fct_consumption_daily_interval_date_ist ................. [PASS in 0.10s]
+11:51:18  50 of 84 START test not_null_int_anomalies_outage_detected_feeder_id ........... [RUN]
+11:51:18  49 of 84 PASS not_null_fct_consumption_daily_meter_id .......................... [PASS in 0.10s]
+11:51:18  51 of 84 START test assert_hourly_reconciles_to_staging_deltas ................. [RUN]
+11:51:18  50 of 84 PASS not_null_int_anomalies_outage_detected_feeder_id ................. [PASS in 0.09s]
+11:51:18  52 of 84 START test not_null_fct_consumption_hourly_consumption_kwh ............ [RUN]
+11:51:18  52 of 84 PASS not_null_fct_consumption_hourly_consumption_kwh .................. [PASS in 0.17s]
+11:51:18  53 of 84 START test not_null_fct_consumption_hourly_hour_start_ts .............. [RUN]
+11:51:19  53 of 84 PASS not_null_fct_consumption_hourly_hour_start_ts .................... [PASS in 0.45s]
+11:51:19  54 of 84 START test not_null_fct_consumption_hourly_meter_id ................... [RUN]
+11:51:19  51 of 84 PASS assert_hourly_reconciles_to_staging_deltas ....................... [PASS in 0.74s]
+11:51:19  55 of 84 START test not_null_int_anomalies_spike_detected_meter_id ............. [RUN]
+11:51:19  54 of 84 PASS not_null_fct_consumption_hourly_meter_id ......................... [PASS in 0.14s]
+11:51:19  55 of 84 PASS not_null_int_anomalies_spike_detected_meter_id ................... [PASS in 0.11s]
+11:51:19  56 of 84 START test not_null_int_anomalies_spike_detected_metric_value ......... [RUN]
+11:51:19  57 of 84 START test not_null_int_anomalies_tamper_detected_meter_id ............ [RUN]
+11:51:19  56 of 84 PASS not_null_int_anomalies_spike_detected_metric_value ............... [PASS in 0.10s]
+11:51:19  57 of 84 PASS not_null_int_anomalies_tamper_detected_meter_id .................. [PASS in 0.09s]
+11:51:19  58 of 84 START sql table model main_marts.mart_billing_monthly ................. [RUN]
+11:51:19  59 of 84 START sql table model main_marts.mart_feeder_consumption_daily ........ [RUN]
+11:51:19  59 of 84 OK created sql table model main_marts.mart_feeder_consumption_daily ... [OK in 0.20s]
+11:51:19  60 of 84 START sql table model main_marts.mart_zone_completeness_daily ......... [RUN]
+11:51:19  58 of 84 OK created sql table model main_marts.mart_billing_monthly ............ [OK in 0.22s]
+11:51:19  61 of 84 START sql table model main_marts.mart_zone_consumption_daily .......... [RUN]
+11:51:19  61 of 84 OK created sql table model main_marts.mart_zone_consumption_daily ..... [OK in 0.15s]
+11:51:19  60 of 84 OK created sql table model main_marts.mart_zone_completeness_daily .... [OK in 0.17s]
+11:51:19  62 of 84 START sql table model main_marts.mart_feeder_consumption_hourly ....... [RUN]
+11:51:19  63 of 84 START sql table model main_marts.mart_anomalies ....................... [RUN]
+11:51:20  63 of 84 OK created sql table model main_marts.mart_anomalies .................. [OK in 0.19s]
+11:51:20  62 of 84 OK created sql table model main_marts.mart_feeder_consumption_hourly .. [OK in 0.21s]
+11:51:20  64 of 84 START test not_null_mart_feeder_consumption_daily_consumption_kwh ..... [RUN]
+11:51:20  65 of 84 START test not_null_mart_feeder_consumption_daily_feeder_id ........... [RUN]
+11:51:20  65 of 84 PASS not_null_mart_feeder_consumption_daily_feeder_id ................. [PASS in 0.09s]
+11:51:20  64 of 84 PASS not_null_mart_feeder_consumption_daily_consumption_kwh ........... [PASS in 0.11s]
+11:51:20  66 of 84 START test accepted_values_mart_billing_monthly_quality_flag__OK__LOW_COMPLETENESS__REGISTER_DECREASE  [RUN]
+11:51:20  67 of 84 START test not_null_mart_billing_monthly_billed_kwh ................... [RUN]
+11:51:20  67 of 84 PASS not_null_mart_billing_monthly_billed_kwh ......................... [PASS in 0.08s]
+11:51:20  66 of 84 PASS accepted_values_mart_billing_monthly_quality_flag__OK__LOW_COMPLETENESS__REGISTER_DECREASE  [PASS in 0.11s]
+11:51:20  68 of 84 START test not_null_mart_billing_monthly_billing_month_ist ............ [RUN]
+11:51:20  69 of 84 START test not_null_mart_billing_monthly_meter_id ..................... [RUN]
+11:51:20  69 of 84 PASS not_null_mart_billing_monthly_meter_id ........................... [PASS in 0.08s]
+11:51:20  68 of 84 PASS not_null_mart_billing_monthly_billing_month_ist .................. [PASS in 0.11s]
+11:51:20  70 of 84 START test assert_feeder_daily_equals_meter_daily ..................... [RUN]
+11:51:20  71 of 84 START test not_null_mart_zone_consumption_daily_consumption_kwh ....... [RUN]
+11:51:20  70 of 84 PASS assert_feeder_daily_equals_meter_daily ........................... [PASS in 0.09s]
+11:51:20  72 of 84 START test not_null_mart_zone_consumption_daily_zone_id ............... [RUN]
+11:51:20  71 of 84 PASS not_null_mart_zone_consumption_daily_consumption_kwh ............. [PASS in 0.09s]
+11:51:20  73 of 84 START test assert_completeness_pct_in_range ........................... [RUN]
+11:51:20  73 of 84 PASS assert_completeness_pct_in_range ................................. [PASS in 0.08s]
+11:51:20  72 of 84 PASS not_null_mart_zone_consumption_daily_zone_id ..................... [PASS in 0.10s]
+11:51:20  74 of 84 START test not_null_mart_zone_completeness_daily_completeness_pct ..... [RUN]
+11:51:20  75 of 84 START test not_null_mart_zone_completeness_daily_interval_date_ist .... [RUN]
+11:51:20  75 of 84 PASS not_null_mart_zone_completeness_daily_interval_date_ist .......... [PASS in 0.09s]
+11:51:20  74 of 84 PASS not_null_mart_zone_completeness_daily_completeness_pct ........... [PASS in 0.10s]
+11:51:20  76 of 84 START test not_null_mart_zone_completeness_daily_intervals_expected ... [RUN]
+11:51:20  77 of 84 START test not_null_mart_zone_completeness_daily_zone_id .............. [RUN]
+11:51:20  77 of 84 PASS not_null_mart_zone_completeness_daily_zone_id .................... [PASS in 0.10s]
+11:51:20  76 of 84 PASS not_null_mart_zone_completeness_daily_intervals_expected ......... [PASS in 0.11s]
+11:51:20  78 of 84 START test accepted_values_mart_anomalies_anomaly_type__SPIKE__TAMPER__OUTAGE  [RUN]
+11:51:20  79 of 84 START test not_null_mart_anomalies_anomaly_id ......................... [RUN]
+11:51:20  78 of 84 PASS accepted_values_mart_anomalies_anomaly_type__SPIKE__TAMPER__OUTAGE  [PASS in 0.14s]
+11:51:20  79 of 84 PASS not_null_mart_anomalies_anomaly_id ............................... [PASS in 0.14s]
+11:51:20  80 of 84 START test not_null_mart_anomalies_feeder_id .......................... [RUN]
+11:51:20  81 of 84 START test not_null_mart_anomalies_start_ts ........................... [RUN]
+11:51:21  81 of 84 PASS not_null_mart_anomalies_start_ts ................................. [PASS in 0.09s]
+11:51:21  80 of 84 PASS not_null_mart_anomalies_feeder_id ................................ [PASS in 0.12s]
+11:51:21  82 of 84 START test unique_mart_anomalies_anomaly_id ........................... [RUN]
+11:51:21  83 of 84 START test not_null_mart_feeder_consumption_hourly_consumption_kwh .... [RUN]
+11:51:21  83 of 84 PASS not_null_mart_feeder_consumption_hourly_consumption_kwh .......... [PASS in 0.10s]
+11:51:21  82 of 84 PASS unique_mart_anomalies_anomaly_id ................................. [PASS in 0.13s]
+11:51:21  84 of 84 START test not_null_mart_feeder_consumption_hourly_feeder_id .......... [RUN]
+11:51:21  84 of 84 PASS not_null_mart_feeder_consumption_hourly_feeder_id ................ [PASS in 0.09s]
+11:51:21  
+11:51:21  Finished running 2 seeds, 13 table models, 67 data tests, 2 view models in 0 hours 0 minutes and 56.74 seconds (56.74s).
+11:51:21  
+11:51:21  Completed successfully
+11:51:21  
+11:51:21  Done. PASS=84 WARN=0 ERROR=0 SKIP=0 NO-OP=0 REUSED=0 TOTAL=84
+=== step took 69s
+=== 4 publish -> postgres
+INFO publish_to_postgres published table=fct_consumption_daily duckdb_rows=35000 postgres_rows=35000 duckdb_kwh=445848.1140 postgres_kwh=445848.1140 reconciled=True
+INFO publish_to_postgres published table=mart_feeder_consumption_hourly duckdb_rows=3360 postgres_rows=3360 duckdb_kwh=445848.1140 postgres_kwh=445848.1140 reconciled=True
+INFO publish_to_postgres published table=mart_feeder_consumption_daily duckdb_rows=140 postgres_rows=140 duckdb_kwh=445848.1140 postgres_kwh=445848.1140 reconciled=True
+INFO publish_to_postgres published table=mart_zone_consumption_daily duckdb_rows=42 postgres_rows=42 duckdb_kwh=445848.1140 postgres_kwh=445848.1140 reconciled=True
+INFO publish_to_postgres published table=mart_zone_completeness_daily duckdb_rows=42 postgres_rows=42 duckdb_kwh=None postgres_kwh=None reconciled=True
+INFO publish_to_postgres published table=mart_billing_monthly duckdb_rows=5000 postgres_rows=5000 duckdb_kwh=445848.1140 postgres_kwh=445848.1140 reconciled=True
+INFO publish_to_postgres published table=mart_anomalies duckdb_rows=9 postgres_rows=9 duckdb_kwh=None postgres_kwh=None reconciled=True
+INFO publish_to_postgres publish done tables=7 seconds=1.9
+=== step took 2s
+exit=0

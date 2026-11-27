@@ -1,0 +1,33 @@
+== mart_anomalies (all rows)
+OUTAGE None FDR-10 2026-11-22T18:00:00+05:30 -> 2026-11-22T20:00:00+05:30 intervals= 8 metric= 0.408 affected= 102
+SPIKE MTR-00441 FDR-01 2026-11-25T14:00:00+05:30 -> 2026-11-25T14:30:00+05:30 intervals= 2 metric= 33.198 affected= 1
+SPIKE MTR-00052 FDR-12 2026-11-25T14:00:00+05:30 -> 2026-11-25T14:30:00+05:30 intervals= 2 metric= 28.215 affected= 1
+SPIKE MTR-02832 FDR-12 2026-11-25T14:00:00+05:30 -> 2026-11-25T14:30:00+05:30 intervals= 2 metric= 32.910 affected= 1
+SPIKE MTR-00553 FDR-13 2026-11-25T14:00:00+05:30 -> 2026-11-25T14:30:00+05:30 intervals= 2 metric= 28.518 affected= 1
+SPIKE MTR-02033 FDR-13 2026-11-25T14:00:00+05:30 -> 2026-11-25T14:30:00+05:30 intervals= 2 metric= 31.937 affected= 1
+TAMPER MTR-01902 FDR-02 2026-11-21T00:00:00+05:30 -> 2026-11-23T12:00:00+05:30 intervals= 240 metric= 1.000 affected= 1
+TAMPER MTR-00254 FDR-14 2026-11-21T00:00:00+05:30 -> 2026-11-23T12:00:00+05:30 intervals= 240 metric= 1.000 affected= 1
+TAMPER MTR-01760 FDR-20 2026-11-21T00:00:00+05:30 -> 2026-11-23T12:00:00+05:30 intervals= 240 metric= 1.000 affected= 1
+
+== SPIKE: detected meters vs expected
+expected ['MTR-00052', 'MTR-00441', 'MTR-00553', 'MTR-02033', 'MTR-02832']
+detected ['MTR-00052', 'MTR-00441', 'MTR-00553', 'MTR-02033', 'MTR-02832']
+false positives: [] | missed: []
+  MTR-00052: expected interval start 2026-11-25T14:00:00+05:30 | detected 2026-11-25T14:00:00+05:30 x2 z=28.215
+  MTR-00441: expected interval start 2026-11-25T14:00:00+05:30 | detected 2026-11-25T14:00:00+05:30 x2 z=33.198
+  MTR-02033: expected interval start 2026-11-25T14:00:00+05:30 | detected 2026-11-25T14:00:00+05:30 x2 z=31.937
+  MTR-02832: expected interval start 2026-11-25T14:00:00+05:30 | detected 2026-11-25T14:00:00+05:30 x2 z=32.910
+  MTR-00553: expected interval start 2026-11-25T14:00:00+05:30 | detected 2026-11-25T14:00:00+05:30 x2 z=28.518
+
+== TAMPER: detected vs expected
+expected ['MTR-00254', 'MTR-01760', 'MTR-01902']
+detected ['MTR-00254', 'MTR-01760', 'MTR-01902']
+false positives: [] | missed: []
+  MTR-01760: expected 240 zero intervals | detected 240, peer share 1.000
+  MTR-01902: expected 240 zero intervals | detected 240, peer share 1.000
+  MTR-00254: expected 240 zero intervals | detected 240, peer share 1.000
+
+== OUTAGE: detected vs expected (+ 20% negative control must NOT fire)
+expected: FDR-10 2026-11-22T18:15:00+05:30 missing_intervals 8 meters 100
+detected: FDR-10 2026-11-22T18:00:00+05:30 intervals 8 max share 0.408 affected 102
+control feeder FDR-11 ( 50 / 250 ) detected: []
