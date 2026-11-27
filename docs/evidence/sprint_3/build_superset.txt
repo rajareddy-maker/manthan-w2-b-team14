@@ -1,0 +1,61 @@
+ Image gridpulse-superset:0.1.0 Building 
+#1 [internal] load local bake definitions
+#1 reading from stdin 633B done
+#1 DONE 0.0s
+
+#2 [internal] load build definition from Dockerfile
+#2 transferring dockerfile: 453B 0.0s done
+#2 DONE 0.1s
+
+#3 [internal] load metadata for docker.io/apache/superset:6.1.0
+#3 DONE 0.1s
+
+#4 [internal] load .dockerignore
+#4 transferring context: 2B done
+#4 DONE 0.0s
+
+#5 [1/5] FROM docker.io/apache/superset:6.1.0@sha256:16b50bbef6648912a79e3293d418fefa743ce555d36c5af6b85d859119ed7f88
+#5 resolve docker.io/apache/superset:6.1.0@sha256:16b50bbef6648912a79e3293d418fefa743ce555d36c5af6b85d859119ed7f88 0.0s done
+#5 CACHED
+
+#6 [internal] load build context
+#6 transferring context: 2.08kB 0.0s done
+#6 DONE 0.1s
+
+#7 [2/5] RUN uv pip install --python /app/.venv/bin/python --no-cache psycopg2-binary==2.9.13
+#7 2.382 Resolved 1 package in 851ms
+#7 2.437 Downloading psycopg2-binary (4.1MiB)
+#7 4.979  Downloaded psycopg2-binary
+#7 4.980 Prepared 1 package in 2.59s
+#7 4.985 Installed 1 package in 4ms
+#7 4.985  + psycopg2-binary==2.9.13
+#7 DONE 5.1s
+
+#8 [3/5] COPY infra/superset/superset_config.py /app/pythonpath/superset_config.py
+#8 DONE 0.2s
+
+#9 [4/5] COPY infra/superset/superset_init.sh /app/docker/superset_init.sh
+#9 DONE 0.1s
+
+#10 [5/5] RUN chmod 0755 /app/docker/superset_init.sh
+#10 DONE 0.5s
+
+#11 exporting to image
+#11 exporting layers
+#11 exporting layers 1.4s done
+#11 exporting manifest sha256:43f3daf9b8f7dab49f543c24c8c3541246beaa0611937559accf37d05250ba5b 0.0s done
+#11 exporting config sha256:83a84529eac88a943360adf20eaf5b77a068a9673eda044b8513ad45999cbe78 0.0s done
+#11 exporting attestation manifest sha256:35822e4ace99d91effb3320f25fe590f97aa7ef8f8f9c77ef6a62e85c4b662aa 0.0s done
+#11 exporting manifest list sha256:ef787dbf3c43df9553ad24534078e4629d14a6c1f34d82ae8f37cc3e9212d885 0.0s done
+#11 naming to docker.io/library/gridpulse-superset:0.1.0 done
+#11 unpacking to docker.io/library/gridpulse-superset:0.1.0
+#11 unpacking to docker.io/library/gridpulse-superset:0.1.0 0.3s done
+#11 DONE 2.0s
+
+#12 resolving provenance for metadata file
+#12 DONE 0.1s
+ Image gridpulse-superset:0.1.0 Built 
+
+real	0m12.150s
+user	0m0.199s
+sys	0m0.092s

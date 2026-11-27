@@ -1,0 +1,4 @@
+health: OK
+login: OK
+databases: ['GridPulse Warehouse']
+sqllab query: success [{'id': 1, 'note': 'warehouse initialised', 'checked_ts': '2026-11-27T16:58:59.594402+05:30'}]

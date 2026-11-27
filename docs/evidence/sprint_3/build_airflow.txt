@@ -1,0 +1,318 @@
+ Image gridpulse-airflow:0.1.0 Building 
+#1 [internal] load local bake definitions
+#1 reading from stdin 628B done
+#1 DONE 0.0s
+
+#2 [internal] load build definition from Dockerfile
+#2 transferring dockerfile: 1.32kB 0.0s done
+#2 DONE 0.1s
+
+#3 [internal] load metadata for docker.io/apache/airflow:3.3.2
+#3 DONE 5.5s
+
+#4 [internal] load .dockerignore
+#4 transferring context: 2B done
+#4 DONE 0.0s
+
+#5 [internal] load build context
+#5 DONE 0.0s
+
+#6 [1/5] FROM docker.io/apache/airflow:3.3.2@sha256:e9982ad3f49a60418622e1baf80c34b0daf3fa5091a336cb5ee61f0cdd189371
+#6 resolve docker.io/apache/airflow:3.3.2@sha256:e9982ad3f49a60418622e1baf80c34b0daf3fa5091a336cb5ee61f0cdd189371
+#6 resolve docker.io/apache/airflow:3.3.2@sha256:e9982ad3f49a60418622e1baf80c34b0daf3fa5091a336cb5ee61f0cdd189371 0.1s done
+#6 ...
+
+#5 [internal] load build context
+#5 transferring context: 371B 0.0s done
+#5 DONE 0.2s
+
+#6 [1/5] FROM docker.io/apache/airflow:3.3.2@sha256:e9982ad3f49a60418622e1baf80c34b0daf3fa5091a336cb5ee61f0cdd189371
+#6 DONE 2.0s
+
+#6 [1/5] FROM docker.io/apache/airflow:3.3.2@sha256:e9982ad3f49a60418622e1baf80c34b0daf3fa5091a336cb5ee61f0cdd189371
+#6 sha256:6ff66361b518d410790d758659bf9fbca7190dfd8585858387c92b42cfd3c55d 0B / 429B 0.2s
+#6 sha256:f0554f88f10dbeedd93ac71beb1e80bc67239f8e0fa9e4b87bcfdd5deb285f72 0B / 431B 0.2s
+#6 sha256:49f44bdcfec8439ea6ecc5050c352fce2e2ef243372b5db9d447e90d6c9af14c 0B / 115B 0.2s
+#6 sha256:d4b83b895a33f635f0417393bd10347b3ce47188adc8db6735dfc8580ad9b0f2 0B / 1.06kB 0.2s
+#6 sha256:6ff66361b518d410790d758659bf9fbca7190dfd8585858387c92b42cfd3c55d 429B / 429B 0.7s done
+#6 sha256:894e47d9dbd506f313296312bf568d76495062b75c9404ddffad6a764942ce5a 0B / 5.89kB 0.2s
+#6 sha256:f0554f88f10dbeedd93ac71beb1e80bc67239f8e0fa9e4b87bcfdd5deb285f72 431B / 431B 0.9s done
+#6 sha256:49f44bdcfec8439ea6ecc5050c352fce2e2ef243372b5db9d447e90d6c9af14c 115B / 115B 1.1s done
+#6 sha256:d4b83b895a33f635f0417393bd10347b3ce47188adc8db6735dfc8580ad9b0f2 1.06kB / 1.06kB 1.2s done
+#6 sha256:83d72e14dab251556d9ed684a433802480ee800e0d7c7a7079a8ad00c778d36b 0B / 292B 0.2s
+#6 sha256:894e47d9dbd506f313296312bf568d76495062b75c9404ddffad6a764942ce5a 5.89kB / 5.89kB 0.6s done
+#6 sha256:83d72e14dab251556d9ed684a433802480ee800e0d7c7a7079a8ad00c778d36b 292B / 292B 0.4s done
+#6 sha256:40195b627c77201f60e3ab82d803ae2caa607b7a68a44c4a4a2a229def7f09ff 0B / 906B 0.2s
+#6 sha256:e8e1e515932d55c25af023c45d839e26a43c2bbc26427e5595807833d5f23af2 0B / 4.16kB 0.3s
+#6 sha256:73fbd0995524fcf7940a4f84cb272002e25c57831da91171d3b9b8fc8ec3d24c 0B / 23.72kB 0.2s
+#6 sha256:40195b627c77201f60e3ab82d803ae2caa607b7a68a44c4a4a2a229def7f09ff 906B / 906B 0.4s done
+#6 sha256:e8e1e515932d55c25af023c45d839e26a43c2bbc26427e5595807833d5f23af2 4.16kB / 4.16kB 0.4s done
+#6 sha256:73fbd0995524fcf7940a4f84cb272002e25c57831da91171d3b9b8fc8ec3d24c 23.72kB / 23.72kB 0.4s done
+#6 sha256:0531f0b0774300f021f9b7d103e64dbe17b460af0bbce0891477e83b95949d2d 0B / 6.93kB 0.2s
+#6 sha256:0531f0b0774300f021f9b7d103e64dbe17b460af0bbce0891477e83b95949d2d 6.93kB / 6.93kB 0.4s done
+#6 sha256:48704a71850e34e67dbc4010af3aacae42f52f58fa5c53b27c12b0f47476162d 0B / 492.18MB 0.2s
+#6 sha256:e118eb27c4520de857d84e8a06f230544608a8c8d02aa0a960b91ab9f02fd065 0B / 22.34MB 0.2s
+#6 sha256:63486dc054048f56e29e0d9ff1ab879bc2fc18263420aec60a71b7537c517676 0B / 2.13kB 0.2s
+#6 sha256:ab371b859416d2de216a48d1ae50cbfbc8cf32e28738e128bbf33888d38b548b 0B / 11.50kB 0.2s
+#6 sha256:63486dc054048f56e29e0d9ff1ab879bc2fc18263420aec60a71b7537c517676 2.13kB / 2.13kB 1.0s done
+#6 sha256:ab371b859416d2de216a48d1ae50cbfbc8cf32e28738e128bbf33888d38b548b 11.50kB / 11.50kB 0.9s done
+#6 sha256:7a0a552ac28bdf87f0c79200b0d6e7dbf2ffdf5f9d864b91f60ce36577555b1c 0B / 2.59kB 0.2s
+#6 sha256:63dd56a68bfe869372a1838d53706106ab9336b365b9e09026281a9e4d2dc296 0B / 87.94MB 0.2s
+#6 sha256:e118eb27c4520de857d84e8a06f230544608a8c8d02aa0a960b91ab9f02fd065 2.10MB / 22.34MB 1.5s
+#6 sha256:7a0a552ac28bdf87f0c79200b0d6e7dbf2ffdf5f9d864b91f60ce36577555b1c 2.59kB / 2.59kB 1.0s done
+#6 sha256:6617ff3d4e02688e535be07f456c13183fba321a15b6188e3aabec7f9670d980 0B / 5.07kB 0.2s
+#6 sha256:6617ff3d4e02688e535be07f456c13183fba321a15b6188e3aabec7f9670d980 5.07kB / 5.07kB 0.4s done
+#6 sha256:048270e7f00c4cfb4462d31800a077b4e8d75bb687f4bb593570a9a41306edc3 0B / 30.24MB 0.2s
+#6 sha256:e118eb27c4520de857d84e8a06f230544608a8c8d02aa0a960b91ab9f02fd065 4.19MB / 22.34MB 2.7s
+#6 sha256:e118eb27c4520de857d84e8a06f230544608a8c8d02aa0a960b91ab9f02fd065 6.29MB / 22.34MB 4.1s
+#6 sha256:48704a71850e34e67dbc4010af3aacae42f52f58fa5c53b27c12b0f47476162d 8.39MB / 492.18MB 5.3s
+#6 sha256:63dd56a68bfe869372a1838d53706106ab9336b365b9e09026281a9e4d2dc296 1.05MB / 87.94MB 5.3s
+#6 sha256:e118eb27c4520de857d84e8a06f230544608a8c8d02aa0a960b91ab9f02fd065 8.39MB / 22.34MB 6.6s
+#6 sha256:048270e7f00c4cfb4462d31800a077b4e8d75bb687f4bb593570a9a41306edc3 2.10MB / 30.24MB 5.0s
+#6 sha256:e118eb27c4520de857d84e8a06f230544608a8c8d02aa0a960b91ab9f02fd065 10.49MB / 22.34MB 8.1s
+#6 sha256:048270e7f00c4cfb4462d31800a077b4e8d75bb687f4bb593570a9a41306edc3 4.19MB / 30.24MB 6.2s
+#6 sha256:e118eb27c4520de857d84e8a06f230544608a8c8d02aa0a960b91ab9f02fd065 12.58MB / 22.34MB 9.2s
+#6 sha256:048270e7f00c4cfb4462d31800a077b4e8d75bb687f4bb593570a9a41306edc3 6.29MB / 30.24MB 7.2s
+#6 sha256:48704a71850e34e67dbc4010af3aacae42f52f58fa5c53b27c12b0f47476162d 15.73MB / 492.18MB 10.4s
+#6 sha256:63dd56a68bfe869372a1838d53706106ab9336b365b9e09026281a9e4d2dc296 6.29MB / 87.94MB 9.0s
+#6 sha256:e118eb27c4520de857d84e8a06f230544608a8c8d02aa0a960b91ab9f02fd065 14.68MB / 22.34MB 10.8s
+#6 sha256:048270e7f00c4cfb4462d31800a077b4e8d75bb687f4bb593570a9a41306edc3 8.39MB / 30.24MB 8.7s
+#6 sha256:e118eb27c4520de857d84e8a06f230544608a8c8d02aa0a960b91ab9f02fd065 16.78MB / 22.34MB 12.3s
+#6 sha256:048270e7f00c4cfb4462d31800a077b4e8d75bb687f4bb593570a9a41306edc3 10.49MB / 30.24MB 10.1s
+#6 sha256:63dd56a68bfe869372a1838d53706106ab9336b365b9e09026281a9e4d2dc296 11.53MB / 87.94MB 12.2s
+#6 sha256:e118eb27c4520de857d84e8a06f230544608a8c8d02aa0a960b91ab9f02fd065 18.87MB / 22.34MB 13.8s
+#6 sha256:048270e7f00c4cfb4462d31800a077b4e8d75bb687f4bb593570a9a41306edc3 12.58MB / 30.24MB 11.6s
+#6 sha256:e118eb27c4520de857d84e8a06f230544608a8c8d02aa0a960b91ab9f02fd065 20.97MB / 22.34MB 15.2s
+#6 sha256:48704a71850e34e67dbc4010af3aacae42f52f58fa5c53b27c12b0f47476162d 25.17MB / 492.18MB 15.6s
+#6 sha256:048270e7f00c4cfb4462d31800a077b4e8d75bb687f4bb593570a9a41306edc3 14.68MB / 30.24MB 12.9s
+#6 sha256:e118eb27c4520de857d84e8a06f230544608a8c8d02aa0a960b91ab9f02fd065 22.34MB / 22.34MB 15.8s
+#6 sha256:63dd56a68bfe869372a1838d53706106ab9336b365b9e09026281a9e4d2dc296 16.78MB / 87.94MB 14.7s
+#6 sha256:048270e7f00c4cfb4462d31800a077b4e8d75bb687f4bb593570a9a41306edc3 16.78MB / 30.24MB 13.7s
+#6 sha256:e118eb27c4520de857d84e8a06f230544608a8c8d02aa0a960b91ab9f02fd065 22.34MB / 22.34MB 16.3s done
+#6 sha256:048270e7f00c4cfb4462d31800a077b4e8d75bb687f4bb593570a9a41306edc3 18.87MB / 30.24MB 14.1s
+#6 sha256:048270e7f00c4cfb4462d31800a077b4e8d75bb687f4bb593570a9a41306edc3 20.97MB / 30.24MB 14.4s
+#6 sha256:048270e7f00c4cfb4462d31800a077b4e8d75bb687f4bb593570a9a41306edc3 23.07MB / 30.24MB 14.7s
+#6 sha256:048270e7f00c4cfb4462d31800a077b4e8d75bb687f4bb593570a9a41306edc3 25.17MB / 30.24MB 15.2s
+#6 sha256:048270e7f00c4cfb4462d31800a077b4e8d75bb687f4bb593570a9a41306edc3 27.26MB / 30.24MB 15.8s
+#6 sha256:048270e7f00c4cfb4462d31800a077b4e8d75bb687f4bb593570a9a41306edc3 29.36MB / 30.24MB 16.4s
+#6 sha256:63dd56a68bfe869372a1838d53706106ab9336b365b9e09026281a9e4d2dc296 22.02MB / 87.94MB 18.3s
+#6 sha256:048270e7f00c4cfb4462d31800a077b4e8d75bb687f4bb593570a9a41306edc3 30.24MB / 30.24MB 17.4s done
+#6 extracting sha256:048270e7f00c4cfb4462d31800a077b4e8d75bb687f4bb593570a9a41306edc3
+#6 sha256:48704a71850e34e67dbc4010af3aacae42f52f58fa5c53b27c12b0f47476162d 39.85MB / 492.18MB 20.7s
+#6 sha256:63dd56a68bfe869372a1838d53706106ab9336b365b9e09026281a9e4d2dc296 27.26MB / 87.94MB 20.0s
+#6 sha256:63dd56a68bfe869372a1838d53706106ab9336b365b9e09026281a9e4d2dc296 32.51MB / 87.94MB 21.2s
+#6 sha256:63dd56a68bfe869372a1838d53706106ab9336b365b9e09026281a9e4d2dc296 37.75MB / 87.94MB 22.7s
+#6 extracting sha256:048270e7f00c4cfb4462d31800a077b4e8d75bb687f4bb593570a9a41306edc3 4.5s done
+#6 extracting sha256:6617ff3d4e02688e535be07f456c13183fba321a15b6188e3aabec7f9670d980
+#6 extracting sha256:6617ff3d4e02688e535be07f456c13183fba321a15b6188e3aabec7f9670d980 0.1s done
+#6 sha256:48704a71850e34e67dbc4010af3aacae42f52f58fa5c53b27c12b0f47476162d 57.67MB / 492.18MB 25.8s
+#6 sha256:63dd56a68bfe869372a1838d53706106ab9336b365b9e09026281a9e4d2dc296 42.99MB / 87.94MB 24.6s
+#6 sha256:63dd56a68bfe869372a1838d53706106ab9336b365b9e09026281a9e4d2dc296 48.23MB / 87.94MB 25.8s
+#6 sha256:63dd56a68bfe869372a1838d53706106ab9336b365b9e09026281a9e4d2dc296 53.48MB / 87.94MB 27.0s
+#6 sha256:63dd56a68bfe869372a1838d53706106ab9336b365b9e09026281a9e4d2dc296 58.72MB / 87.94MB 28.1s
+#6 sha256:63dd56a68bfe869372a1838d53706106ab9336b365b9e09026281a9e4d2dc296 63.96MB / 87.94MB 29.1s
+#6 sha256:48704a71850e34e67dbc4010af3aacae42f52f58fa5c53b27c12b0f47476162d 80.74MB / 492.18MB 30.9s
+#6 sha256:63dd56a68bfe869372a1838d53706106ab9336b365b9e09026281a9e4d2dc296 69.21MB / 87.94MB 30.3s
+#6 sha256:63dd56a68bfe869372a1838d53706106ab9336b365b9e09026281a9e4d2dc296 74.45MB / 87.94MB 31.4s
+#6 sha256:63dd56a68bfe869372a1838d53706106ab9336b365b9e09026281a9e4d2dc296 79.69MB / 87.94MB 32.4s
+#6 sha256:63dd56a68bfe869372a1838d53706106ab9336b365b9e09026281a9e4d2dc296 84.93MB / 87.94MB 34.5s
+#6 sha256:48704a71850e34e67dbc4010af3aacae42f52f58fa5c53b27c12b0f47476162d 100.66MB / 492.18MB 36.0s
+#6 sha256:63dd56a68bfe869372a1838d53706106ab9336b365b9e09026281a9e4d2dc296 87.94MB / 87.94MB 37.3s done
+#6 extracting sha256:63dd56a68bfe869372a1838d53706106ab9336b365b9e09026281a9e4d2dc296
+#6 sha256:48704a71850e34e67dbc4010af3aacae42f52f58fa5c53b27c12b0f47476162d 117.44MB / 492.18MB 41.1s
+#6 sha256:48704a71850e34e67dbc4010af3aacae42f52f58fa5c53b27c12b0f47476162d 142.61MB / 492.18MB 45.6s
+#6 extracting sha256:63dd56a68bfe869372a1838d53706106ab9336b365b9e09026281a9e4d2dc296 8.5s done
+#6 extracting sha256:7a0a552ac28bdf87f0c79200b0d6e7dbf2ffdf5f9d864b91f60ce36577555b1c 0.1s done
+#6 extracting sha256:ab371b859416d2de216a48d1ae50cbfbc8cf32e28738e128bbf33888d38b548b 0.1s done
+#6 extracting sha256:63486dc054048f56e29e0d9ff1ab879bc2fc18263420aec60a71b7537c517676 0.1s done
+#6 extracting sha256:e118eb27c4520de857d84e8a06f230544608a8c8d02aa0a960b91ab9f02fd065
+#6 sha256:48704a71850e34e67dbc4010af3aacae42f52f58fa5c53b27c12b0f47476162d 167.77MB / 492.18MB 49.1s
+#6 extracting sha256:e118eb27c4520de857d84e8a06f230544608a8c8d02aa0a960b91ab9f02fd065 2.3s done
+#6 sha256:48704a71850e34e67dbc4010af3aacae42f52f58fa5c53b27c12b0f47476162d 192.94MB / 492.18MB 53.9s
+#6 sha256:48704a71850e34e67dbc4010af3aacae42f52f58fa5c53b27c12b0f47476162d 212.86MB / 492.18MB 59.0s
+#6 sha256:48704a71850e34e67dbc4010af3aacae42f52f58fa5c53b27c12b0f47476162d 238.03MB / 492.18MB 63.6s
+#6 sha256:48704a71850e34e67dbc4010af3aacae42f52f58fa5c53b27c12b0f47476162d 244.32MB / 492.18MB 68.7s
+#6 sha256:48704a71850e34e67dbc4010af3aacae42f52f58fa5c53b27c12b0f47476162d 262.14MB / 492.18MB 73.8s
+#6 sha256:48704a71850e34e67dbc4010af3aacae42f52f58fa5c53b27c12b0f47476162d 286.26MB / 492.18MB 78.9s
+#6 sha256:48704a71850e34e67dbc4010af3aacae42f52f58fa5c53b27c12b0f47476162d 311.43MB / 492.18MB 82.8s
+#6 sha256:48704a71850e34e67dbc4010af3aacae42f52f58fa5c53b27c12b0f47476162d 336.59MB / 492.18MB 87.5s
+#6 sha256:48704a71850e34e67dbc4010af3aacae42f52f58fa5c53b27c12b0f47476162d 361.76MB / 492.18MB 90.5s
+#6 sha256:48704a71850e34e67dbc4010af3aacae42f52f58fa5c53b27c12b0f47476162d 387.97MB / 492.18MB 93.9s
+#6 sha256:48704a71850e34e67dbc4010af3aacae42f52f58fa5c53b27c12b0f47476162d 413.14MB / 492.18MB 98.4s
+#6 sha256:48704a71850e34e67dbc4010af3aacae42f52f58fa5c53b27c12b0f47476162d 434.11MB / 492.18MB 103.5s
+#6 sha256:48704a71850e34e67dbc4010af3aacae42f52f58fa5c53b27c12b0f47476162d 459.28MB / 492.18MB 107.1s
+#6 sha256:48704a71850e34e67dbc4010af3aacae42f52f58fa5c53b27c12b0f47476162d 484.44MB / 492.18MB 112.1s
+#6 sha256:48704a71850e34e67dbc4010af3aacae42f52f58fa5c53b27c12b0f47476162d 492.18MB / 492.18MB 114.5s done
+#6 extracting sha256:48704a71850e34e67dbc4010af3aacae42f52f58fa5c53b27c12b0f47476162d
+#6 extracting sha256:48704a71850e34e67dbc4010af3aacae42f52f58fa5c53b27c12b0f47476162d 52.5s done
+#6 DONE 170.8s
+
+#6 [1/5] FROM docker.io/apache/airflow:3.3.2@sha256:e9982ad3f49a60418622e1baf80c34b0daf3fa5091a336cb5ee61f0cdd189371
+#6 extracting sha256:0531f0b0774300f021f9b7d103e64dbe17b460af0bbce0891477e83b95949d2d 0.0s done
+#6 extracting sha256:73fbd0995524fcf7940a4f84cb272002e25c57831da91171d3b9b8fc8ec3d24c 0.0s done
+#6 extracting sha256:e8e1e515932d55c25af023c45d839e26a43c2bbc26427e5595807833d5f23af2 0.0s done
+#6 extracting sha256:40195b627c77201f60e3ab82d803ae2caa607b7a68a44c4a4a2a229def7f09ff 0.0s done
+#6 DONE 170.9s
+
+#6 [1/5] FROM docker.io/apache/airflow:3.3.2@sha256:e9982ad3f49a60418622e1baf80c34b0daf3fa5091a336cb5ee61f0cdd189371
+#6 extracting sha256:83d72e14dab251556d9ed684a433802480ee800e0d7c7a7079a8ad00c778d36b 0.0s done
+#6 extracting sha256:894e47d9dbd506f313296312bf568d76495062b75c9404ddffad6a764942ce5a 0.0s done
+#6 extracting sha256:d4b83b895a33f635f0417393bd10347b3ce47188adc8db6735dfc8580ad9b0f2 0.0s done
+#6 extracting sha256:49f44bdcfec8439ea6ecc5050c352fce2e2ef243372b5db9d447e90d6c9af14c 0.0s done
+#6 extracting sha256:f0554f88f10dbeedd93ac71beb1e80bc67239f8e0fa9e4b87bcfdd5deb285f72 0.0s done
+#6 DONE 171.0s
+
+#6 [1/5] FROM docker.io/apache/airflow:3.3.2@sha256:e9982ad3f49a60418622e1baf80c34b0daf3fa5091a336cb5ee61f0cdd189371
+#6 extracting sha256:6ff66361b518d410790d758659bf9fbca7190dfd8585858387c92b42cfd3c55d 0.0s done
+#6 extracting sha256:4f4fb700ef54461cfa02571ae0db9a0dc1e0cdb5577484a6d75e68dc38e8acc1 0.0s done
+#6 DONE 171.0s
+
+#7 [2/5] RUN mkdir -p /opt/gridpulse-venv /opt/duckdb_ext     && chown -R airflow:0 /opt/gridpulse-venv /opt/duckdb_ext     && chmod -R g+rwX /opt/duckdb_ext
+#7 DONE 0.8s
+
+#8 [3/5] COPY --chown=airflow:0 requirements.txt /tmp/requirements.txt
+#8 DONE 0.1s
+
+#9 [4/5] RUN uv venv --python "$(which python)" /opt/gridpulse-venv     && uv pip install --python /opt/gridpulse-venv/bin/python --no-cache -r /tmp/requirements.txt     && /opt/gridpulse-venv/bin/python -c "import duckdb, dbt.version, great_expectations as gx; print('duckdb', duckdb.__version__, 'gx', gx.__version__)"
+#9 0.371 Using CPython 3.13.15 interpreter at: /home/airflow/.local/bin/python
+#9 0.371 Creating virtual environment at: /opt/gridpulse-venv
+#9 0.375 Activate with: source /opt/gridpulse-venv/bin/activate
+#9 0.464 Using Python 3.13.15 environment at: /opt/gridpulse-venv
+#9 4.027 Resolved 78 packages in 3.56s
+#9 4.157 Downloading babel (10.5MiB)
+#9 4.158 Downloading faker (2.0MiB)
+#9 4.167 Downloading pandas (11.4MiB)
+#9 4.169 Downloading pydantic-core (2.2MiB)
+#9 4.172 Downloading rapidfuzz (3.0MiB)
+#9 4.174 Downloading cryptography (4.5MiB)
+#9 4.178 Downloading networkx (2.0MiB)
+#9 4.206 Downloading great-expectations (5.5MiB)
+#9 4.210 Downloading scipy (33.7MiB)
+#9 4.211 Downloading dbt-core (1.1MiB)
+#9 4.216 Downloading duckdb (23.8MiB)
+#9 4.220 Downloading numpy (15.0MiB)
+#9 4.222 Downloading psycopg2-binary (4.1MiB)
+#9 4.228 Downloading pyarrow (52.5MiB)
+#9 5.421    Building dbt-core-experimental-parser==2.0.11
+#9 8.418  Downloaded dbt-core
+#9 9.966  Downloaded faker
+#9 10.00  Downloaded networkx
+#9 10.37  Downloaded pydantic-core
+#9 11.48  Downloaded rapidfuzz
+#9 13.01  Downloaded psycopg2-binary
+#9 13.59  Downloaded cryptography
+#9 14.79  Downloaded great-expectations
+#9 26.33  Downloaded babel
+#9 27.45  Downloaded pandas
+#9 28.57       Built dbt-core-experimental-parser==2.0.11
+#9 36.00  Downloaded numpy
+#9 40.04  Downloaded duckdb
+#9 42.75  Downloaded scipy
+#9 44.93  Downloaded pyarrow
+#9 44.93 Prepared 78 packages in 40.90s
+#9 47.72 Installed 78 packages in 2.78s
+#9 47.72  + agate==1.9.1
+#9 47.72  + altair==6.3.0
+#9 47.72  + annotated-types==0.8.0
+#9 47.72  + attrs==26.1.0
+#9 47.72  + babel==2.19.0
+#9 47.72  + certifi==2026.11.20
+#9 47.72  + cffi==2.1.1
+#9 47.72  + charset-normalizer==3.5.3
+#9 47.72  + click==8.5.1
+#9 47.72  + colorama==0.4.6
+#9 47.72  + cryptography==50.0.2
+#9 47.72  + daff==1.4.2
+#9 47.72  + dbt-adapters==1.24.6
+#9 47.72  + dbt-common==1.39.0
+#9 47.72  + dbt-core==1.12.7
+#9 47.72  + dbt-core-experimental-parser==2.0.11
+#9 47.72  + dbt-duckdb==1.11.1
+#9 47.72  + dbt-extractor==0.6.0
+#9 47.72  + dbt-protos==1.0.615
+#9 47.72  + deepdiff==8.6.2
+#9 47.72  + duckdb==2.0.1
+#9 47.72  + faker==40.63.0
+#9 47.72  + great-expectations==1.25.0
+#9 47.72  + idna==3.20
+#9 47.72  + importlib-metadata==10.2.0
+#9 47.72  + isodate==0.7.2
+#9 47.72  + jinja2==3.1.6
+#9 47.72  + jsonschema==4.26.0
+#9 47.72  + jsonschema-specifications==2025.9.1
+#9 47.72  + lazy-importer==0.1.0
+#9 47.72  + leather==0.4.1
+#9 47.72  + markupsafe==3.0.4
+#9 47.72  + marshmallow==4.4.0
+#9 47.72  + mashumaro==3.17
+#9 47.72  + metricflow==0.214.0
+#9 47.72  + mistune==3.4.0
+#9 47.72  + more-itertools==10.8.0
+#9 47.72  + msgpack==1.2.4
+#9 47.72  + narwhals==2.29.0
+#9 47.72  + networkx==3.7
+#9 47.72  + numpy==2.5.5
+#9 47.72  + opentelemetry-api==1.45.2
+#9 47.72  + orderly-set==5.5.0
+#9 47.72  + packaging==26.4
+#9 47.72  + pandas==3.1.1
+#9 47.72  + parsedatetime==2.6
+#9 47.72  + pathspec==1.0.4
+#9 47.72  + protobuf==6.33.6
+#9 47.72  + psycopg2-binary==2.9.13
+#9 47.72  + pyarrow==26.0.1
+#9 47.72  + pycparser==3.12
+#9 47.72  + pydantic==2.14.4
+#9 47.72  + pydantic-core==2.50.5
+#9 47.72  + pyparsing==3.3.3
+#9 47.72  + python-dateutil==2.9.0.post0
+#9 47.72  + python-dotenv==1.2.4
+#9 47.72  + python-slugify==9.2.0
+#9 47.72  + pytimeparse==1.1.10
+#9 47.72  + pytz==2026.6
+#9 47.72  + pyyaml==6.0.4
+#9 47.72  + rapidfuzz==3.14.6
+#9 47.72  + referencing==0.37.0
+#9 47.72  + requests==2.34.2
+#9 47.72  + rpds-py==2026.9.1
+#9 47.72  + ruamel-yaml==0.19.1
+#9 47.72  + scipy==1.18.1
+#9 47.72  + six==1.17.0
+#9 47.72  + snowplow-tracker==1.1.0
+#9 47.72  + sqlglot==30.35.0
+#9 47.72  + sqlparse==0.6.1
+#9 47.72  + tabulate==0.10.0
+#9 47.72  + text-unidecode==1.3
+#9 47.72  + tqdm==4.70.1
+#9 47.72  + typing-extensions==4.16.0
+#9 47.72  + typing-inspection==0.4.5
+#9 47.72  + tzlocal==5.4.5
+#9 47.72  + urllib3==2.8.0
+#9 47.72  + zipp==4.1.2
+#9 65.28 duckdb 2.0.1 gx 1.25.0
+#9 DONE 67.8s
+
+#10 [5/5] RUN /opt/gridpulse-venv/bin/python -c "import duckdb; c = duckdb.connect(); c.execute(\"SET extension_directory='/opt/duckdb_ext'\"); c.execute('INSTALL postgres')"     && chmod -R g+rwX /opt/duckdb_ext
+#10 4.616 100% ▕██████████████████████████████████████▏ (00:00:03.69 elapsed)     
+#10 DONE 4.7s
+
+#11 exporting to image
+#11 exporting layers
+#11 exporting layers 43.8s done
+#11 exporting manifest sha256:3f8b942e72558ecfe1635e8eaa3ac09ff2a7f54f3bf302310646045a38655d4d 0.0s done
+#11 exporting config sha256:6ebe04c4ca17c66c6a459ec780e53ef19da9c54d223ffdd45bbcddfc9a145237 0.0s done
+#11 exporting attestation manifest sha256:16397c879c0efb686c6f8829c483e67b9c531b7aa2db5d6092ee5eda48b14439
+#11 exporting attestation manifest sha256:16397c879c0efb686c6f8829c483e67b9c531b7aa2db5d6092ee5eda48b14439 0.0s done
+#11 exporting manifest list sha256:31d5bc977a6c2c44ce0e3b316b326a356fc9ee79e73fbe49a842f164a98b4a85 0.0s done
+#11 naming to docker.io/library/gridpulse-airflow:0.1.0 done
+#11 unpacking to docker.io/library/gridpulse-airflow:0.1.0
+#11 unpacking to docker.io/library/gridpulse-airflow:0.1.0 111.0s done
+#11 DONE 155.1s
+
+#12 resolving provenance for metadata file
+#12 DONE 0.1s
+ Image gridpulse-airflow:0.1.0 Built 
+
+real	6m49.065s
+user	0m0.153s
+sys	0m0.154s

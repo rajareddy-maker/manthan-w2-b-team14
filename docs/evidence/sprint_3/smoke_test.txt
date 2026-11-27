@@ -1,0 +1,13 @@
+GridPulse smoke test — 2026-11-27 17:09:11 IST
+  [PASS] Postgres accepts connections                 /var/run/postgresql:5432 - accepting connections
+  [PASS] Warehouse readable by bi_reader              warehouse initialised
+  [PASS] Airflow API :8080 healthy                    {"metadatabase":{"status":"healthy"},"scheduler":{"status":"healthy","
+  [PASS] Airflow scheduler healthy                    
+  [PASS] hello_gridpulse DAG run succeeds             [trigger] hello_gridpulse manual__20261127T170919_17251 -> success in 
+  [PASS] dbt debug passes                             [0m11:40:03  [32mAll checks passed![0m
+  [PASS] GX sample checkpoint passes                  INFO gx_checkpoint suite=sample success=True evaluated=5 successful=5 
+  [PASS] Superset UI :8088 healthy                    OK
+  [PASS] Superset queries the warehouse               superset->warehouse: warehouse initialised
+  [SKIP] Kafka topic produce/consume                     dropped by design (ADR-002)
+  [SKIP] Spark UI :8081 sample job                        dropped by design (ADR-002)
+RESULT: 9 passed, 0 failed

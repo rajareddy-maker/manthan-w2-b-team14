@@ -18,6 +18,30 @@ Verify: `docker compose version --short` gives a version ≥ 2.20.
 
 **Memory:** set Docker Desktop to **6 GB** (Settings → Resources → Memory) on a 14–16 GB host, and close heavy apps. With 8 GB, systemd-oomd kills Docker Desktop under load (DEF-002).
 
+## 2b. Windows 11 host (Docker Desktop + Git Bash) — verified Sprint 3
+Verified on Sagar's laptop: 16 GB RAM, Docker Desktop 29.9.3 (WSL2 backend, VM 7.65 GB), Git Bash.
+1. **Docker CLI on PATH.** A per-user Docker Desktop install lives in `%LOCALAPPDATA%\Programs\DockerDesktop`. In Git Bash:
+   ```bash
+   export PATH="$LOCALAPPDATA/Programs/DockerDesktop/resources/bin:$PATH"   # add to ~/.bashrc
+   docker version --format '{{.Server.Version}}'
+   ```
+2. **Line endings.** Scripts run inside Linux containers must be LF.
+   - `.gitattributes` enforces this for fresh clones.
+   - A checkout made before `.gitattributes` existed keeps CRLF. Symptom: `$'\r': command not found` in `postgres-init`.
+   - Fix it with a fresh clone, or by converting the tracked `*.sh`/`*.py`/`*.yml`/`Dockerfile`/`Makefile` files to LF (no content diff results).
+3. **No `make` on Windows.** Every target is a thin wrapper, so run the underlying command:
+
+   | make target | Windows (Git Bash) equivalent |
+   |---|---|
+   | `make env` | `bash scripts/init_env.sh` (writes `AIRFLOW_UID=50000` on non-Linux hosts) |
+   | `make build` | `docker compose build superset-init && docker compose build airflow-init` (one at a time) |
+   | `make up` | `docker compose up -d --wait --wait-timeout 600` |
+   | `make smoke` | `bash scripts/smoke_test.sh` |
+   | `make down` | `docker compose down` |
+
+4. **Path conversion.** Git Bash rewrites arguments that start with `/` (e.g. `/opt/gridpulse-venv/bin/python`) into Windows paths. The scripts set `MSYS_NO_PATHCONV=1`. Do the same for ad-hoc `docker compose exec` commands.
+5. **Other stacks.** Ports 8080/8088 clash with any other Airflow or Superset stack. Stop it first with `docker compose -p <project> stop`; volumes are kept.
+
 ## 3. Project setup and stack
 ```bash
 make setup     # .env with random secrets, .venv, pinned deps, pre-commit

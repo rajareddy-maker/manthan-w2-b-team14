@@ -3,6 +3,8 @@
 # Usage: scripts/airflow_trigger_wait.sh <dag_id> [conf_json] [timeout_seconds]
 set -euo pipefail
 cd "$(dirname "$0")/.."
+# Git Bash on Windows rewrites args starting with "/" into Windows paths; keep them verbatim.
+export MSYS_NO_PATHCONV=1
 
 DAG_ID=$1
 CONF=${2:-'{}'}

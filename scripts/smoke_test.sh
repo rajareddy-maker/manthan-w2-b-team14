@@ -3,6 +3,8 @@
 # Requires `make up`. Prints PASS/FAIL per check; exits 1 on any failure.
 set -uo pipefail
 cd "$(dirname "$0")/.."
+# Git Bash on Windows rewrites args starting with "/" into Windows paths; keep them verbatim.
+export MSYS_NO_PATHCONV=1
 set -a; . ./.env; set +a
 
 PASS=0; FAILN=0

@@ -1,0 +1,46 @@
+ Container gridpulse-postgres-1 Running 
+ Container gridpulse-superset-1 Running 
+ Volume gridpulse_airflow-logs Creating 
+ Volume gridpulse_airflow-logs Created 
+ Container gridpulse-airflow-init-1 Creating 
+ Container gridpulse-airflow-init-1 Created 
+ Container gridpulse-airflow-scheduler-1 Creating 
+ Container gridpulse-airflow-apiserver-1 Creating 
+ Container gridpulse-airflow-dag-processor-1 Creating 
+ Container gridpulse-airflow-dag-processor-1 Created 
+ Container gridpulse-airflow-apiserver-1 Created 
+ Container gridpulse-airflow-scheduler-1 Created 
+ Container gridpulse-postgres-1 Waiting 
+ Container gridpulse-postgres-1 Healthy 
+ Container gridpulse-airflow-init-1 Starting 
+ Container gridpulse-superset-init-1 Starting 
+ Container gridpulse-airflow-init-1 Started 
+ Container gridpulse-airflow-init-1 Waiting 
+ Container gridpulse-superset-init-1 Started 
+ Container gridpulse-superset-init-1 Waiting 
+ Container gridpulse-airflow-init-1 Exited 
+ Container gridpulse-airflow-apiserver-1 Starting 
+ Container gridpulse-airflow-dag-processor-1 Starting 
+ Container gridpulse-airflow-scheduler-1 Starting 
+ Container gridpulse-airflow-apiserver-1 Started 
+ Container gridpulse-airflow-dag-processor-1 Started 
+ Container gridpulse-airflow-scheduler-1 Started 
+ Container gridpulse-superset-init-1 Exited 
+ Container gridpulse-airflow-init-1 Waiting 
+ Container gridpulse-airflow-apiserver-1 Waiting 
+ Container gridpulse-airflow-scheduler-1 Waiting 
+ Container gridpulse-airflow-dag-processor-1 Waiting 
+ Container gridpulse-superset-init-1 Waiting 
+ Container gridpulse-superset-1 Waiting 
+ Container gridpulse-postgres-1 Waiting 
+ Container gridpulse-superset-init-1 Exited 
+ Container gridpulse-airflow-init-1 Exited 
+ Container gridpulse-postgres-1 Healthy 
+ Container gridpulse-superset-1 Healthy 
+ Container gridpulse-airflow-dag-processor-1 Healthy 
+ Container gridpulse-airflow-apiserver-1 Healthy 
+ Container gridpulse-airflow-scheduler-1 Healthy 
+
+real	1m38.639s
+user	0m0.121s
+sys	0m0.138s

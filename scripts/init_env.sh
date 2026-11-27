@@ -9,10 +9,19 @@ if [[ -f .env ]]; then
   exit 0
 fi
 
+# Linux: container uid must match the host uid for bind mounts. Windows/macOS Docker Desktop
+# maps ownership itself, and Git Bash's `id -u` is not a real uid -> use the image default.
+case "$(uname -s)" in
+  Linux*) HOST_UID=$(id -u) ;;
+  *) HOST_UID=50000 ;;
+esac
+id() { echo "$HOST_UID"; }
+
 rand() { python3 -c 'import secrets; print(secrets.token_urlsafe(24))'; }
 fernet() { python3 -c 'import base64, os; print(base64.urlsafe_b64encode(os.urandom(32)).decode())'; }
 
 while IFS= read -r line; do
+  line=${line%$'\r'}  # tolerate CRLF checkouts (Windows)
   case "$line" in
     AIRFLOW_UID=*) echo "AIRFLOW_UID=$(id -u)" ;;
     *=change_me_fernet) echo "${line%%=*}=$(fernet)" ;;

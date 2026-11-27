@@ -3,6 +3,8 @@
 # Idempotent: safe to run twice. Stages grow per sprint (see docs/PROGRESS.md).
 set -euo pipefail
 cd "$(dirname "$0")/.."
+# Git Bash on Windows rewrites args starting with "/" into Windows paths; keep them verbatim.
+export MSYS_NO_PATHCONV=1
 T0=$(date +%s)
 step() { printf '\n=== [demo %4ss] %s\n' "$(( $(date +%s) - T0 ))" "$*"; }
 
