@@ -15,6 +15,8 @@
 | E2E Airflow runs (backfill ×3, daily scheduled + manual) | 5 | 5 | 0 | 0 | 0 | [airflow_backfill_run.txt](evidence/sprint_3/airflow_backfill_run.txt), [airflow_daily_run.txt](evidence/sprint_3/airflow_daily_run.txt) |
 | Ground truth (anomalies vs manifest) | 3 rule types + control | all | 0 | 0 | 0 | [anomalies_vs_manifest.txt](evidence/sprint_2/anomalies_vs_manifest.txt) |
 | Drills (backfill, rollback) | 2 | 2 | 0 | 0 | 0 | [runbook_rollback_drill.txt](evidence/sprint_3/runbook_rollback_drill.txt) |
+| Failure-alert drill (`gridpulse_alert_drill`) | 1 | 1 | 0 | 0 | 0 | [alert_failure_drill.txt](evidence/sprint_3/alert_failure_drill.txt): run FAILED as intended, CRITICAL alert + failed run recorded, e-mail skipped (no SMTP) |
+| Unit — alerting (added after the summary run) | 3 | 3 | 0 | 0 | 0 | `tests/unit/test_alerting.py` |
 | One-command demo (`scripts/demo.sh`, in place) | 1 | 1 | 0 | 0 | 0 | [demo_run.txt](evidence/sprint_3/demo_run.txt) — 658 s |
 | Performance 10× (70 days) | 0 | 0 | 0 | 0 | 1 (not run, time-box) | — |
 

@@ -41,7 +41,9 @@ Every task retries twice, 2 minutes apart. Tasks that touch DuckDB share pool `d
 2. Airflow UI → `gridpulse_daily` → the last run is green.
 
 ## 3. Alerts → action
-Task failures are not yet written to `ops.alerts`; watch the Airflow UI (red task) until the `on_failure_callback` (US-26) lands.
+**Task failures** (after the last retry) raise a CRITICAL `task_failed` row in `ops.alerts`, mark the run `failed` in `ops.pipeline_runs` (Pipeline health tab), and log an ERROR line.
+- They e-mail `ALERT_EMAIL` (sagar.kalthiya@nucleusteq.com) once `SMTP_HOST`/`SMTP_*` are set in `.env`. Until then, the log says `alert e-mail disabled`.
+- Drill: `bash scripts/airflow_trigger_wait.sh gridpulse_alert_drill` (performed 27-Nov-2026, `docs/evidence/sprint_3/alert_failure_drill.txt`).
 
 | Alert / symptom | Meaning | Action |
 |---|---|---|

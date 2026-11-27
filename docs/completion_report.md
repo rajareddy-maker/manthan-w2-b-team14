@@ -94,7 +94,7 @@ Expected:
 - The repo is bind-mounted from a OneDrive folder, so container I/O is about 4× slower than native.
 - `data/` should move to a named volume and out of sync for production.
 - Alerts go to `ops.alerts` + logs only; there is no email/Slack (A9).
-- **No DAG task-failure alert yet.** A failed run writes no `ops.alerts`/`ops.pipeline_runs` row, because that is done by `ops_metrics_alerts`, which runs only on success. Failures are visible in the Airflow UI only. Fix: `on_failure_callback` writing a CRITICAL `task_failed` alert (US-26). Data alerts do work: `late_beyond_window` fired correctly on both daily runs (5,971 readings more than 3 days late).
+- **Task-failure alerts (US-26) are done.** An `on_failure_callback` on every DAG writes a CRITICAL `task_failed` row to `ops.alerts` and a `failed` row to `ops.pipeline_runs`, naming `ALERT_EMAIL` = sagar.kalthiya@nucleusteq.com. The drill passed (`alert_failure_drill.txt`). E-mail delivery needs an SMTP server (`SMTP_HOST`); none is configured, so the e-mail is skipped and logged. Data alerts do work: `late_beyond_window` fired correctly on both daily runs (5,971 readings more than 3 days late).
 - Spike detection needs ≥ 96 clean history points, so meters with less than ~1 day of history are not checked.
 
 **Open risks:**
