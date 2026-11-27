@@ -26,7 +26,7 @@ Points: Fibonacci. Stories > 8 pts are split at refinement. Excel export: `make 
 
 ## US-01: Requirement analysis & ideation
 **Epic:** E1 Inception & setup **Req IDs:** all FR/NFR
-**Priority:** Must **Points:** 5 **Sprint:** S0 **Owner:** Mahendra Umath **Status:** In review
+**Priority:** Must **Points:** 5 **Sprint:** S0 **Owner:** Mahendra Umath **Status:** Done
 
 **Story**
 As the PO, I want the PRD analysed into requirements, an RTM and an ideation document, so that scope is clear, traceable and the approach is justified.
@@ -45,7 +45,7 @@ As the PO, I want the PRD analysed into requirements, an RTM and an ideation doc
 
 ## US-02: Prioritised backlog and release plan (Markdown + Excel)
 **Epic:** E1 Inception & setup **Req IDs:** —
-**Priority:** Must **Points:** 3 **Sprint:** S0 **Owner:** Mahendra Umath **Status:** In review
+**Priority:** Must **Points:** 3 **Sprint:** S0 **Owner:** Mahendra Umath **Status:** Done
 
 **Story**
 As the PO, I want a prioritised backlog and release plan in Markdown and Excel, so that I can track delivery.
@@ -62,7 +62,7 @@ As the PO, I want a prioritised backlog and release plan in Markdown and Excel, 
 
 ## US-03: System check script
 **Epic:** E1 Inception & setup **Req IDs:** NFR-10
-**Priority:** Must **Points:** 2 **Sprint:** S0 **Owner:** Raja Rao Reddy **Status:** In review
+**Priority:** Must **Points:** 2 **Sprint:** S0 **Owner:** Raja Rao Reddy **Status:** Done
 
 **Story**
 As a data engineer, I want a system check script, so that I know my machine can run the stack.
@@ -97,7 +97,7 @@ As a data engineer, I want the full stack in Docker Compose, so that every tool 
 
 ## US-05: Repo skeleton, Makefile, linting, pre-commit
 **Epic:** E1 Inception & setup **Req IDs:** FR-27
-**Priority:** Must **Points:** 3 **Sprint:** S0 **Owner:** Raja Rao Reddy **Status:** In progress
+**Priority:** Must **Points:** 3 **Sprint:** S0 **Owner:** Raja Rao Reddy **Status:** Done
 
 **Story**
 As a data engineer, I want a repo skeleton with Makefile, linting and pre-commit, so that standards are enforced from day one.
@@ -113,7 +113,7 @@ As a data engineer, I want a repo skeleton with Makefile, linting and pre-commit
 
 ## US-06: Architecture and ADRs
 **Epic:** E2 Architecture, design & walking skeleton **Req IDs:** FR-14, FR-15, FR-28
-**Priority:** Must **Points:** 5 **Sprint:** S1 **Owner:** Mahendra Umath **Status:** In review
+**Priority:** Must **Points:** 5 **Sprint:** S1 **Owner:** Mahendra Umath **Status:** Done
 
 **Story**
 As an architect, I want an architecture diagram and ADRs for partitioning, retention, late data and schema evolution, so that tool and storage choices are documented.
@@ -125,7 +125,7 @@ As an architect, I want an architecture diagram and ADRs for partitioning, reten
 
 ## US-07: Synthetic data generator with injected defects
 **Epic:** E2 Architecture, design & walking skeleton **Req IDs:** FR-23, FR-01, FR-02
-**Priority:** Must **Points:** 5 **Sprint:** S1 **Owner:** Sagar Kalthiya **Status:** In review
+**Priority:** Must **Points:** 5 **Sprint:** S1 **Owner:** Sagar Kalthiya **Status:** Done
 
 **Story**
 As a data engineer, I want a synthetic generator for 5,000 meters / 20 feeders / 6 zones, so that the pipeline can be tested without real data.
@@ -137,7 +137,7 @@ As a data engineer, I want a synthetic generator for 5,000 meters / 20 feeders /
 
 ## US-08: Bronze ingestion for both schema versions with compaction
 **Epic:** E2 Architecture, design & walking skeleton **Req IDs:** FR-01, FR-02, FR-03, FR-14, NFR-07
-**Priority:** Must **Points:** 5 **Sprint:** S1 **Owner:** Sagar Kalthiya **Status:** In review
+**Priority:** Must **Points:** 5 **Sprint:** S1 **Owner:** Sagar Kalthiya **Status:** Done
 
 **Story**
 As a data engineer, I want landing files loaded into bronze Parquet partitioned by date and zone, with the raw payload and schema version kept, so that raw data is preserved and queryable by time.

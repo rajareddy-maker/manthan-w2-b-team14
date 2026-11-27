@@ -49,13 +49,15 @@ xychart-beta
 ## Sprint review
 | Story ID | Demo evidence | Accepted? | Notes |
 |----------|---------------|-----------|-------|
-| US-01 | docs/ideation.md, docs/requirements.md, docs/rtm.md | pending PO | |
-| US-02 | docs/scrum/product_backlog.md + .xlsx, evidence/sprint_0/export_backlog.txt | pending PO | |
-| US-03 | evidence/sprint_0/system_check.txt | pending PO | Correctly flags the Docker daemon down |
+| US-01 | docs/ideation.md, docs/requirements.md, docs/rtm.md | Yes | |
+| US-02 | docs/scrum/product_backlog.md + .xlsx, evidence/sprint_0/export_backlog.txt | Yes | |
+| US-03 | evidence/sprint_0/system_check.txt | Yes | Correctly flags the Docker daemon down |
 | US-04 | compose + Dockerfiles written; dbt debug + GX pass locally | Not yet | Stack not started — DEF-002 |
-| US-05 | `make lint`, `make test` (10 passed, 82%) | pending PO | |
+| US-05 | `make lint`, `make test` (10 passed, 82%) | Yes | |
 
-**Completed:** pending PO review **Carried over:** US-04 if DEF-002 is not resolved
+**Completed:** 13 pts accepted (US-01, US-02, US-03, US-05) **Carried over:** US-04 (blocked by DEF-002)
+
+**PO decision (27-Nov-2026):** APPROVED — relayed by Sagar Kalthiya in the build session on behalf of Mahendra Umath (PO).
 
 ## Retrospective
 - What went well: requirements to backlog fast; cached images reused; secrets generated automatically.

@@ -1,6 +1,6 @@
 # ADR-005: Schema evolution (v1 → v2 → future)
 
-- **Status:** Proposed (Sprint 1, 27-Nov-2026) · **Deciders:** Mahendra Umath (PO), Sagar Kalthiya
+- **Status:** Accepted (Sprint 1 review, 27-Nov-2026) · **Deciders:** Mahendra Umath (PO), Sagar Kalthiya
 - **Req IDs:** FR-01, FR-02, FR-03, FR-04, FR-28
 
 ## Context

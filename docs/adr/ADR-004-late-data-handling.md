@@ -1,6 +1,6 @@
 # ADR-004: Late and out-of-order data
 
-- **Status:** Proposed (Sprint 1, 27-Nov-2026) · **Deciders:** Mahendra Umath (PO), Sagar Kalthiya
+- **Status:** Accepted (Sprint 1 review, 27-Nov-2026) · **Deciders:** Mahendra Umath (PO), Sagar Kalthiya
 - **Req IDs:** FR-05, FR-06, FR-17, FR-28, NFR-05, NFR-07
 
 ## Context

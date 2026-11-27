@@ -1,14 +1,14 @@
 # GridPulse — Progress
 
-**Current sprint:** S1 (Phases 2 + 3) — in review, awaiting PO approval · **S0** also still awaiting PO approval · **Next:** S2 (Phase 4)
+**Current sprint:** S2 (Phase 4) — in progress · S0 + S1 APPROVED by PO (27-Nov-2026, relayed by Sagar Kalthiya)
 **PO:** Mahendra Umath · **Builder:** Claude session · Last update: 27-Nov-2026 (S1 on Sagar Kalthiya's Windows 11 host)
 
 ## Phase status
 | Phase | Sprint | Status |
 |---|---|---|
-| 0 Requirements | S0 | Done — pending PO approval |
+| 0 Requirements | S0 | Done — approved |
 | 1 Environment | S0 | Partial — local toolchain verified on both hosts; Docker stack blocked (DEF-002, DEF-005) |
-| 2 Architecture | S1 | Done — architecture.md + ADR-003/004/005 (status Proposed → PO) |
+| 2 Architecture | S1 | Done — architecture.md + ADR-003/004/005 (Accepted) |
 | 3 Detailed design | S1 | Done — docs/lld.md; walking skeleton runs locally to a DuckDB mart; Postgres + Superset leg blocked |
 | 4 Development | S1–S3 | Started — generator, bronze extractor, dbt staging + quarantine + zone completeness mart |
 | 5 Testing | S3 | Ongoing — 31 unit tests (90% cov), 36 dbt checks, manifest reconciliation |
@@ -21,8 +21,8 @@
 - `dbt build`: PASS=36. Reconciliation: `bronze = kept 3,347,177 + dups 43,439 + quarantined 1,520`.
 - Evidence is in `docs/evidence/sprint_1/`; test cases and defects are in `docs/test_results.md`.
 
-## Branches (stacked, local only — not pushed, not merged)
-`main` ← `feature/US-01-inception-docs` (S0, pushed) ← `feature/US-07-data-generator` ← `feature/US-08-bronze-ingestion` ← `feature/US-06-architecture-adrs` ← `feature/US-09-lld-walking-skeleton`
+## Branches (stacked, pushed to origin; PRs open, not merged)
+`main` ← `feature/US-01-inception-docs` (S0) ← `feature/US-07-data-generator` ← `feature/US-08-bronze-ingestion` ← `feature/US-06-architecture-adrs` ← `feature/US-09-lld-walking-skeleton`
 
 ## Decisions (ADR log)
 | ADR | Decision |

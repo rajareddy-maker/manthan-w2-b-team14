@@ -1,6 +1,6 @@
 # ADR-003: Partitioning, compaction and retention of the time-series lake
 
-- **Status:** Proposed (Sprint 1, 27-Nov-2026) · **Deciders:** Mahendra Umath (PO), Sagar Kalthiya
+- **Status:** Accepted (Sprint 1 review, 27-Nov-2026) · **Deciders:** Mahendra Umath (PO), Sagar Kalthiya
 - **Req IDs:** FR-14, FR-15, NFR-01, NFR-06, NFR-07
 
 ## Context

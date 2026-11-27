@@ -54,12 +54,14 @@ Points count as burned when a story reaches In review with evidence. The remaini
 ## Sprint review
 | Story ID | Demo evidence | Accepted? | Notes |
 |----------|---------------|-----------|-------|
-| US-06 | docs/architecture.md, ADR-003/004/005, evidence/sprint_1/bronze_checks.txt (pruning 48 → 6 → 1 files) | pending PO | AC1–AC3 met |
-| US-07 | evidence/sprint_1/generator_run.txt; `tests/unit/test_generator.py` (determinism, defects, crafted anomalies) | pending PO | 3,392,136 events in 15 s |
-| US-08 | evidence/sprint_1/bronze_load_run1.txt, bronze_checks.txt; `tests/unit/test_landing_to_bronze.py` | pending PO | Reconciles 1:1, idempotent, 1 file per partition |
+| US-06 | docs/architecture.md, ADR-003/004/005, evidence/sprint_1/bronze_checks.txt (pruning 48 → 6 → 1 files) | Yes | AC1–AC3 met |
+| US-07 | evidence/sprint_1/generator_run.txt; `tests/unit/test_generator.py` (determinism, defects, crafted anomalies) | Yes | 3,392,136 events in 15 s |
+| US-08 | evidence/sprint_1/bronze_load_run1.txt, bronze_checks.txt; `tests/unit/test_landing_to_bronze.py` | Yes | Reconciles 1:1, idempotent, 1 file per partition |
 | US-09 | docs/lld.md; evidence/sprint_1/dbt_build.txt (36/36), staging_vs_manifest.txt | Partial | AC1 met. AC2 local part met (landing → bronze → staging → mart). Postgres + Superset blocked by DEF-002 |
 
-**Completed:** 19 of 23 pts in review (pending PO) **Carried over:** US-09 AC2 (4 pts) to S2
+**Completed:** 19 of 23 pts accepted **Carried over:** US-09 AC2 (4 pts) to S2
+
+**PO decision (27-Nov-2026):** APPROVED — relayed by Sagar Kalthiya in the build session on behalf of Mahendra Umath (PO).
 
 ## Retrospective
 - **What went well:**
