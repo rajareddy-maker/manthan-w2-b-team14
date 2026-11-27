@@ -33,6 +33,27 @@
 | TC-ENV-03 (S1) | US-05 | ruff + black --check + sqlfluff | clean | All checks passed / 18 files unchanged / sqlfluff All Finished (0 violations) | ✅ | — |
 | TC-ENV-07 | US-04, US-09 AC2 | `make smoke`, publish to Postgres, Superset chart | stack healthy | not run: no Docker on this host (DEF-002) | ⏸ Blocked | — |
 
+## Executed in Sprint 2 (Windows 11 host, local venv; full 7-day data set unless noted)
+| Test case | Requirement | Command | Expected | Actual | Status | Evidence |
+|---|---|---|---|---|---|---|
+| TC-UNIT-01 (crafted) | FR-04, US-10 AC1 | `make test-dbt` | v1 1500 Wh = v2 1.5 kWh = v2 1500 Wh → 1.5000 | equal | ✅ | [pytest_dbt_crafted.txt](evidence/sprint_2/pytest_dbt_crafted.txt) |
+| TC-DUP-01 (crafted) | FR-05, US-10 AC2 | same | 3 copies → 1 kept, ranks 2–3 dropped | as expected | ✅ | same |
+| TC-ORD-01 | FR-06, US-10 AC3 | same (files written newest first, lines reversed) | no false register decreases | only B2 (crafted reset) flagged | ✅ | same |
+| TC-GAP-01 | FR-07, US-11 AC1 | same + full set | 3 missing → 3 gap rows, next delta gap_intervals = 3 | as expected; full set 17,823 gaps in 3,360,000 grid rows | ✅ | same, [intervals_vs_manifest.txt](evidence/sprint_2/intervals_vs_manifest.txt) |
+| TC-DQ-03 | FR-21, US-11 AC2 | same | ROLLOVER → (max − prev) + cur; other decrease → NULL + flag | as expected; flagged meters = manifest (3/3) | ✅ | same |
+| TC-REC-01 | FR-08, NFR-11, US-12 AC1 | `dbt build` singular tests | Σ hourly = Σ staging deltas per meter-day; register span exact | PASS (both) | ✅ | [dbt_build.txt](evidence/sprint_2/dbt_build.txt) |
+| TC-REC-02 | FR-09 | `dbt build` | feeder = zone = billing = meter totals | PASS | ✅ | same |
+| TC-BILL-01 | FR-10, US-12 AC2 | crafted | billed kWh = register span; quality flags | as expected | ✅ | [pytest_dbt_crafted.txt](evidence/sprint_2/pytest_dbt_crafted.txt) |
+| TC-DQ-04 | FR-22 | crafted | 15 missing on one day → LOW_COMPLETENESS for that meter-day only | as expected | ✅ | same |
+| TC-ANO-01 | FR-11, US-13 AC1 | full set + crafted | crafted spikes flagged, controls clean | 5/5, 0 false positives (with ADR-006 guard) | ✅ | [anomalies_vs_manifest.txt](evidence/sprint_2/anomalies_vs_manifest.txt) |
+| TC-ANO-01b | FR-11 | rule measurement | z > 3 alone is usable | **34,932 intervals on 4,998 meters flagged** → unusable without a guard | ❌ → ADR-006 | [spike_rule_measurement.txt](evidence/sprint_2/spike_rule_measurement.txt) |
+| TC-ANO-02 | FR-12, US-13 AC2 | full set + crafted | tamper meters flagged; whole-feeder zero not flagged | 3/3, 0 false positives; flat feeder F3 silent | ✅ | same |
+| TC-ANO-03 | FR-13, US-13 AC3 | full set + crafted | ≥ 30% missing for ≥ 2 intervals → OUTAGE; 20–25% → none | FDR-10, 8 intervals (102 meters); 20% control silent | ✅ | same |
+| TC-MUT-01 | test quality | set `tamper_peer_active_share: 0.0` | negative-control test fails | `1 failed` | ✅ | — |
+| TC-DBT-02 | all models | `dbt build` (full) | all pass | PASS=84 in 62 s | ✅ | [dbt_build.txt](evidence/sprint_2/dbt_build.txt) |
+| TC-ENV-04 (S2) | US-05 | `pytest tests --cov` | pass, ≥ 80% coverage | 44 passed, 90% | ✅ | [pytest.txt](evidence/sprint_2/pytest.txt) |
+| TC-PUB-01 | US-12 AC3 | publish marts → Postgres | tables in warehouse.marts | not run: no Postgres/Docker on host | ⏸ Blocked | — |
+
 ## Defect log
 | Defect ID | Found in | Severity | Description | Root cause | Fix | Re-test | Status |
 |---|---|---|---|---|---|---|---|
@@ -41,3 +62,6 @@
 | DEF-003 | TC-GEN-02 | Low | Generator test expected 10 off-grid events, got 11 | Test counted event lines; an injected event inside a gateway re-sent (`-r1`) file appears twice | Assert on distinct (meter_id, ts); same fix applied to the negative-value assertion | 31 passed | Closed |
 | DEF-004 | TC-ENV-03 (S1) | Low | `sqlfluff lint`: "'env_var' is undefined" on `stg_meter__readings_validated.sql` | sqlfluff jinja templater has no dbt `env_var` builtin (used by the `bronze_meter_readings` macro) | Stub `env_var` macro in `[tool.sqlfluff.templater.jinja.macros]` | 0 violations | Closed |
 | DEF-005 | Sprint 1 setup | Medium | Windows build host has no `make`, no `docker` CLI on PATH and no git identity | Build host changed from Ubuntu (Raja) to Windows (Sagar) | Repo-local git identity set; Makefile uses `.venv/Scripts` on Windows; make/Docker install pending | partial | Open |
+| DEF-006 | Sprint 2 push | High | `git push` → 403: `sagarkalthiya-sudo` has only read access to `rajareddy-maker/manthan-w2-b-team14` | Repo owned by Raja; Sagar is not a collaborator | Repo owner adds collaborator (Write) | pending | Open |
+| DEF-007 | TC-ANO-01b | High | Spike rule (z > 3 vs trailing 30 d) flags 4,998 of 5,000 meters | Daily load shape plus noise push normal peaks above 3σ; 3σ base rate on 3.4M intervals | ADR-006: add guard kWh ≥ 8 × trailing mean (proposed) | 5/5 found, 0 false positives | Fixed — pending PO approval of ADR-006 |
+| DEF-008 | Sprint 2 harness | Low | Crafted tests errored: "Can't open a connection to same database file with a different configuration" | In-process `dbtRunner` keeps the DuckDB connection open | Run dbt in a subprocess | 13 passed | Closed |

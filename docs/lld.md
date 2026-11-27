@@ -10,7 +10,7 @@ Legend: ✅ implemented and verified · ⬜ designed, built in a later sprint (s
 | C1 | Synthetic generator | `ingestion/generator/` | `python -m ingestion.generator --days 7 [--meters --seed --end-date --out --seeds-dir]` | ✅ US-07 |
 | C2 | Landing → bronze extractor + compaction | `ingestion/extractors/landing_to_bronze.py` | `python -m ingestion.extractors.landing_to_bronze --dt D \| --all \| --compact` | ✅ US-08 |
 | C3 | Retention | `ingestion/extractors/retention.py` | `--raw-days 30 --hourly-months 13` | ⬜ US-15 |
-| C4 | dbt project (staging → intermediate → marts) | `dbt_project/` | `dbt build --project-dir dbt_project --profiles-dir dbt_project` | ✅ staging + 1 mart · ⬜ rest US-10…13 |
+| C4 | dbt project (staging → intermediate → marts) | `dbt_project/` | `dbt build --project-dir dbt_project --profiles-dir dbt_project` | ✅ staging, intervals, marts, anomalies (US-10…13) |
 | C5 | GX checkpoints per layer | `data_quality/gx/run_checkpoint.py` | `--suite bronze\|silver\|gold` → exit ≠ 0 on failure | ⬜ US-14 |
 | C6 | Publish DuckDB marts → Postgres | `ingestion/publish/to_postgres.py` | full refresh of the window, one transaction per table | ⬜ US-12 |
 | C7 | Airflow DAGs | `airflow/dags/gridpulse_daily.py`, `gridpulse_backfill.py` | thin; call C2–C6 | ⬜ US-15 |
@@ -69,7 +69,7 @@ erDiagram
 
 **Quarantine reason codes** (first rule that fails wins): `invalid_json` → `unknown_schema` → `missing_or_unparseable_field` → `unknown_unit` → `negative_energy` → `off_grid` → `unknown_meter`.
 
-**`int_meter_intervals`** ⬜ US-11. One row per meter per 15-min grid slot in the window. The date spine runs from `var('window_start')` to `var('window_end')`.
+**`int_meter_intervals`** ✅ US-11. One row per meter per 15-min grid slot in the window. The date spine runs from `var('window_start')` to `var('window_end')`.
 
 | Column | Type | Rule |
 |---|---|---|
@@ -84,7 +84,7 @@ erDiagram
 | `delta_kwh` | decimal(18,4) | `register − prev`. If `status = ROLLOVER` and register < prev: `(register_max_kwh − prev) + register`. If register < prev otherwise: NULL with `dq_flag = 'register_decrease'`. For a gap slot: NULL, and the next received reading carries the whole delta once. |
 | `dq_flag` | varchar | |
 
-**Marts** ⬜ US-12/13 (all kWh columns are `decimal(18,4)`, suffix `_kwh`):
+**Marts** ✅ built in DuckDB (US-12/13); Postgres publish ⬜ blocked (all kWh columns are `decimal(18,4)`, suffix `_kwh`):
 
 | Model | Grain | Key columns | Published to Postgres |
 |---|---|---|---|
@@ -93,7 +93,7 @@ erDiagram
 | `mart_feeder_consumption_hourly` / `_daily` | feeder × hour/day | `consumption_kwh`, `meters_reporting` | Yes |
 | `mart_zone_consumption_daily` | zone × day | `consumption_kwh` | Yes |
 | `mart_billing_monthly` | meter × IST month | `billed_kwh`, `completeness_pct`, `gap_intervals`, `quality_flag` | Yes |
-| `mart_anomalies` | one row per detected event | `anomaly_type` ∈ {SPIKE, TAMPER, OUTAGE}, `meter_id` (NULL for OUTAGE), `feeder_id`, `start_ts`, `end_ts`, `metric_value`, `threshold`, `affected_meters` | Yes |
+| `mart_anomalies` ✅ | one row per detected event (spike rule per ADR-006) | `anomaly_type` ∈ {SPIKE, TAMPER, OUTAGE}, `meter_id` (NULL for OUTAGE), `feeder_id`, `start_ts`, `end_ts`, `metric_value`, `threshold`, `affected_meters` | Yes |
 | `mart_zone_completeness_daily` ✅ | zone × day | `completeness_pct`, `low_completeness_meter_days` | Yes |
 | `mart_feeder_voltage_daily` | feeder × day | `min/avg/max_voltage_v`, `meters_reporting` | Yes (Could, US-21) |
 
@@ -189,17 +189,24 @@ All other mart tables follow the same pattern: the grain columns form the primar
 |---|---|---|---|
 | DQ-1 meter in master | staging ✅ | `unknown_meter` reason | Quarantine |
 | DQ-2 energy ≥ 0 | staging ✅ | `negative_energy` reason | Quarantine |
-| DQ-3 register monotonic unless ROLLOVER | `int_meter_intervals` ⬜ | `dq_flag = register_decrease`, delta NULL | Row kept, excluded from sums, counted |
-| DQ-4 completeness ≥ 90% (87/96) | `fct_consumption_daily` ⬜, zone mart ✅ | `quality_flag = LOW_COMPLETENESS` | Flag + `ops.alerts` if a zone falls below 90% |
+| DQ-3 register monotonic unless ROLLOVER | `int_meter_intervals` ✅ | `dq_flag = register_decrease`, delta NULL | Row kept, excluded from sums, counted |
+| DQ-4 completeness ≥ 90% (87/96) | `fct_consumption_daily` ✅, zone mart ✅ | `quality_flag = LOW_COMPLETENESS` | Flag + `ops.alerts` if a zone falls below 90% |
 | Dedup key unique | staging ✅ | singular dbt test | dbt build fails |
 | Layer gates | GX ⬜ | bronze / silver / gold checkpoints | Downstream tasks skipped, alert raised |
-| Reconciliation | gold ⬜ | Σ hourly = Σ deltas per meter-day | Test fails |
+| Reconciliation | gold ✅ (singular dbt tests) | Σ hourly = Σ deltas per meter-day | Test fails |
 
 **Verified in Sprint 1** (`docs/evidence/sprint_1/staging_vs_manifest.txt`):
 - `bronze 3,392,136 = kept 3,347,177 + dups dropped 43,439 + quarantined 1,520`;
 - every injected defect class is caught in exactly the expected count.
 
-## 5. Known limitations (Sprint 1)
-- `mart_zone_completeness_daily` shows a partial edge day (2026-11-19, 1.04%). It is built only from the opening 00:00 reading.
-  - `int_meter_intervals` (US-11) introduces an explicit window date spine, which removes it.
-- Staging is a full rebuild. The 3-day incremental `delete+insert` (ADR-004) arrives with the DAG (US-15).
+## 5. Anomaly rules (as implemented, Sprint 2)
+| Type | Model | Rule (dbt vars) |
+|---|---|---|
+| SPIKE | `int_anomalies_spike_detected` | z > `spike_z_threshold` (3.0) vs trailing `spike_history_days` (30) with ≥ `spike_min_points` (96) clean intervals **and** kWh ≥ `spike_min_multiple` (8) × trailing mean (ADR-006, proposed). Consecutive intervals are merged into one event. |
+| TAMPER | `int_anomalies_tamper_detected` | Register flat for ≥ `tamper_zero_intervals` (192) slots, while ≥ `tamper_peer_active_share` (70%) of the other meters on the feeder have kWh > 0 in that window. A zero delta that spans gaps counts every slot it covers. |
+| OUTAGE | `int_anomalies_outage_detected` | ≥ `outage_missing_share` (30%) of the feeder's master meters are gaps in the same slot, for ≥ `outage_min_intervals` (2) consecutive slots. |
+
+## 6. Known limitations (Sprint 2)
+- Silver and gold are full rebuilds (about 60 s for 7 days). The 3-day incremental `delete+insert` (ADR-004) lands with the DAG (US-15).
+- Publishing to Postgres (C6) and the Superset contract are not built yet: there is no Postgres on the build host (DEF-002).
+- The Sprint 1 partial edge day is fixed: the grid window now starts at the first reading's IST date.

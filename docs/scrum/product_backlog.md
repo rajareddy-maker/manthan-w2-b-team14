@@ -160,7 +160,7 @@ As a data engineer, I want an LLD (components, data model, interfaces) and a wal
 
 ## US-10: Staging — kWh, IST, dedup, ordering
 **Epic:** E3 Normalisation & consumption **Req IDs:** FR-04, FR-05, FR-06, NFR-12
-**Priority:** Must **Points:** 5 **Sprint:** S2 **Owner:** Shantanu Kale **Status:** In progress
+**Priority:** Must **Points:** 5 **Sprint:** S2 **Owner:** Shantanu Kale **Status:** In review
 
 **Story**
 As an analyst, I want events normalised to kWh in IST with duplicates removed and readings ordered, so that every downstream number is consistent.
@@ -172,7 +172,7 @@ As an analyst, I want events normalised to kWh in IST with duplicates removed an
 
 ## US-11: Interval grid, gaps and register deltas
 **Epic:** E3 Normalisation & consumption **Req IDs:** FR-07, FR-21
-**Priority:** Must **Points:** 5 **Sprint:** S2 **Owner:** Shantanu Kale **Status:** To do
+**Priority:** Must **Points:** 5 **Sprint:** S2 **Owner:** Shantanu Kale **Status:** In review
 
 **Story**
 As a billing analyst, I want each meter's 15-min grid with gaps marked and consumption derived from register deltas, so that missing data is visible and never invented.
@@ -183,7 +183,7 @@ As a billing analyst, I want each meter's 15-min grid with gaps marked and consu
 
 ## US-12: Consumption marts and publish to Postgres
 **Epic:** E3 Normalisation & consumption **Req IDs:** FR-08, FR-09, FR-10, NFR-11
-**Priority:** Must **Points:** 8 **Sprint:** S2 **Owner:** Shantanu Kale **Status:** To do
+**Priority:** Must **Points:** 8 **Sprint:** S2 **Owner:** Shantanu Kale **Status:** In progress
 
 **Story**
 As a billing analyst / network engineer, I want hourly and daily kWh per meter, feeder and zone plus a monthly billing table, so that I can bill and monitor load from ready tables.
@@ -195,7 +195,7 @@ As a billing analyst / network engineer, I want hourly and daily kWh per meter, 
 
 ## US-13: Anomaly detection — spike, tamper, outage
 **Epic:** E4 Anomalies, quality & orchestration **Req IDs:** FR-11, FR-12, FR-13
-**Priority:** Must **Points:** 8 **Sprint:** S2 **Owner:** Rituja Kekatpure **Status:** To do
+**Priority:** Must **Points:** 8 **Sprint:** S2 **Owner:** Rituja Kekatpure **Status:** In review
 
 **Story**
 As a revenue-protection / ops engineer, I want spike, suspected-tamper and outage flags, so that problems are found before customers complain.
