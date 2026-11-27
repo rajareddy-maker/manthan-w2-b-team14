@@ -189,3 +189,16 @@ def test_different_seed_differs(tmp_path: Path) -> None:
     run(b)
     assert _digest(a.out_dir) != _digest(b.out_dir)
     assert (a.out_dir / MANIFEST_NAME).exists()
+
+
+def test_install_dates_do_not_depend_on_wall_clock(tmp_path: Path) -> None:
+    # DEF-012: install dates must be a pure function of (seed, end_date), not of "now".
+    from ingestion.generator.topology import build_topology
+
+    cfg = small_cfg(tmp_path)
+    dates = build_topology(cfg).install_dates
+    assert dates == build_topology(cfg).install_dates
+    lo, hi = date(END.year - 8, END.month, END.day), date(END.year - 1, END.month, END.day)
+    assert all(lo <= date.fromisoformat(d) <= hi for d in dates)
+    leap = GeneratorConfig(meters=6, feeders=3, zones=1, days=1, end_date=date(2028, 2, 29))
+    assert len(build_topology(leap).install_dates) == 6

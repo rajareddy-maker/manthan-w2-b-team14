@@ -12,7 +12,7 @@ Legend: ✅ implemented and verified · ⬜ designed, built in a later sprint (s
 | C3 | Retention | `ingestion/extractors/retention.py` | `--raw-days 30 --hourly-months 13` | ⬜ US-15 |
 | C4 | dbt project (staging → intermediate → marts) | `dbt_project/` | `dbt build --project-dir dbt_project --profiles-dir dbt_project` | ✅ staging, intervals, marts, anomalies (US-10…13) |
 | C5 | GX checkpoints per layer | `data_quality/gx/run_checkpoint.py` | `--suite bronze\|silver\|gold` → exit ≠ 0 on failure | ⬜ US-14 |
-| C6 | Publish DuckDB marts → Postgres | `ingestion/publish/to_postgres.py` | full refresh of the window, one transaction per table | ⬜ US-12 |
+| C6 | Publish DuckDB marts → Postgres | `ingestion/publish/to_postgres.py` | load table + atomic `DO` swap + PK per table, row/kWh reconciliation | ✅ US-23 |
 | C7 | Airflow DAGs | `airflow/dags/gridpulse_daily.py`, `gridpulse_backfill.py` | thin; call C2–C6 | ⬜ US-15 |
 | C8 | Ops metrics + alerts | `ingestion/ops/metrics.py` | writes `ops.pipeline_runs`, `ops.alerts` | ⬜ US-19 |
 | C9 | Superset dashboard as code | `superset/` | imported by `superset_init.sh` | ⬜ US-16 |

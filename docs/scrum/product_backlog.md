@@ -78,7 +78,7 @@ As a data engineer, I want a system check script, so that I know my machine can 
 
 ## US-04: Full stack in Docker Compose
 **Epic:** E1 Inception & setup **Req IDs:** FR-27
-**Priority:** Must **Points:** 8 **Sprint:** S0 **Owner:** Raja Rao Reddy **Status:** In progress
+**Priority:** Must **Points:** 8 **Sprint:** S0 **Owner:** Raja Rao Reddy **Status:** In review
 
 **Story**
 As a data engineer, I want the full stack in Docker Compose, so that every tool runs locally.
@@ -308,7 +308,7 @@ As the PO, I want a retrospective, known limitations, future roadmap and a confi
 
 ## US-23: Publish marts to Postgres and show them in Superset (walking-skeleton serving leg)
 **Epic:** E3 Normalisation & consumption **Req IDs:** FR-08, FR-09, FR-10, FR-18, FR-27
-**Priority:** Must **Points:** 7 **Sprint:** S3 **Owner:** Raja Rao Reddy **Status:** In progress
+**Priority:** Must **Points:** 7 **Sprint:** S3 **Owner:** Raja Rao Reddy **Status:** In review
 
 **Story**
 As a billing analyst / network engineer, I want the DuckDB marts published to the Postgres warehouse and visible in Superset, so that I can query and chart them without touching the lake.
@@ -321,8 +321,8 @@ As a billing analyst / network engineer, I want the DuckDB marts published to th
 **Tasks**
 | Task | Estimate (h) | Status |
 |------|--------------|--------|
-| Stack up on the Windows host (Docker Desktop), smoke test | 1.0 | In progress |
-| `ingestion/publish/to_postgres.py` (DuckDB postgres extension) + tests | 1.0 | To do |
-| Superset dataset + first chart | 0.5 | To do |
+| Stack up on the Windows host (Docker Desktop), smoke test | 1.0 | Done |
+| `ingestion/publish/to_postgres.py` (DuckDB postgres extension) + tests | 1.0 | Done |
+| Superset dataset + first chart | 0.5 | Done |
 
 (Split 27-Nov-2026 from US-12 AC3 (3 pts) and US-09 AC2 (4 pts); backlog total unchanged at 111 pts.)

@@ -1,6 +1,6 @@
 # Requirements Traceability Matrix (RTM)
 
-Status: **updated Sprint 2**. Design/Code/Test columns are filled as stories complete. Test status: ⬜ not run · ✅ pass · ❌ fail.
+Status: **updated Sprint 3 (stack + US-23)**. Design/Code/Test columns are filled as stories complete. Test status: ⬜ not run · ✅ pass · ❌ fail.
 
 | Req ID | Story | Design (LLD section) | Code (repo path) | Test case(s) | Status |
 |---|---|---|---|---|---|
@@ -30,7 +30,7 @@ Status: **updated Sprint 2**. Design/Code/Test columns are filled as stories com
 | FR-24 | US-19 | LLD monitoring | ops schema + DAG callbacks | TC-OPS-01 | ⬜ |
 | FR-25 | US-19 | LLD monitoring | airflow/dags/ alert task | TC-OPS-02 | ⬜ |
 | FR-26 | US-20 | docs/runbook.md | scripts/ | TC-OPS-03 (backfill + rollback drill) | ⬜ |
-| FR-27 | US-04, US-18 | docs/architecture.md | docker-compose.yml, .github/workflows | TC-DEP-01 (clean start) | ⬜ |
+| FR-27 | US-04, US-18 | docs/architecture.md | docker-compose.yml, .github/workflows | TC-DEP-01 (clean start) | 🟡 stack + smoke + in-Docker pipeline ✅ (TC-ENV-07/08, TC-PIPE-01); CI + `make demo` in S4 |
 | FR-28 | US-06 | ADR-004, ADR-005 | — | review (ADR-004, ADR-005 written) | ✅ |
 | FR-29 | US-14 | LLD DQ design | dbt_project/models/ quarantine | TC-DQ-05 | ✅ |
 | FR-30 | US-21 | LLD §2 | dbt_project/models/marts/ | TC-UAT-30 | ⬜ |

@@ -69,8 +69,13 @@ def build_topology(cfg: GeneratorConfig) -> Topology:
     unit_kwh = is_v2 & (rng.random(cfg.meters) < cfg.v2_kwh_share)
     fw_idx = rng.integers(0, len(FIRMWARE_VERSIONS), cfg.meters)
     firmware = [FIRMWARE_VERSIONS[i] if v2 else "" for i, v2 in zip(fw_idx, is_v2, strict=True)]
+    # Anchor to the config, never the wall clock: "-8y"/"-1y" strings are relative to *now* and
+    # broke determinism across runs (DEF-012).
+    anchor = cfg.end_date.replace(day=min(cfg.end_date.day, 28))  # 29-Feb safe
+    oldest = anchor.replace(year=anchor.year - 8)
+    newest = anchor.replace(year=anchor.year - 1)
     install_dates = [
-        fake.date_between(start_date="-8y", end_date="-1y").isoformat() for _ in meter_ids
+        fake.date_between(start_date=oldest, end_date=newest).isoformat() for _ in meter_ids
     ]
     return Topology(
         zone_ids=zone_ids,
