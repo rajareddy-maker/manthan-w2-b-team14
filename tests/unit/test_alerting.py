@@ -48,3 +48,37 @@ def test_callback_records_and_never_raises(monkeypatch: pytest.MonkeyPatch) -> N
 
     monkeypatch.setattr(alerting, "_write", broken)
     alerting.on_failure(ctx())  # must not raise: the task failure stays the reported error
+
+
+def test_email_sent_via_smtp_when_configured(monkeypatch: pytest.MonkeyPatch) -> None:
+    sent: dict = {}
+
+    class FakeSMTP:
+        def __init__(self, host: str, port: int, timeout: int) -> None:
+            sent["server"] = (host, port)
+
+        def __enter__(self):  # noqa: ANN204
+            return self
+
+        def __exit__(self, *exc: object) -> None:
+            return None
+
+        def starttls(self) -> None:
+            sent["tls"] = True
+
+        def login(self, user: str, password: str) -> None:
+            sent["user"] = user
+
+        def send_message(self, msg) -> None:  # noqa: ANN001
+            sent["to"], sent["subject"], sent["body"] = msg["To"], msg["Subject"], msg.get_content()
+
+    monkeypatch.setattr(alerting.smtplib, "SMTP", FakeSMTP)
+    monkeypatch.setenv("SMTP_HOST", "smtp.office365.com")
+    monkeypatch.setenv("SMTP_USER", "alerts@example.com")
+    monkeypatch.setenv("SMTP_PASSWORD", "x")
+    alert = alerting.build_alert(ctx(), "sagar.kalthiya@nucleusteq.com")
+    assert alerting._email(alert, "sagar.kalthiya@nucleusteq.com") is True
+    assert sent["server"] == ("smtp.office365.com", 587) and sent["tls"]
+    assert sent["to"] == "sagar.kalthiya@nucleusteq.com"
+    assert sent["subject"] == "[GridPulse CRITICAL] gridpulse_daily.dbt_build failed"
+    assert "boom" in sent["body"]
