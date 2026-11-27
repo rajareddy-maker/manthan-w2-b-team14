@@ -102,3 +102,13 @@ models:
         data_tests: [not_null]
       - name: start_ts
         data_tests: [not_null]
+
+  - name: mart_feeder_voltage_daily
+    description: Min / avg / max voltage and reporting v2 meters per feeder per IST day (FR-30).
+    columns:
+      - name: feeder_id
+        data_tests: [not_null]
+      - name: interval_date_ist
+        data_tests: [not_null]
+      - name: meters_reporting
+        data_tests: [not_null]

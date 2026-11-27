@@ -31,6 +31,7 @@ PUBLISHED: dict[str, tuple[tuple[str, ...], str | None]] = {
     "mart_zone_completeness_daily": (("zone_id", "interval_date_ist"), None),
     "mart_billing_monthly": (("billing_month_ist", "meter_id"), "billed_kwh"),
     "mart_anomalies": (("anomaly_id",), None),
+    "mart_feeder_voltage_daily": (("feeder_id", "interval_date_ist"), None),
 }
 SOURCE_SCHEMA = "lake.main_marts"
 TARGET_SCHEMA = "marts"

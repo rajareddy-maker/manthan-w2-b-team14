@@ -2,7 +2,8 @@
 
 gridpulse_daily     01:30 IST. Logical date D = yesterday in IST (override: conf logical_date_ist).
                     Reloads landing [D-3, D+1] into bronze (ADR-004 lookback), dbt build,
-                    publish to Postgres, ops metrics + alerts, retention.
+                    GX gates (silver + gold; failure blocks publish), publish to Postgres,
+                    ops metrics + alerts, retention.
 gridpulse_backfill  manual, params start/end (IST dates): same tasks over the range.
 """
 
@@ -48,6 +49,10 @@ def build(dag: DAG, start: str, end: str, lookback: str, load_from: str, load_to
             + f"{DBT} build --project-dir dbt_project --profiles-dir dbt_project --no-use-colors",
             execution_timeout=pendulum.duration(minutes=30),
         )
+        gx_gates = BashOperator(
+            task_id="gx_gates",
+            bash_command=CD + f"{PY} data_quality/gx/run_checkpoint.py --suite silver --suite gold",
+        )
         publish = BashOperator(
             task_id="publish_postgres",
             bash_command=CD + f"{PY} -m ingestion.publish.to_postgres",
@@ -64,7 +69,7 @@ def build(dag: DAG, start: str, end: str, lookback: str, load_from: str, load_to
             task_id="retention",
             bash_command=CD + f"{PY} -m ingestion.extractors.retention --reference {{{{ {end} }}}}",
         )
-        ingest >> dbt_build >> publish >> ops >> retention
+        ingest >> dbt_build >> gx_gates >> publish >> ops >> retention
 
 
 LOGICAL = (

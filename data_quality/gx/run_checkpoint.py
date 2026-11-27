@@ -12,9 +12,11 @@ from __future__ import annotations
 
 import argparse
 import logging
+import os
 import sys
 from pathlib import Path
 
+import duckdb
 import great_expectations as gx
 import pandas as pd
 
@@ -37,7 +39,60 @@ def sample_suite() -> tuple[pd.DataFrame, list[gx.expectations.Expectation]]:
     return df, expectations
 
 
-SUITES = {"sample": sample_suite}
+def _lake(sql: str) -> pd.DataFrame:
+    path = os.environ.get("DUCKDB_PATH", str(ROOT / "data/warehouse/gridpulse.duckdb"))
+    con = duckdb.connect(path, read_only=True)
+    try:
+        return con.execute(sql).df()
+    finally:
+        con.close()
+
+
+def silver_suite() -> tuple[pd.DataFrame, list[gx.expectations.Expectation]]:
+    """Gate before publish: daily meter facts (DQ-2/3/4 outcomes, grain uniqueness)."""
+    df = _lake(
+        "select meter_id, interval_date_ist, consumption_kwh::double as consumption_kwh, "
+        "completeness_pct::double as completeness_pct, quality_flag "
+        "from main_marts.fct_consumption_daily"
+    )
+    expectations = [
+        gx.expectations.ExpectTableRowCountToBeBetween(min_value=1),
+        gx.expectations.ExpectColumnValuesToNotBeNull(column="meter_id"),
+        gx.expectations.ExpectColumnValuesToBeBetween(column="consumption_kwh", min_value=0),
+        gx.expectations.ExpectColumnValuesToBeBetween(
+            column="completeness_pct", min_value=0, max_value=100
+        ),
+        gx.expectations.ExpectColumnValuesToBeInSet(
+            column="quality_flag", value_set=["OK", "LOW_COMPLETENESS"]
+        ),
+        gx.expectations.ExpectCompoundColumnsToBeUnique(
+            column_list=["meter_id", "interval_date_ist"]
+        ),
+    ]
+    return df, expectations
+
+
+def gold_suite() -> tuple[pd.DataFrame, list[gx.expectations.Expectation]]:
+    """Gate before publish: billing table is complete, non-negative and one row per meter-month."""
+    df = _lake(
+        "select billing_month_ist, meter_id, billed_kwh::double as billed_kwh, quality_flag "
+        "from main_marts.mart_billing_monthly"
+    )
+    expectations = [
+        gx.expectations.ExpectTableRowCountToBeBetween(min_value=1),
+        gx.expectations.ExpectColumnValuesToNotBeNull(column="billed_kwh"),
+        gx.expectations.ExpectColumnValuesToBeBetween(column="billed_kwh", min_value=0),
+        gx.expectations.ExpectColumnValuesToBeInSet(
+            column="quality_flag", value_set=["OK", "LOW_COMPLETENESS", "REGISTER_DECREASE"]
+        ),
+        gx.expectations.ExpectCompoundColumnsToBeUnique(
+            column_list=["billing_month_ist", "meter_id"]
+        ),
+    ]
+    return df, expectations
+
+
+SUITES = {"sample": sample_suite, "silver": silver_suite, "gold": gold_suite}
 
 
 def run(suite_name: str) -> bool:
@@ -77,8 +132,8 @@ def main() -> None:
     for noisy in ("great_expectations", "py.warnings"):
         logging.getLogger(noisy).setLevel(logging.ERROR)
     parser = argparse.ArgumentParser()
-    parser.add_argument("--suite", choices=sorted(SUITES), default="sample")
-    ok = run(parser.parse_args().suite)
+    parser.add_argument("--suite", choices=sorted(SUITES), action="append")
+    ok = all([run(name) for name in parser.parse_args().suite or ["sample"]])
     print(f"GX checkpoint {'PASSED' if ok else 'FAILED'}")
     sys.exit(0 if ok else 1)
 
