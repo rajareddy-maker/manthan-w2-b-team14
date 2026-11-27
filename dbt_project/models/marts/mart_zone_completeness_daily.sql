@@ -1,52 +1,24 @@
 -- Completeness % per zone per IST day (dashboard KPI, FR-18 / FR-22).
--- expected = meters in master x 96; received = distinct valid on-grid intervals.
+-- expected = every master meter x 96 slots; silent meters count as missing.
 
-with meters as (
-    select
-        z.zone_id,
-        z.zone_name,
-        count(m.meter_id) as meters_in_master
-    from {{ ref('feeder_zone') }} as z
-    inner join {{ ref('meter_master') }} as m on z.feeder_id = m.feeder_id
-    group by z.zone_id, z.zone_name
-),
-
-per_meter_day as (
-    select
+with zones as (
+    select distinct
         zone_id,
-        interval_date_ist,
-        meter_id,
-        count(*) as intervals_received
-    from {{ ref('stg_meter__readings') }}
-    group by zone_id, interval_date_ist, meter_id
-),
-
-per_zone_day as (
-    select
-        zone_id,
-        interval_date_ist,
-        count(*) as meters_reporting,
-        sum(intervals_received) as intervals_received,
-        count(*) filter (
-            where intervals_received
-            < {{ var('intervals_per_day') }} * {{ var('completeness_threshold') }}
-        ) as low_completeness_reporting_meters
-    from per_meter_day
-    group by zone_id, interval_date_ist
+        zone_name
+    from {{ ref('feeder_zone') }}
 )
 
 select
     d.interval_date_ist,
-    m.zone_id,
-    m.zone_name,
-    m.meters_in_master,
-    d.meters_reporting,
-    m.meters_in_master * {{ var('intervals_per_day') }} as intervals_expected,
-    d.intervals_received,
-    round(
-        100.0 * d.intervals_received / (m.meters_in_master * {{ var('intervals_per_day') }}), 2
-    )::decimal(6, 2) as completeness_pct,
-    d.low_completeness_reporting_meters
-    + (m.meters_in_master - d.meters_reporting) as low_completeness_meter_days
-from per_zone_day as d
-inner join meters as m on d.zone_id = m.zone_id
+    d.zone_id,
+    z.zone_name,
+    count(*) as meters_in_master,
+    count(*) filter (where d.intervals_received > 0) as meters_reporting,
+    sum(d.intervals_expected) as intervals_expected,
+    sum(d.intervals_received) as intervals_received,
+    round(100.0 * sum(d.intervals_received) / sum(d.intervals_expected), 2)::decimal(6, 2)
+        as completeness_pct,
+    count(*) filter (where d.quality_flag = 'LOW_COMPLETENESS') as low_completeness_meter_days
+from {{ ref('fct_consumption_daily') }} as d
+inner join zones as z on d.zone_id = z.zone_id
+group by d.interval_date_ist, d.zone_id, z.zone_name
