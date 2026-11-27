@@ -25,7 +25,7 @@ DEFAULTS = {
     "retries": 2,
     "retry_delay": pendulum.duration(minutes=2),
     "pool": "duckdb",
-    "on_failure_callback": on_failure,  # ops.alerts CRITICAL + ALERT_EMAIL (US-26)
+    "on_failure_callback": on_failure,  # ops.alerts CRITICAL + ALERT_EMAIL (US-19)
 }
 
 

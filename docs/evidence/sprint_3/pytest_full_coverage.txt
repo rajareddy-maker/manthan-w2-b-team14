@@ -1,0 +1,28 @@
+........................................................................ [100%]
+=============================== tests coverage ================================
+_______________ coverage: platform win32, python 3.14.5-final-0 _______________
+
+Name                                        Stmts   Miss  Cover
+---------------------------------------------------------------
+ingestion\__init__.py                           0      0   100%
+ingestion\extractors\__init__.py                0      0   100%
+ingestion\extractors\landing_to_bronze.py     125      7    94%
+ingestion\extractors\retention.py              38      1    97%
+ingestion\generator\__init__.py                 0      0   100%
+ingestion\generator\__main__.py                36      1    97%
+ingestion\generator\config.py                  66      0   100%
+ingestion\generator\simulate.py               141      0   100%
+ingestion\generator\topology.py                65      0   100%
+ingestion\generator\writer.py                 136      0   100%
+ingestion\ops\__init__.py                       0      0   100%
+ingestion\ops\alerting.py                      55     11    80%
+ingestion\ops\metrics.py                       51      1    98%
+ingestion\publish\__init__.py                   0      0   100%
+ingestion\publish\to_postgres.py               78      7    91%
+scripts\export_backlog.py                      98     18    82%
+scripts\superset_dashboard.py                  83      5    94%
+scripts\superset_first_chart.py                75      5    93%
+---------------------------------------------------------------
+TOTAL                                        1047     56    95%
+Coverage XML written to file docs/evidence/sprint_3/coverage.xml
+72 passed in 101.23s (0:01:41)

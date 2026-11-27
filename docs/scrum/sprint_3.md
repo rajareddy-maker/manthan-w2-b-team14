@@ -33,8 +33,16 @@ Host: Sagar's Windows 11 laptop.
 ## Sprint review
 | Story ID | Demo evidence | Accepted? | Notes |
 |----------|---------------|-----------|-------|
-| US-04 | evidence/sprint_3/compose_up.txt, smoke_test.txt (9/9) | pending PO | Pinned images, healthchecks and memory limits; ~1.05 GB in use |
-| US-23 | evidence/sprint_3/pipeline_in_docker.txt, superset_first_chart.txt, superset_chart_after_republish.txt | pending PO | 7/7 marts reconciled (445,848.1140 kWh); idempotent re-publish; chart reads via `bi_reader` |
+| US-04 | evidence/sprint_3/compose_up.txt, smoke_test.txt (9/9) | Yes | Carried from S0 |
+| US-23 | pipeline_in_docker.txt, superset_first_chart.txt | Yes | 8 marts reconciled |
+| US-14 | runbook_backfill_drill.txt (`gx_gates` silver 6/6, gold 5/5); unit test blocks negative energy | Yes | |
+| US-15 | airflow_backfill_run.txt (174 s), airflow_daily_run.txt (scheduled + manual) | Yes | |
+| US-16 | superset_dashboard.txt (4 tabs, 9 charts) | Yes | |
+| US-17 | docs/test_plan.md, test_results.md execution summary, pytest_full_coverage.txt (95%) | Yes | |
+
+**Completed:** 41 pts (US-04 8 + US-14 5 + US-15 5 + US-16 8 + US-17 8 + US-23 7) **Carried over:** none
+
+**PO decision (Sprint 3 review):** APPROVED — relayed by Sagar Kalthiya on behalf of Mahendra Umath (PO), 27-Nov-2026.
 
 ## Impediments / RAID updates
 | Type (R/A/I/D) | Description | Owner | Status |

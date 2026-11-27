@@ -55,10 +55,10 @@ The remaining 7 points are US-12 AC3 (publish, about 3 pts) and US-09 AC2 (4 pts
 ## Sprint review
 | Story ID | Demo evidence | Accepted? | Notes |
 |----------|---------------|-----------|-------|
-| US-10 | evidence/sprint_2/pytest_dbt_crafted.txt (AC1–AC3 tests); sprint_1/staging_vs_manifest.txt | pending PO | 1500 Wh = 1.5 kWh = 1500 Wh (v2) → 1.5000; triplicate → 1 kept, 2 counted; reversed files → no false decreases |
-| US-11 | evidence/sprint_2/intervals_vs_manifest.txt; crafted tests | pending PO | 3,360,000 grid rows; 3 gaps → gap_intervals = 3; ROLLOVER delta correct; register_decrease meters = manifest (3/3) |
-| US-12 | evidence/sprint_2/dbt_build.txt (PASS=84) | AC1–AC2 pending PO; AC3 blocked | Σ hourly = Σ staging deltas exactly; feeder = zone = billing = meter totals |
-| US-13 | evidence/sprint_2/anomalies_vs_manifest.txt, spike_rule_measurement.txt; ADR-006 | pending PO (ADR-006 accepted) | 5/5 spike, 3/3 tamper, 1/1 outage, 0 false positives; negative controls silent |
+| US-10 | evidence/sprint_2/pytest_dbt_crafted.txt (AC1–AC3 tests); sprint_1/staging_vs_manifest.txt | Yes | 1500 Wh = 1.5 kWh = 1500 Wh (v2) → 1.5000; triplicate → 1 kept, 2 counted; reversed files → no false decreases |
+| US-11 | evidence/sprint_2/intervals_vs_manifest.txt; crafted tests | Yes | 3,360,000 grid rows; 3 gaps → gap_intervals = 3; ROLLOVER delta correct; register_decrease meters = manifest (3/3) |
+| US-12 | evidence/sprint_2/dbt_build.txt (PASS=84) | Yes (AC3 moved to US-23) | Σ hourly = Σ staging deltas exactly; feeder = zone = billing = meter totals |
+| US-13 | evidence/sprint_2/anomalies_vs_manifest.txt, spike_rule_measurement.txt; ADR-006 | Yes | 5/5 spike, 3/3 tamper, 1/1 outage, 0 false positives; negative controls silent |
 
 **Completed:** 18 of 26 pts in review (US-10, US-11, US-13). US-12 is in progress (AC3 blocked). **Carried over:** US-12 AC3 + US-09 AC2.
 
@@ -86,3 +86,5 @@ The remaining 7 points are US-12 AC3 (publish, about 3 pts) and US-09 AC2 (4 pts
 | I | DEF-006: push refused, `sagarkalthiya-sudo` lacks write access to `rajareddy-maker/manthan-w2-b-team14` | Raja Rao Reddy | Open |
 | D | ADR-006 spike magnitude guard (8× trailing mean) | Mahendra Umath | Accepted |
 | R | S3 holds DQ gates, DAG, dashboard and test plan, but the stack is still not running. Risk to the S3 goal. | Mahendra Umath | Open: escalate if Docker isn't up at S3 start |
+
+**PO decision (Sprint 2 review):** APPROVED — relayed by Sagar Kalthiya on behalf of Mahendra Umath (PO), 27-Nov-2026. Accepted: US-10, US-11, US-12 (5 pts after split), US-13 = 23 pts.

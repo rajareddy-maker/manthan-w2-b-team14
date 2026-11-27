@@ -20,19 +20,21 @@
 | One-command demo (`scripts/demo.sh`, in place) | 1 | 1 | 0 | 0 | 0 | [demo_run.txt](evidence/sprint_3/demo_run.txt) — 658 s |
 | Performance 10× (70 days) | 0 | 0 | 0 | 0 | 1 (not run, time-box) | — |
 
-**Python coverage: 70%** (992 statements). Ingestion/generator modules: 76–100%. The Superset API scripts (0%), publish (42%) and ops metrics (29%) are exercised by the Docker E2E runs, not by unit tests.
+**Python coverage: 95%** on the full suite: `pytest tests/unit tests/integration -m "not e2e"`, 72 passed, 1,047 statements ([pytest_full_coverage.txt](evidence/sprint_3/pytest_full_coverage.txt)). It includes stack integration tests that publish to a scratch schema `marts_test`, write and clean up `ops` rows, and rebuild the Superset dashboard.
+
+**Unit-only coverage (the CI view, no stack): 73%** (53 passed; [pytest_unit_only_coverage.txt](evidence/sprint_3/pytest_unit_only_coverage.txt)). The first measurement was 70%; DEF-014 records the fix.
 
 ### Exit criteria (from test_plan.md)
 | Criterion | Status |
 |---|---|
 | 100% of Must FRs have a passing test | Not met — see RTM (built FR-15…18, 24–27, 30 have run evidence; RTM rows not all updated) |
-| ≥ 80% Python coverage | **Not met** — 70% |
+| ≥ 80% Python coverage | **Met** — 95% full suite (unit-only 73%) |
 | Zero open Critical/High defects | **Met** — DEF-001…013 all Closed |
 | Every Medium defect triaged | **Met** |
 | 7-day run within SLA (≤ 15 min per day of data) | **Met** — 7-day backfill 174–225 s |
 | 10× performance run recorded | Not met — not run |
 | CI green on PR | Not met — `ci.yml`/`cd.yml` written, push blocked (token lacks `workflow` scope) |
-| UAT signed off by PO | Not met — S2/S3 stories await acceptance |
+| UAT signed off by PO | **Met for S0–S3** (96/111 pts accepted, 27-Nov-2026); US-18…22 in review |
 
 ## Executed so far (Sprint 0)
 | Test case | Requirement | Command | Expected | Actual | Status | Evidence |
@@ -115,3 +117,4 @@
 | DEF-011 | TC-ENV-08 | Low | `docker compose exec … /opt/...` args mangled to `C:/Program Files/Git/opt/...` | Git Bash MSYS path conversion | `export MSYS_NO_PATHCONV=1` in container-exec scripts | 9/9 | Closed |
 | DEF-012 | TC-PIPE-01 | Medium | Re-running the generator later the same day changed `install_date` in `meter_master.csv` (all other columns identical) | `fake.date_between("-8y", "-1y")` is relative to the wall clock; the S1 determinism test ran both runs within seconds | Anchor the range to `cfg.end_date` (29-Feb safe); regression test `test_install_dates_do_not_depend_on_wall_clock` | 12 generator tests pass; double run in Docker hash-identical (see pipeline_in_docker.txt) | Closed |
 | DEF-013 | Final demo run | Medium | Image builds slow (step 2 of demo took ~2.5 min with cached layers) | No `.dockerignore`: every build sent `data/` (1.3 GB) and `.venv` as build context | Added `.dockerignore` (images only need `infra/` + requirements) | next build | Closed |
+| DEF-014 | Exit criteria | Medium | Python coverage 70% < 80% target | Publish, ops metrics and Superset scripts only ran in Docker E2E, not under pytest | Stack integration tests (`tests/integration/test_stack_integration.py`, skip when the stack is down) + CLI unit tests; publish target schema configurable (`PUBLISH_SCHEMA`) | 95% full suite, 72 passed | Closed |

@@ -1,4 +1,4 @@
-"""Airflow task-failure alerting (US-26, FR-25).
+"""Airflow task-failure alerting (US-19, FR-25).
 
 ``on_failure`` is the ``on_failure_callback`` of every GridPulse DAG. It runs after a task's
 last retry fails and:
