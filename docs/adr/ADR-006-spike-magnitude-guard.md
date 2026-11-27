@@ -1,7 +1,7 @@
 # ADR-006: Spike detection needs a magnitude guard on top of z > 3
 
-- **Status:** Proposed (Sprint 2, 27-Nov-2026) · **Deciders:** Mahendra Umath (PO), Rituja Kekatpure, Sagar Kalthiya
-- **Req IDs:** FR-11, US-13 AC1 · **Changes:** CLAUDE.md anomaly default "Spike" (needs PO approval)
+- **Status:** Accepted (relayed by Sagar Kalthiya on behalf of Mahendra Umath (PO), 27-Nov-2026) · **Deciders:** Mahendra Umath (PO), Rituja Kekatpure, Sagar Kalthiya
+- **Req IDs:** FR-11, US-13 AC1 · **Changes:** CLAUDE.md anomaly default "Spike"
 
 ## Context
 - The default rule is: interval kWh z-score > 3.0 against the meter's trailing 30 days, with at least 96 points.
@@ -38,4 +38,4 @@ For the crafted spikes, the lowest z is 17.8 and the lowest ratio is 14.1.
 
 ## Consequences
 - Small spikes (2–7× normal) are not flagged. That class belongs to the planned daily-level consumption-shift detector (roadmap), not interval spikes.
-- When this ADR is approved, the CLAUDE.md anomaly default line is updated to match.
+- CLAUDE.md anomaly default line updated to match (on acceptance).

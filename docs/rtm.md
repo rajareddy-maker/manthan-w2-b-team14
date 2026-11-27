@@ -14,7 +14,7 @@ Status: **updated Sprint 2**. Design/Code/Test columns are filled as stories com
 | FR-08 | US-12 | LLD §2 fct_consumption_hourly/daily | dbt_project/models/marts/ | TC-REC-01 (reconcile to raw) | ✅ |
 | FR-09 | US-12 | LLD §2 mart_feeder/zone_daily | dbt_project/models/marts/ | TC-REC-02 | ✅ |
 | FR-10 | US-12 | LLD §2 mart_billing_monthly | dbt_project/models/marts/ | TC-BILL-01 | ✅ |
-| FR-11 | US-13 | LLD §5 anomaly rules, ADR-006 (proposed) | dbt_project/models/marts/ | TC-ANO-01 (spike) | ✅ |
+| FR-11 | US-13 | LLD §5 anomaly rules, ADR-006 | dbt_project/models/marts/ | TC-ANO-01 (spike) | ✅ |
 | FR-12 | US-13 | LLD §5 anomaly rules | dbt_project/models/marts/ | TC-ANO-02 (tamper) | ✅ |
 | FR-13 | US-13 | LLD §5 anomaly rules | dbt_project/models/marts/ | TC-ANO-03 (outage) | ✅ |
 | FR-14 | US-08, US-06 | ADR-003 | ingestion/extractors/landing_to_bronze.py (compact_partition) | TC-STO-01 | ✅ |

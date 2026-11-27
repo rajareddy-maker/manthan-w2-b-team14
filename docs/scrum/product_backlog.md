@@ -17,9 +17,9 @@ Points: Fibonacci. Stories > 8 pts are split at refinement. Excel export: `make 
 | Sprint | Time (IST) | SDLC phases | Goal | Stories | Pts |
 |---|---|---|---|---|---|
 | S0 | 10:00–10:40 | 0, 1 | Requirements, ideation, backlog in Excel, stack running locally | US-01…US-05 | 21 |
-| S1 | 10:40–11:20 | 2, 3 | Architecture + LLD signed off; walking skeleton via `make demo` | US-06…US-09 | 23 |
-| S2 | 11:20–13:00 | 4 | Normalised intervals, consumption marts, anomaly flags | US-10…US-13 | 26 |
-| S3 | 13:00–14:10 | 4, 5 | DQ gates, scheduled DAG + backfill, dashboard, tests executed | US-14…US-17 | 26 |
+| S1 | 10:40–11:20 | 2, 3 | Architecture + LLD signed off; walking skeleton (local leg) | US-06…US-09 | 19 |
+| S2 | 11:20–13:00 | 4 | Normalised intervals, consumption marts, anomaly flags | US-10…US-13 | 23 |
+| S3 | 13:00–14:10 | 4, 5 | Publish to Postgres, DQ gates, scheduled DAG + backfill, dashboard, tests executed | US-14…US-17, US-23 | 33 |
 | S4 | 14:10–15:00 | 6, 7 | CI, ops metrics + alerts, runbook drill, handover | US-18…US-22 | 15 |
 
 ---
@@ -149,14 +149,15 @@ As a data engineer, I want landing files loaded into bronze Parquet partitioned 
 
 ## US-09: LLD, star schema DDL and walking skeleton
 **Epic:** E2 Architecture, design & walking skeleton **Req IDs:** FR-08…FR-13, FR-16, FR-18
-**Priority:** Must **Points:** 8 **Sprint:** S1 **Owner:** Mahendra Umath **Status:** In progress
+**Priority:** Must **Points:** 4 **Sprint:** S1 **Owner:** Mahendra Umath **Status:** Done
 
 **Story**
 As a data engineer, I want an LLD (components, data model, interfaces) and a walking skeleton from one source to one chart, so that development has a clear spec and integration risk is retired early.
 
 **Acceptance criteria**
 - AC1: Given docs/lld.md, when reviewed, then it has the components (with repo paths), data model (ER + DDL + source-to-target mapping) and interfaces sections.
-- AC2: Given `make demo`, when run, then one Airflow run moves data landing → bronze → mart → Postgres and a Superset chart shows it.
+- AC2: Given the local venv, when the generator, extractor and `dbt build` run, then data moves landing → bronze → staging → a mart in DuckDB.
+- (Split 27-Nov-2026: the Postgres + Superset leg moved to US-23.)
 
 ## US-10: Staging — kWh, IST, dedup, ordering
 **Epic:** E3 Normalisation & consumption **Req IDs:** FR-04, FR-05, FR-06, NFR-12
@@ -183,7 +184,7 @@ As a billing analyst, I want each meter's 15-min grid with gaps marked and consu
 
 ## US-12: Consumption marts and publish to Postgres
 **Epic:** E3 Normalisation & consumption **Req IDs:** FR-08, FR-09, FR-10, NFR-11
-**Priority:** Must **Points:** 8 **Sprint:** S2 **Owner:** Shantanu Kale **Status:** In progress
+**Priority:** Must **Points:** 5 **Sprint:** S2 **Owner:** Shantanu Kale **Status:** In review
 
 **Story**
 As a billing analyst / network engineer, I want hourly and daily kWh per meter, feeder and zone plus a monthly billing table, so that I can bill and monitor load from ready tables.
@@ -191,7 +192,7 @@ As a billing analyst / network engineer, I want hourly and daily kWh per meter, 
 **Acceptance criteria**
 - AC1: Given marts, when Σ hourly kWh per meter-day is compared with Σ register deltas in staging, then the difference is 0.
 - AC2: Given mart_billing_monthly, when queried, then each meter-month has billed_kwh, completeness_pct, gap_intervals and quality_flag.
-- AC3: Given a pipeline run, when publishing completes, then the marts exist in Postgres warehouse.marts.
+- (Split 27-Nov-2026: AC3 "marts published to Postgres" moved to US-23.)
 
 ## US-13: Anomaly detection — spike, tamper, outage
 **Epic:** E4 Anomalies, quality & orchestration **Req IDs:** FR-11, FR-12, FR-13
@@ -304,3 +305,24 @@ As the PO, I want a retrospective, known limitations, future roadmap and a confi
 
 **Acceptance criteria**
 - AC1: Given docs/PROGRESS.md, when the project ends, then it lists the retro notes, limitations and enhancements, and every hackathon artifact is confirmed present and current.
+
+## US-23: Publish marts to Postgres and show them in Superset (walking-skeleton serving leg)
+**Epic:** E3 Normalisation & consumption **Req IDs:** FR-08, FR-09, FR-10, FR-18, FR-27
+**Priority:** Must **Points:** 7 **Sprint:** S3 **Owner:** Raja Rao Reddy **Status:** In progress
+
+**Story**
+As a billing analyst / network engineer, I want the DuckDB marts published to the Postgres warehouse and visible in Superset, so that I can query and chart them without touching the lake.
+
+**Acceptance criteria**
+- AC1: Given a successful `dbt build`, when the publish step runs inside the stack, then every published mart exists in `warehouse.marts` with the same row count and Σ kWh as in DuckDB (DECIMAL(18,4) preserved).
+- AC2: Given the same publish run twice, when counts are compared, then they are unchanged (idempotent full refresh of the window).
+- AC3: Given the running stack, when Superset opens, then the warehouse database is registered read-only (`bi_reader`) and one chart shows a published mart.
+
+**Tasks**
+| Task | Estimate (h) | Status |
+|------|--------------|--------|
+| Stack up on the Windows host (Docker Desktop), smoke test | 1.0 | In progress |
+| `ingestion/publish/to_postgres.py` (DuckDB postgres extension) + tests | 1.0 | To do |
+| Superset dataset + first chart | 0.5 | To do |
+
+(Split 27-Nov-2026 from US-12 AC3 (3 pts) and US-09 AC2 (4 pts); backlog total unchanged at 111 pts.)

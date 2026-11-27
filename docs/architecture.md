@@ -6,7 +6,7 @@ Decisions: [ADR-001](adr/ADR-001-orchestrator-and-runtime.md) runtime ·
 [ADR-003](adr/ADR-003-partitioning-compaction-retention.md) partitioning/retention ·
 [ADR-004](adr/ADR-004-late-data-handling.md) late data ·
 [ADR-005](adr/ADR-005-schema-evolution.md) schema evolution ·
-[ADR-006](adr/ADR-006-spike-magnitude-guard.md) spike magnitude guard (proposed).
+[ADR-006](adr/ADR-006-spike-magnitude-guard.md) spike magnitude guard.
 
 ## 1. Data flow
 

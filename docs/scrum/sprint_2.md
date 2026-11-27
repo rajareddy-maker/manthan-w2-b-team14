@@ -11,7 +11,7 @@ Host: Sagar's Windows 11 laptop (local venv, DuckDB). There is still no Docker o
 | US-10 | Staging: kWh, IST, dedup, ordering | 5 | Shantanu Kale | In review |
 | US-11 | Interval grid, gaps and register deltas | 5 | Shantanu Kale | In review |
 | US-12 | Consumption marts and publish to Postgres | 8 | Shantanu Kale | In progress: AC1 + AC2 met; AC3 (publish) blocked by DEF-002 |
-| US-13 | Anomaly detection: spike, tamper, outage | 8 | Rituja Kekatpure | In review (ADR-006 needs PO decision) |
+| US-13 | Anomaly detection: spike, tamper, outage | 8 | Rituja Kekatpure | In review (ADR-006 accepted) |
 | US-09 (carry) | Walking skeleton: Postgres + Superset leg | 4 | Mahendra Umath | Blocked (DEF-002) |
 
 ## Sprint board
@@ -48,8 +48,8 @@ The remaining 7 points are US-12 AC3 (publish, about 3 pts) and US-09 AC2 (4 pts
 - **US-13: the spike rule as specified does not work.** Measured on the demo set, it flags 34,932 intervals on 4,998 of 5,000 meters.
   - Proposed fix in ADR-006: also require kWh ≥ 8 × the meter's trailing mean.
   - Result with the fix: 5/5 crafted spikes found, 0 false positives.
-  - **PO decision needed.**
-- **US-12 split suggestion:** move AC3 (publish to Postgres) into a new 3-pt story, *US-23 Publish marts to Postgres*, together with the US-09 AC2 carry-over. This way the modelling work can be accepted now.
+  - **ADR-006 accepted** (relayed by Sagar Kalthiya on behalf of Mahendra Umath (PO), 27-Nov-2026).
+- **US-12 split (done 27-Nov-2026, PO):** AC3 (publish to Postgres, 3 pts) and the US-09 AC2 carry-over (4 pts) moved into the new story *US-23 Publish marts to Postgres and show them in Superset* (7 pts, S3).
 - **New test harness:** `tests/integration/dbt_harness.py` runs the real pipeline on crafted histories. It feeds US-17 (test plan) in S3.
 
 ## Sprint review
@@ -58,7 +58,7 @@ The remaining 7 points are US-12 AC3 (publish, about 3 pts) and US-09 AC2 (4 pts
 | US-10 | evidence/sprint_2/pytest_dbt_crafted.txt (AC1–AC3 tests); sprint_1/staging_vs_manifest.txt | pending PO | 1500 Wh = 1.5 kWh = 1500 Wh (v2) → 1.5000; triplicate → 1 kept, 2 counted; reversed files → no false decreases |
 | US-11 | evidence/sprint_2/intervals_vs_manifest.txt; crafted tests | pending PO | 3,360,000 grid rows; 3 gaps → gap_intervals = 3; ROLLOVER delta correct; register_decrease meters = manifest (3/3) |
 | US-12 | evidence/sprint_2/dbt_build.txt (PASS=84) | AC1–AC2 pending PO; AC3 blocked | Σ hourly = Σ staging deltas exactly; feeder = zone = billing = meter totals |
-| US-13 | evidence/sprint_2/anomalies_vs_manifest.txt, spike_rule_measurement.txt; ADR-006 | pending PO + ADR-006 decision | 5/5 spike, 3/3 tamper, 1/1 outage, 0 false positives; negative controls silent |
+| US-13 | evidence/sprint_2/anomalies_vs_manifest.txt, spike_rule_measurement.txt; ADR-006 | pending PO (ADR-006 accepted) | 5/5 spike, 3/3 tamper, 1/1 outage, 0 false positives; negative controls silent |
 
 **Completed:** 18 of 26 pts in review (US-10, US-11, US-13). US-12 is in progress (AC3 blocked). **Carried over:** US-12 AC3 + US-09 AC2.
 
@@ -74,7 +74,7 @@ The remaining 7 points are US-12 AC3 (publish, about 3 pts) and US-09 AC2 (4 pts
 - **Action items (owner, due):**
   - Raja to add `sagarkalthiya-sudo` as a collaborator with Write access (before S3).
   - Install Docker Desktop + GNU make on the Windows host, or run S3 publish/DAG work on the Ubuntu host (Sagar/Raja, start of S3).
-  - PO decision on ADR-006 (Mahendra, S2 review).
+  - PO decision on ADR-006 (Mahendra, S2 review): done, accepted.
 - **Last sprint's action items, done?**
   - Push branches: blocked (DEF-006).
   - Docker/make: not done.
@@ -84,5 +84,5 @@ The remaining 7 points are US-12 AC3 (publish, about 3 pts) and US-09 AC2 (4 pts
 |----------------|-------------|-------|--------|
 | I | DEF-002/005: no Docker stack on either host → no Postgres publish, no Superset | Raja Rao Reddy / Sagar Kalthiya | Open |
 | I | DEF-006: push refused, `sagarkalthiya-sudo` lacks write access to `rajareddy-maker/manthan-w2-b-team14` | Raja Rao Reddy | Open |
-| D | ADR-006 spike magnitude guard (8× trailing mean) | Mahendra Umath | Proposed |
+| D | ADR-006 spike magnitude guard (8× trailing mean) | Mahendra Umath | Accepted |
 | R | S3 holds DQ gates, DAG, dashboard and test plan, but the stack is still not running. Risk to the S3 goal. | Mahendra Umath | Open: escalate if Docker isn't up at S3 start |

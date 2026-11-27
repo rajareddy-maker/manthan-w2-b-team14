@@ -202,7 +202,7 @@ All other mart tables follow the same pattern: the grain columns form the primar
 ## 5. Anomaly rules (as implemented, Sprint 2)
 | Type | Model | Rule (dbt vars) |
 |---|---|---|
-| SPIKE | `int_anomalies_spike_detected` | z > `spike_z_threshold` (3.0) vs trailing `spike_history_days` (30) with ≥ `spike_min_points` (96) clean intervals **and** kWh ≥ `spike_min_multiple` (8) × trailing mean (ADR-006, proposed). Consecutive intervals are merged into one event. |
+| SPIKE | `int_anomalies_spike_detected` | z > `spike_z_threshold` (3.0) vs trailing `spike_history_days` (30) with ≥ `spike_min_points` (96) clean intervals **and** kWh ≥ `spike_min_multiple` (8) × trailing mean (ADR-006). Consecutive intervals are merged into one event. |
 | TAMPER | `int_anomalies_tamper_detected` | Register flat for ≥ `tamper_zero_intervals` (192) slots, while ≥ `tamper_peer_active_share` (70%) of the other meters on the feeder have kWh > 0 in that window. A zero delta that spans gaps counts every slot it covers. |
 | OUTAGE | `int_anomalies_outage_detected` | ≥ `outage_missing_share` (30%) of the feeder's master meters are gaps in the same slot, for ≥ `outage_min_intervals` (2) consecutive slots. |
 
