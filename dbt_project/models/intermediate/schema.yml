@@ -1,0 +1,25 @@
+version: 2
+
+models:
+  - name: int_meter_intervals
+    description: >
+      Meter × 15-min grid for the window (every meter in the master, every slot). is_gap marks
+      slots no valid reading closes; never filled. delta_kwh = register delta (ROLLOVER-aware);
+      NULL with dq_flag = register_decrease when the register drops without ROLLOVER. A delta that
+      spans missing slots is kept once on the closing slot with gap_intervals = n.
+    columns:
+      - name: meter_id
+        data_tests: [not_null]
+      - name: interval_start_ts
+        data_tests: [not_null]
+      - name: interval_date_ist
+        data_tests: [not_null]
+      - name: hour_start_ts
+        data_tests: [not_null]
+      - name: is_gap
+        data_tests: [not_null]
+      - name: dq_flag
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ["no_previous_reading", "register_decrease"]
