@@ -24,3 +24,7 @@ data_quality/gx/uncommitted/
 .vscode/
 .idea/
 .DS_Store
+
+# demo video build artefacts (regenerate: python docs/demo/build_video.py)
+docs/demo/_build/
+docs/demo/narration.wav
