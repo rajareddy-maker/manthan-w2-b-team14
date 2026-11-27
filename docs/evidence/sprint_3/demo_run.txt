@@ -1,0 +1,205 @@
+
+=== [demo    1s] 1/6 environment (.env with random secrets)
+[init_env] .env exists — leaving it unchanged
+
+=== [demo    1s] 2/6 build images one at a time, start the stack, wait for healthchecks
+ Image gridpulse-superset:0.1.0 Building 
+#1 [internal] load local bake definitions
+#1 reading from stdin 633B done
+#1 DONE 0.0s
+
+#2 [internal] load build definition from Dockerfile
+#2 transferring dockerfile: 453B 0.1s done
+#2 DONE 0.1s
+
+#3 [internal] load metadata for docker.io/apache/superset:6.1.0
+#3 DONE 0.2s
+
+#4 [internal] load .dockerignore
+#4 transferring context: 2B done
+#4 DONE 0.0s
+
+#5 [1/5] FROM docker.io/apache/superset:6.1.0@sha256:16b50bbef6648912a79e3293d418fefa743ce555d36c5af6b85d859119ed7f88
+#5 resolve docker.io/apache/superset:6.1.0@sha256:16b50bbef6648912a79e3293d418fefa743ce555d36c5af6b85d859119ed7f88 0.0s done
+#5 DONE 0.0s
+
+#6 [internal] load build context
+#6 transferring context: 2.08kB 0.0s done
+#6 DONE 0.0s
+
+#7 [2/5] RUN uv pip install --python /app/.venv/bin/python --no-cache psycopg2-binary==2.9.13
+#7 CACHED
+
+#8 [3/5] COPY infra/superset/superset_config.py /app/pythonpath/superset_config.py
+#8 CACHED
+
+#9 [4/5] COPY infra/superset/superset_init.sh /app/docker/superset_init.sh
+#9 CACHED
+
+#10 [5/5] RUN chmod 0755 /app/docker/superset_init.sh
+#10 CACHED
+
+#11 exporting to image
+#11 exporting layers 0.0s done
+#11 exporting manifest sha256:43f3daf9b8f7dab49f543c24c8c3541246beaa0611937559accf37d05250ba5b done
+#11 exporting config sha256:83a84529eac88a943360adf20eaf5b77a068a9673eda044b8513ad45999cbe78 done
+#11 exporting attestation manifest sha256:f5806f20911f610d99a683aace2a5d324e69fec8f89bf5cd7fd85aabd27d3695
+#11 exporting attestation manifest sha256:f5806f20911f610d99a683aace2a5d324e69fec8f89bf5cd7fd85aabd27d3695 0.0s done
+#11 exporting manifest list sha256:599141ad41ec0a48a800aeeff3598e282e4f8590e3476f277268eb13c11d537f 0.0s done
+#11 naming to docker.io/library/gridpulse-superset:0.1.0 done
+#11 unpacking to docker.io/library/gridpulse-superset:0.1.0 0.0s done
+#11 DONE 0.2s
+
+#12 resolving provenance for metadata file
+#12 DONE 0.1s
+ Image gridpulse-superset:0.1.0 Built 
+ Image gridpulse-airflow:0.1.0 Building 
+#1 [internal] load local bake definitions
+#1 reading from stdin 628B done
+#1 DONE 0.0s
+
+#2 [internal] load build definition from Dockerfile
+#2 transferring dockerfile: 1.32kB 0.0s done
+#2 DONE 0.0s
+
+#3 [internal] load metadata for docker.io/apache/airflow:3.3.2
+#3 DONE 3.3s
+
+#4 [internal] load .dockerignore
+#4 transferring context: 2B done
+#4 DONE 0.0s
+
+#5 [1/5] FROM docker.io/apache/airflow:3.3.2@sha256:e9982ad3f49a60418622e1baf80c34b0daf3fa5091a336cb5ee61f0cdd189371
+#5 resolve docker.io/apache/airflow:3.3.2@sha256:e9982ad3f49a60418622e1baf80c34b0daf3fa5091a336cb5ee61f0cdd189371 0.0s done
+#5 DONE 0.0s
+
+#6 [internal] load build context
+#6 transferring context: 371B done
+#6 DONE 0.0s
+
+#7 [2/5] RUN mkdir -p /opt/gridpulse-venv /opt/duckdb_ext     && chown -R airflow:0 /opt/gridpulse-venv /opt/duckdb_ext     && chmod -R g+rwX /opt/duckdb_ext
+#7 CACHED
+
+#8 [3/5] COPY --chown=airflow:0 requirements.txt /tmp/requirements.txt
+#8 CACHED
+
+#9 [4/5] RUN uv venv --python "$(which python)" /opt/gridpulse-venv     && uv pip install --python /opt/gridpulse-venv/bin/python --no-cache -r /tmp/requirements.txt     && /opt/gridpulse-venv/bin/python -c "import duckdb, dbt.version, great_expectations as gx; print('duckdb', duckdb.__version__, 'gx', gx.__version__)"
+#9 CACHED
+
+#10 [5/5] RUN /opt/gridpulse-venv/bin/python -c "import duckdb; c = duckdb.connect(); c.execute(\"SET extension_directory='/opt/duckdb_ext'\"); c.execute('INSTALL postgres')"     && chmod -R g+rwX /opt/duckdb_ext
+#10 CACHED
+
+#11 exporting to image
+#11 exporting layers 0.0s done
+#11 exporting manifest sha256:3f8b942e72558ecfe1635e8eaa3ac09ff2a7f54f3bf302310646045a38655d4d done
+#11 exporting config sha256:6ebe04c4ca17c66c6a459ec780e53ef19da9c54d223ffdd45bbcddfc9a145237 done
+#11 exporting attestation manifest sha256:2d8479d440282abc136c1be2fe822e62b5fe1d88f87bafb7bff9ab42dea9e328 0.0s done
+#11 exporting manifest list sha256:69de1142c564edd9548c3aca472db49c47eef0d4b5e4141dc9865688da4329ee 0.0s done
+#11 naming to docker.io/library/gridpulse-airflow:0.1.0 done
+#11 unpacking to docker.io/library/gridpulse-airflow:0.1.0 0.0s done
+#11 DONE 0.2s
+
+#12 resolving provenance for metadata file
+#12 DONE 0.0s
+ Image gridpulse-airflow:0.1.0 Built 
+ Container gridpulse-superset-1 Running 
+ Container gridpulse-postgres-1 Recreate 
+ Container gridpulse-postgres-1 Recreated 
+ Container gridpulse-airflow-init-1 Recreate 
+ Container gridpulse-superset-init-1 Recreate 
+ Container gridpulse-superset-init-1 Recreated 
+ Container gridpulse-airflow-init-1 Recreated 
+ Container gridpulse-airflow-apiserver-1 Recreate 
+ Container gridpulse-airflow-scheduler-1 Recreate 
+ Container gridpulse-airflow-dag-processor-1 Recreate 
+ Container gridpulse-airflow-dag-processor-1 Recreated 
+ Container gridpulse-airflow-apiserver-1 Recreated 
+ Container gridpulse-airflow-scheduler-1 Recreated 
+ Container gridpulse-postgres-1 Starting 
+ Container gridpulse-postgres-1 Started 
+ Container gridpulse-postgres-1 Waiting 
+ Container gridpulse-postgres-1 Healthy 
+ Container gridpulse-airflow-init-1 Starting 
+ Container gridpulse-superset-init-1 Starting 
+ Container gridpulse-airflow-init-1 Started 
+ Container gridpulse-airflow-init-1 Waiting 
+ Container gridpulse-superset-init-1 Started 
+ Container gridpulse-superset-init-1 Waiting 
+ Container gridpulse-airflow-init-1 Exited 
+ Container gridpulse-airflow-apiserver-1 Starting 
+ Container gridpulse-airflow-scheduler-1 Starting 
+ Container gridpulse-airflow-dag-processor-1 Starting 
+ Container gridpulse-airflow-apiserver-1 Started 
+ Container gridpulse-airflow-scheduler-1 Started 
+ Container gridpulse-airflow-dag-processor-1 Started 
+ Container gridpulse-superset-init-1 Exited 
+ Container gridpulse-postgres-1 Waiting 
+ Container gridpulse-airflow-init-1 Waiting 
+ Container gridpulse-airflow-apiserver-1 Waiting 
+ Container gridpulse-airflow-scheduler-1 Waiting 
+ Container gridpulse-airflow-dag-processor-1 Waiting 
+ Container gridpulse-superset-init-1 Waiting 
+ Container gridpulse-superset-1 Waiting 
+ Container gridpulse-superset-init-1 Exited 
+ Container gridpulse-airflow-init-1 Exited 
+ Container gridpulse-airflow-dag-processor-1 Healthy 
+ Container gridpulse-postgres-1 Healthy 
+ Container gridpulse-superset-1 Healthy 
+ Container gridpulse-airflow-scheduler-1 Healthy 
+ Container gridpulse-airflow-apiserver-1 Healthy 
+
+=== [demo  147s] 3/6 verify every service
+GridPulse smoke test — 2026-11-27 17:54:04 IST
+  [PASS] Postgres accepts connections                 /var/run/postgresql:5432 - accepting connections
+  [PASS] Warehouse readable by bi_reader              warehouse initialised
+  [PASS] Airflow API :8080 healthy                    {"metadatabase":{"status":"healthy"},"scheduler":{"status":"healthy","
+  [PASS] Airflow scheduler healthy                    
+  [PASS] hello_gridpulse DAG run succeeds             [trigger] hello_gridpulse manual__20261127T175410_12728 -> success in 
+  [PASS] dbt debug passes                             [0m12:25:05  [32mAll checks passed![0m
+  [PASS] GX sample checkpoint passes                  GX checkpoint PASSED
+  [PASS] Superset UI :8088 healthy                    OK
+  [PASS] Superset queries the warehouse               superset->warehouse: warehouse initialised
+  [SKIP] Kafka topic produce/consume                     dropped by design (ADR-002)
+  [SKIP] Spark UI :8081 sample job                        dropped by design (ADR-002)
+RESULT: 9 passed, 0 failed
+
+=== [demo  240s] 4/6 synthetic gateway data: 7 days x 5,000 meters (in Docker)
+INFO ingestion.generator.simulate simulated meters=5000 readings=673 missing=17778 duplicates=9936 specials=85
+INFO ingestion.generator.writer landing written out_dir=data/landing files=1023 lines=3392136
+INFO generator generator done start=2026-11-20 end=2026-11-26 meters=5000 files=1023 lines=3392136 seconds=87.2
+
+=== [demo  333s] 5/6 Airflow: gridpulse_backfill 2026-11-20 -> 2026-11-26 (ingest, dbt build, publish, ops metrics, retention)
+[trigger] gridpulse_backfill run_id=manual__20261127T175711_2690 conf={"start":"2026-11-20","end":"2026-11-26"}
+[trigger] gridpulse_backfill manual__20261127T175711_2690 -> success in 279s
+gridpulse_daily unpaused (01:30 IST)
+
+=== [demo  648s] 6/6 Superset dashboard as code
+chart   2 [Feeder consumption] Daily consumption by feeder (kWh) <- marts.mart_feeder_consumption_daily
+chart   3 [Feeder consumption] Hourly consumption by feeder (kWh) <- marts.mart_feeder_consumption_hourly
+chart   1 [Feeder consumption] Daily consumption by zone (kWh) <- marts.mart_zone_consumption_daily
+chart   4 [Anomalies] Anomaly events by type <- marts.mart_anomalies
+chart   5 [Anomalies] Anomaly list <- marts.mart_anomalies
+chart   6 [Completeness per zone] Completeness % by zone and day <- marts.mart_zone_completeness_daily
+chart   7 [Completeness per zone] Low-completeness meter-days by zone <- marts.mart_zone_completeness_daily
+chart   8 [Pipeline health] Pipeline runs <- ops.pipeline_runs
+chart   9 [Pipeline health] Alerts <- ops.alerts
+dashboard 1: http://127.0.0.1:8088/superset/dashboard/gridpulse/
+  data check marts.mart_feeder_consumption_daily    rows=   140  (Daily consumption by feeder (kWh))
+  data check marts.mart_feeder_consumption_hourly   rows=  3360  (Hourly consumption by feeder (kWh))
+  data check marts.mart_zone_consumption_daily      rows=    42  (Daily consumption by zone (kWh))
+  data check marts.mart_anomalies                   rows=     9  (Anomaly events by type)
+  data check marts.mart_anomalies                   rows=     9  (Anomaly list)
+  data check marts.mart_zone_completeness_daily     rows=    42  (Completeness % by zone and day)
+  data check marts.mart_zone_completeness_daily     rows=    42  (Low-completeness meter-days by zone)
+  data check ops.pipeline_runs                    rows=     5  (Pipeline runs)
+  data check ops.alerts                           rows=     2  (Alerts)
+
+=== [demo  658s] ready in 658s
+  Dashboard http://localhost:8088/superset/dashboard/gridpulse/   (user: admin, password in .env)
+  Airflow   http://localhost:8080                                  (user: admin, password in .env)
+  Warehouse postgresql://localhost:5433/warehouse  (read-only user bi_reader, password in .env)
+
+real	10m58.419s
+user	0m8.541s
+sys	0m11.808s
+exit=0

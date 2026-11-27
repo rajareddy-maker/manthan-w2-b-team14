@@ -2,6 +2,36 @@
 
 > Living document. Only real executed results are recorded here. Full execution summary and exit-criteria checklist are produced in Sprint 3 (Phase 5).
 
+## Execution summary (final run, 27-Nov-2026)
+**Build:** `21fe1b7` on `feature/US-17-handover-docs` · **Environment:** Windows 11, Docker Desktop 29.9.3 (VM 7.65 GB), Airflow 3.3.2 / Python 3.13 in containers; local venv Python 3.14.5 · **Data:** 5,000 meters × 7 days, seed 42 (3,392,136 events)
+
+| Test type | Executed | Passed | Failed | Blocked | Skipped | Evidence |
+|---|---|---|---|---|---|---|
+| Unit (pytest) | 44 | 44 | 0 | 0 | 0 | [pytest_unit_final.txt](evidence/sprint_3/pytest_unit_final.txt), [coverage.xml](evidence/sprint_3/coverage.xml) |
+| Crafted-history dbt integration (pytest + dbt) | 13 | 13 | 0 | 0 | 0 | [pytest_dbt_crafted.txt](evidence/sprint_2/pytest_dbt_crafted.txt) |
+| dbt build (models + data tests), in Docker | 84 | 84 | 0 | 0 | 0 | [pipeline_in_docker.txt](evidence/sprint_3/pipeline_in_docker.txt) |
+| Great Expectations (silver 6 + gold 5) | 11 | 11 | 0 | 0 | 0 | [runbook_backfill_drill.txt](evidence/sprint_3/runbook_backfill_drill.txt) (task `gx_gates`) |
+| Smoke (stack) | 9 | 9 | 0 | 0 | 2 (Kafka, Spark: ADR-002) | [smoke_test.txt](evidence/sprint_3/smoke_test.txt) |
+| E2E Airflow runs (backfill ×3, daily scheduled + manual) | 5 | 5 | 0 | 0 | 0 | [airflow_backfill_run.txt](evidence/sprint_3/airflow_backfill_run.txt), [airflow_daily_run.txt](evidence/sprint_3/airflow_daily_run.txt) |
+| Ground truth (anomalies vs manifest) | 3 rule types + control | all | 0 | 0 | 0 | [anomalies_vs_manifest.txt](evidence/sprint_2/anomalies_vs_manifest.txt) |
+| Drills (backfill, rollback) | 2 | 2 | 0 | 0 | 0 | [runbook_rollback_drill.txt](evidence/sprint_3/runbook_rollback_drill.txt) |
+| One-command demo (`scripts/demo.sh`, in place) | 1 | 1 | 0 | 0 | 0 | [demo_run.txt](evidence/sprint_3/demo_run.txt) — 658 s |
+| Performance 10× (70 days) | 0 | 0 | 0 | 0 | 1 (not run, time-box) | — |
+
+**Python coverage: 70%** (992 statements). Ingestion/generator modules: 76–100%. The Superset API scripts (0%), publish (42%) and ops metrics (29%) are exercised by the Docker E2E runs, not by unit tests.
+
+### Exit criteria (from test_plan.md)
+| Criterion | Status |
+|---|---|
+| 100% of Must FRs have a passing test | Not met — see RTM (built FR-15…18, 24–27, 30 have run evidence; RTM rows not all updated) |
+| ≥ 80% Python coverage | **Not met** — 70% |
+| Zero open Critical/High defects | **Met** — DEF-001…013 all Closed |
+| Every Medium defect triaged | **Met** |
+| 7-day run within SLA (≤ 15 min per day of data) | **Met** — 7-day backfill 174–225 s |
+| 10× performance run recorded | Not met — not run |
+| CI green on PR | Not met — `ci.yml`/`cd.yml` written, push blocked (token lacks `workflow` scope) |
+| UAT signed off by PO | Not met — S2/S3 stories await acceptance |
+
 ## Executed so far (Sprint 0)
 | Test case | Requirement | Command | Expected | Actual | Status | Evidence |
 |---|---|---|---|---|---|---|
@@ -82,3 +112,4 @@
 | DEF-010 | TC-PUB-01 | Medium | Publish failed in turn: read-only attach, "cannot insert multiple commands into a prepared statement", wrong cache function name | Lake file opened read-only made `pg` read-only; `postgres_execute` prepares its SQL; function is `postgres_clear_cache` | In-memory DuckDB + `attach … (read_only)`; swap as one `DO $$ … $$` block; correct call | 7/7 reconciled | Closed |
 | DEF-011 | TC-ENV-08 | Low | `docker compose exec … /opt/...` args mangled to `C:/Program Files/Git/opt/...` | Git Bash MSYS path conversion | `export MSYS_NO_PATHCONV=1` in container-exec scripts | 9/9 | Closed |
 | DEF-012 | TC-PIPE-01 | Medium | Re-running the generator later the same day changed `install_date` in `meter_master.csv` (all other columns identical) | `fake.date_between("-8y", "-1y")` is relative to the wall clock; the S1 determinism test ran both runs within seconds | Anchor the range to `cfg.end_date` (29-Feb safe); regression test `test_install_dates_do_not_depend_on_wall_clock` | 12 generator tests pass; double run in Docker hash-identical (see pipeline_in_docker.txt) | Closed |
+| DEF-013 | Final demo run | Medium | Image builds slow (step 2 of demo took ~2.5 min with cached layers) | No `.dockerignore`: every build sent `data/` (1.3 GB) and `.venv` as build context | Added `.dockerignore` (images only need `infra/` + requirements) | next build | Closed |

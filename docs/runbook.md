@@ -41,6 +41,8 @@ Every task retries twice, 2 minutes apart. Tasks that touch DuckDB share pool `d
 2. Airflow UI → `gridpulse_daily` → the last run is green.
 
 ## 3. Alerts → action
+Task failures are not yet written to `ops.alerts`; watch the Airflow UI (red task) until the `on_failure_callback` (US-26) lands.
+
 | Alert / symptom | Meaning | Action |
 |---|---|---|
 | `completeness_drop zone=Zxx date=…` | Zone completeness < 90% for that day | Check the **Completeness** tab and the anomaly list for an `OUTAGE`. If a gateway is late, its files arrive within 3 days and the next daily runs absorb them. Otherwise escalate to field ops. |

@@ -9,13 +9,13 @@ Legend: ✅ implemented and verified · ⬜ designed, built in a later sprint (s
 |---|---|---|---|---|
 | C1 | Synthetic generator | `ingestion/generator/` | `python -m ingestion.generator --days 7 [--meters --seed --end-date --out --seeds-dir]` | ✅ US-07 |
 | C2 | Landing → bronze extractor + compaction | `ingestion/extractors/landing_to_bronze.py` | `python -m ingestion.extractors.landing_to_bronze --dt D \| --all \| --compact` | ✅ US-08 |
-| C3 | Retention | `ingestion/extractors/retention.py` | `--raw-days 30 --hourly-months 13` | ⬜ US-15 |
+| C3 | Retention | `ingestion/extractors/retention.py` | `--reference D --raw-days 30`; drops landing + bronze `dt=` partitions older than 30 days, logged | ✅ US-15 |
 | C4 | dbt project (staging → intermediate → marts) | `dbt_project/` | `dbt build --project-dir dbt_project --profiles-dir dbt_project` | ✅ staging, intervals, marts, anomalies (US-10…13) |
-| C5 | GX checkpoints per layer | `data_quality/gx/run_checkpoint.py` | `--suite bronze\|silver\|gold` → exit ≠ 0 on failure | ⬜ US-14 |
+| C5 | GX checkpoints per layer | `data_quality/gx/run_checkpoint.py` | `--suite silver --suite gold` → exit ≠ 0 on failure (task `gx_gates` blocks publish) | ✅ US-14 |
 | C6 | Publish DuckDB marts → Postgres | `ingestion/publish/to_postgres.py` | load table + atomic `DO` swap + PK per table, row/kWh reconciliation | ✅ US-23 |
-| C7 | Airflow DAGs | `airflow/dags/gridpulse_daily.py`, `gridpulse_backfill.py` | thin; call C2–C6 | ⬜ US-15 |
-| C8 | Ops metrics + alerts | `ingestion/ops/metrics.py` | writes `ops.pipeline_runs`, `ops.alerts` | ⬜ US-19 |
-| C9 | Superset dashboard as code | `superset/` | imported by `superset_init.sh` | ⬜ US-16 |
+| C7 | Airflow DAGs | `airflow/dags/gridpulse_pipeline.py` (`gridpulse_daily`, `gridpulse_backfill`) | thin; call C2–C8 via BashOperator in pool `duckdb` | ✅ US-15 |
+| C8 | Ops metrics + alerts | `ingestion/ops/metrics.py` | `--run-id --dag-id --logical-date --started --lookback`; writes `ops.pipeline_runs`, `ops.alerts` + WARNING logs | ✅ US-19 |
+| C9 | Superset dashboard as code | `scripts/superset_dashboard.py` | idempotent REST API: datasets, 9 charts, 4-tab dashboard `gridpulse` | ✅ US-16 |
 
 ## 2. Data model
 
@@ -206,7 +206,31 @@ All other mart tables follow the same pattern: the grain columns form the primar
 | TAMPER | `int_anomalies_tamper_detected` | Register flat for ≥ `tamper_zero_intervals` (192) slots, while ≥ `tamper_peer_active_share` (70%) of the other meters on the feeder have kWh > 0 in that window. A zero delta that spans gaps counts every slot it covers. |
 | OUTAGE | `int_anomalies_outage_detected` | ≥ `outage_missing_share` (30%) of the feeder's master meters are gaps in the same slot, for ≥ `outage_min_intervals` (2) consecutive slots. |
 
-## 6. Known limitations (Sprint 2)
+## 6. Airflow, DQ and dashboard design (as built)
+```mermaid
+flowchart LR
+    A[ingest_bronze<br/>landing D-3..D+1] --> B[dbt_build<br/>models + tests] --> C[gx_gates<br/>silver + gold] --> D[publish_postgres<br/>atomic swap + reconcile] --> E[ops_metrics_alerts] --> F[retention 30 d]
+```
+| DAG | Schedule | Window | Retries | On failure |
+|---|---|---|---|---|
+| `gridpulse_daily` | `30 1 * * *` Asia/Kolkata, `max_active_runs=1` | D = yesterday IST (or conf `logical_date_ist`); landing `[D-3, D+1]` | 2 × 2 min | Downstream tasks do not run. Yesterday's marts stay live because publish only swaps after the gates pass. |
+| `gridpulse_backfill` | manual, params `start`, `end` | landing `[start, end+4]` | 2 × 2 min | Same as daily |
+
+| DQ layer | Check | On failure |
+|---|---|---|
+| Staging | Quarantine reason codes (DQ-1, DQ-2, off-grid, schema, unit, JSON) | Row quarantined, counted in `ops.pipeline_runs.quarantined_rows` |
+| Intervals | `register_decrease` flag (DQ-3) | Delta NULL, excluded from sums, `REGISTER_DECREASE` billing flag |
+| Marts | dbt singular reconciliation tests | `dbt_build` fails |
+| Silver / gold | GX suites (non-null, ranges, accepted values, grain uniqueness, row count) | `gx_gates` fails, publish blocked |
+| Ops | Zone completeness < 90% (DQ-4), late data beyond window | `ops.alerts` row + WARNING log |
+
+| Dashboard tab | Charts | Mart |
+|---|---|---|
+| Feeder consumption | Daily by feeder · hourly by feeder · daily by zone | `mart_feeder_consumption_daily/hourly`, `mart_zone_consumption_daily` |
+| Anomalies | Events by type · anomaly list | `mart_anomalies` |
+| Completeness per zone | Completeness % by zone/day · low-completeness meter-days | `mart_zone_completeness_daily` |
+| Pipeline health | Pipeline runs · alerts | `ops.pipeline_runs`, `ops.alerts` |
+
+## 7. Known limitations
 - Silver and gold are full rebuilds (about 60 s for 7 days). The 3-day incremental `delete+insert` (ADR-004) lands with the DAG (US-15).
-- Publishing to Postgres (C6) and the Superset contract are not built yet: there is no Postgres on the build host (DEF-002).
 - The Sprint 1 partial edge day is fixed: the grid window now starts at the first reading's IST date.
