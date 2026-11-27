@@ -1,0 +1,24 @@
+GridPulse system check — 2026-11-27 15:45:06 IST
+Note: Java is optional (Spark dropped, ADR-002).
+| Item                   | Found                        | Required       | Status  |
+|------------------------|------------------------------|----------------|---------|
+| OS                     | Ubuntu 26.04.1 LTS           | Linux x86_64   | OK      |
+| CPU cores              | 12                           | >= 4           | OK      |
+| RAM total (GB)         | 14.8                         | >= 8 (LITE)    | OK      |
+| RAM available (GB)     | 8.0                          | >= 5           | OK      |
+| Free disk (GB)         | 287                          | >= 20          | OK      |
+| Virtualization         | enabled                      | enabled        | OK      |
+| git                    | 2.53.0                       | >= 2.30        | OK      |
+| Docker                 | not found                    | >= 24.0        | MISSING |
+| Docker Compose         | 5.6.0                        | >= 2.20        | OK      |
+| Python 3               | 3.14.4                       | >= 3.11        | OK      |
+| python3 venv           | 3.14.4                       | >= 3.11        | OK      |
+| pip (python3 -m pip)   | not found                    | optional       | SKIP    |
+| Java (JDK)             | 21.0.13.1                    | >= 11          | OK      |
+| make                   | 4.4.1                        | >= 4.0         | OK      |
+| curl                   | 8.18.0                       | >= 7.0         | OK      |
+| Docker daemon access   | denied                       | no sudo        | MISSING |
+| Port 8080              | free                         | free           | OK      |
+| Port 8088              | free                         | free           | OK      |
+| Port 5433              | free                         | free           | OK      |
+RESULT: FIX ITEMS MARKED MISSING/UPGRADE

@@ -1,0 +1,12 @@
+_______________ coverage: platform linux, python 3.14.4-final-0 ________________
+
+Name                               Stmts   Miss  Cover   Missing
+----------------------------------------------------------------
+ingestion/__init__.py                  0      0   100%
+ingestion/extractors/__init__.py       0      0   100%
+ingestion/generator/__init__.py        0      0   100%
+scripts/export_backlog.py             98     18    82%   95-96, 142-157, 161
+----------------------------------------------------------------
+TOTAL                                 98     18    82%
+Coverage XML written to file docs/evidence/coverage.xml
+10 passed in 0.20s

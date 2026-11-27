@@ -1,0 +1,26 @@
+# secrets
+.env
+# python
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+.coverage
+coverage.xml
+htmlcov/
+# data (generated, never committed)
+data/
+*.duckdb
+*.duckdb.wal
+# dbt
+dbt_project/target/
+dbt_project/dbt_packages/
+dbt_project/logs/
+logs/
+# GX runtime
+data_quality/gx/uncommitted/
+# editors / os
+.vscode/
+.idea/
+.DS_Store

@@ -1,0 +1,36 @@
+name: gridpulse
+version: "0.1.0"
+config-version: 2
+profile: gridpulse
+
+model-paths: ["models"]
+seed-paths: ["seeds"]
+test-paths: ["tests"]
+macro-paths: ["macros"]
+target-path: "target"
+clean-targets: ["target", "dbt_packages"]
+
+vars:
+  tz: "Asia/Kolkata"
+  interval_minutes: 15
+  intervals_per_day: 96
+  completeness_threshold: 0.90
+  lookback_days: 3
+  spike_z_threshold: 3.0
+  spike_history_days: 30
+  tamper_zero_intervals: 192
+  tamper_peer_active_share: 0.70
+  outage_missing_share: 0.30
+  outage_min_intervals: 2
+
+models:
+  gridpulse:
+    staging:
+      +materialized: view
+      +schema: staging
+    intermediate:
+      +materialized: table
+      +schema: intermediate
+    marts:
+      +materialized: table
+      +schema: marts

@@ -1,0 +1,10 @@
+# Runtime deps (installed into /opt/gridpulse-venv in the Airflow image and into .venv locally).
+# Top-level pins; full transitive lock for local dev is constraints.txt.
+duckdb==2.0.1
+pyarrow==26.0.1
+faker==40.63.0
+dbt-duckdb==1.11.1
+dbt-core==1.12.7
+great-expectations==1.25.0
+psycopg2-binary==2.9.13
+pandas==3.1.1

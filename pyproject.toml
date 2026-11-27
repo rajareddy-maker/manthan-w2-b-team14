@@ -1,0 +1,47 @@
+[project]
+name = "gridpulse"
+version = "0.1.0"
+description = "GridPulse — smart meter telemetry platform (Team 14, Track B)"
+requires-python = ">=3.13"
+
+[tool.black]
+line-length = 100
+target-version = ["py313"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py313"
+extend-exclude = ["dbt_project/target", "dbt_project/dbt_packages", "data"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "S", "N", "SIM"]
+ignore = ["S101", "S603", "S607", "S608"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["S311"]
+"ingestion/generator/**" = ["S311"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q --strict-markers"
+markers = [
+  "integration: needs the docker stack (make up)",
+  "e2e: runs the full DAG",
+]
+
+[tool.coverage.run]
+source = ["ingestion", "scripts"]
+omit = ["scripts/*.sh"]
+
+[tool.sqlfluff.core]
+dialect = "duckdb"
+templater = "jinja"
+max_line_length = 120
+exclude_rules = ["AM04", "ST06", "RF04"]
+
+[tool.sqlfluff.templater.jinja]
+apply_dbt_builtins = true
+load_macros_from_path = "dbt_project/macros"
+
+[tool.sqlfluff.rules.capitalisation.keywords]
+capitalisation_policy = "lower"

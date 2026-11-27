@@ -1,0 +1,2 @@
+.venv/bin/python scripts/export_backlog.py
+INFO export_backlog exported stories=22 points=111 out=/home/rajareddy/Downloads/manthan-w2-b-team14/docs/scrum/product_backlog.xlsx
