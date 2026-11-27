@@ -1,0 +1,22 @@
+---------------------------------------------------------------
+ingestion\__init__.py                           0      0   100%
+ingestion\extractors\__init__.py                0      0   100%
+ingestion\extractors\landing_to_bronze.py     125      7    94%
+ingestion\extractors\retention.py              38      9    76%
+ingestion\generator\__init__.py                 0      0   100%
+ingestion\generator\__main__.py                36     15    58%
+ingestion\generator\config.py                  66     13    80%
+ingestion\generator\simulate.py               141      1    99%
+ingestion\generator\topology.py                65      0   100%
+ingestion\generator\writer.py                 136      0   100%
+ingestion\ops\__init__.py                       0      0   100%
+ingestion\ops\metrics.py                       51     36    29%
+ingestion\publish\__init__.py                   0      0   100%
+ingestion\publish\to_postgres.py               78     45    42%
+scripts\export_backlog.py                      98     18    82%
+scripts\superset_dashboard.py                  83     83     0%
+scripts\superset_first_chart.py                75     75     0%
+---------------------------------------------------------------
+TOTAL                                         992    302    70%
+Coverage XML written to file docs/evidence/sprint_3/coverage.xml
+44 passed in 110.88s (0:01:50)

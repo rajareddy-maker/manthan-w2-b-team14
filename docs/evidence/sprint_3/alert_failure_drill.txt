@@ -1,0 +1,12 @@
+== failure-alert drill 2026-11-27 18:07:00 (expected: DAG run FAILED + CRITICAL alert)
+[trigger] gridpulse_alert_drill run_id=manual__20261127T180701_15619 conf={}
+[trigger] gridpulse_alert_drill manual__20261127T180701_15619 -> FAILED
+gridpulse_alert_drill |              | simulated_failure | failed | 2026-11-27T12:37:17.753925+00:00 | 2026-11-27T12:37:39.900365+00:00
+--- ops.alerts (latest)
+2026-11-27 18:07:40|CRITICAL|task_failed|dag=gridpulse_alert_drill task=simulated_failure|Task gridpulse_alert_drill.simulated_failure failed after try 1 (run manual__20261127T180701_15619): Bash command failed. The command returned a non-zero exit code 1.. Notify: sagar.kalthiya@nucleusteq.com. Runbook: docs/runbook.md section 3.
+--- ops.pipeline_runs (failed)
+gridpulse_alert_drill|failed|2026-11-27
+--- task log callback lines
+ALERT task_failed dag=gridpulse_alert_drill task=simulated_failure Task gridpulse_alert_drill.simulated_fai
+alert e-mail disabled (SMTP_HOST not set) recipient=sagar.kalthiya@nucleusteq.com
+alert recorded in ops.alerts run_id=manual__20261127T180701_15619 emailed=False

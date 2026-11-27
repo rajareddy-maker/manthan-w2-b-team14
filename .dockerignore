@@ -1,0 +1,12 @@
+# Images only need infra/ and requirements*.txt; the repo is bind-mounted at runtime.
+# Without this, every build shipped data/ (1.3 GB) and .venv as build context (DEF-013).
+.git
+.venv
+data
+docs
+dbt_project/target
+dbt_project/logs
+**/__pycache__
+.pytest_cache
+.ruff_cache
+.env

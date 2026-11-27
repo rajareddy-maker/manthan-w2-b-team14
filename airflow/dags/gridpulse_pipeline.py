@@ -15,11 +15,18 @@ import pendulum
 from airflow.providers.standard.operators.bash import BashOperator
 from airflow.sdk import DAG, Param
 
+from ingestion.ops.alerting import on_failure
+
 TZ = "Asia/Kolkata"
 PY = '"$GRIDPULSE_PYTHON"'
 DBT = "/opt/gridpulse-venv/bin/dbt"
 CD = 'cd "$GRIDPULSE_HOME" && '
-DEFAULTS = {"retries": 2, "retry_delay": pendulum.duration(minutes=2), "pool": "duckdb"}
+DEFAULTS = {
+    "retries": 2,
+    "retry_delay": pendulum.duration(minutes=2),
+    "pool": "duckdb",
+    "on_failure_callback": on_failure,  # ops.alerts CRITICAL + ALERT_EMAIL (US-26)
+}
 
 
 def shift(day: str, days: int) -> str:
@@ -120,3 +127,16 @@ build(
     load_from="params.start",
     load_to="shift(params.end, 4)",
 )
+
+
+# Alert drill (runbook §3): one task that always fails, no retries -> proves the failure alert.
+drill = DAG(
+    dag_id="gridpulse_alert_drill",
+    schedule=None,
+    start_date=pendulum.datetime(2026, 11, 1, tz=TZ),
+    catchup=False,
+    default_args={"retries": 0, "on_failure_callback": on_failure},
+    tags=["gridpulse", "drill"],
+)
+with drill:
+    BashOperator(task_id="simulated_failure", bash_command="echo 'simulated failure'; exit 1")
