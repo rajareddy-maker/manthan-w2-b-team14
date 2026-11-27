@@ -10,14 +10,14 @@ Status as of 27-Nov-2026 · `main` @ `dc5b11f` on GitHub (`rajareddy-maker/manth
 | 2 | Code base | Repository, README, one-command run | GitHub `main`; `README.md`; `scripts/demo.sh` / `make demo` | ✅ Ready | Demo ran successfully in 658 s. CI/CD files are local only (need gh `workflow` scope). |
 | 3 | Test plan | Scope, risks, entry and exit criteria | `docs/test_plan.md` | ✅ Ready | — |
 | 4 | Test results | Executed cases, defects and evidence | `docs/test_results.md` (execution summary, exit criteria, DEF-001…014) + `docs/evidence/` | ✅ Ready | Performance (10×) row still "not run" |
-| 5 | UI designs | Wireframes and final screens | Dashboard as code: `scripts/superset_dashboard.py` (4 tabs, 9 charts) | ❌ Pending | Wireframe of the 4 tabs + screenshots of the live dashboard (http://localhost:8088/superset/dashboard/gridpulse/) saved under `docs/ui/` |
+| 5 | UI designs | Wireframes and final screens | Final screens: `docs/demo/frames/` (4 dashboard tabs, Airflow DAGs/graph/runs, repo); dashboard as code `scripts/superset_dashboard.py` | 🟡 Partial | Final screens ✅; wireframes still pending |
 | 6 | Stories (Excel) | Backlog with acceptance criteria | `docs/scrum/product_backlog.xlsx` (+ `.md`) | ✅ Ready | 23 stories / 111 pts; 96 accepted |
-| 7 | Application demo | Running app, five-minute walkthrough | Stack running locally (Airflow :8080, Superset :8088) | 🟡 Partial | App is running. Write the 5-minute demo script and rehearse it. |
+| 7 | Application demo | Running app, five-minute walkthrough | `docs/demo/gridpulse_demo.mp4` (4 min 33 s, 1080p, voiceover); `docs/demo/demo_script.md`; `docs/demo/gridpulse_walkthrough.gif` | ✅ Ready | Rebuild: `python docs/demo/build_video.py` |
 | 8 | Ideation document | Problem, options, chosen approach | `docs/ideation.md` | ✅ Ready | — |
 | 9 | LLD document | Components, data model, interfaces | `docs/lld.md` | ✅ Ready | — |
 | 10 | Runbook | Operate, monitor and recover | `docs/runbook.md` (backfill + rollback + failure-alert drills done) | ✅ Ready | — |
 
-**Score: 7 ready · 1 partial · 2 pending.**
+**Score: 8 ready · 1 partial (UI wireframes) · 1 pending (presentation).**
 
 ## Presentation topics
 | Topic | Material we have | Status |
