@@ -1,0 +1,11 @@
+# Keep LF in the repo and in working copies for files executed inside Linux containers.
+* text=auto
+*.sh text eol=lf
+*.py text eol=lf
+*.sql text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+Makefile text eol=lf
+Dockerfile text eol=lf
+*.xlsx binary
+*.parquet binary
