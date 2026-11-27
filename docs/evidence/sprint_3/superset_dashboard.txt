@@ -1,0 +1,19 @@
+chart   2 [Feeder consumption] Daily consumption by feeder (kWh) <- marts.mart_feeder_consumption_daily
+chart   3 [Feeder consumption] Hourly consumption by feeder (kWh) <- marts.mart_feeder_consumption_hourly
+chart   1 [Feeder consumption] Daily consumption by zone (kWh) <- marts.mart_zone_consumption_daily
+chart   4 [Anomalies] Anomaly events by type <- marts.mart_anomalies
+chart   5 [Anomalies] Anomaly list <- marts.mart_anomalies
+chart   6 [Completeness per zone] Completeness % by zone and day <- marts.mart_zone_completeness_daily
+chart   7 [Completeness per zone] Low-completeness meter-days by zone <- marts.mart_zone_completeness_daily
+chart   8 [Pipeline health] Pipeline runs <- ops.pipeline_runs
+chart   9 [Pipeline health] Alerts <- ops.alerts
+dashboard 1: http://127.0.0.1:8088/superset/dashboard/gridpulse/
+  data check marts.mart_feeder_consumption_daily    rows=   140  (Daily consumption by feeder (kWh))
+  data check marts.mart_feeder_consumption_hourly   rows=  3360  (Hourly consumption by feeder (kWh))
+  data check marts.mart_zone_consumption_daily      rows=    42  (Daily consumption by zone (kWh))
+  data check marts.mart_anomalies                   rows=     9  (Anomaly events by type)
+  data check marts.mart_anomalies                   rows=     9  (Anomaly list)
+  data check marts.mart_zone_completeness_daily     rows=    42  (Completeness % by zone and day)
+  data check marts.mart_zone_completeness_daily     rows=    42  (Low-completeness meter-days by zone)
+  data check ops.pipeline_runs                    rows=     1  (Pipeline runs)
+  data check ops.alerts                           rows=     0  (Alerts)

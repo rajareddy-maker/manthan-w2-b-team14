@@ -216,6 +216,8 @@ def main(argv: list[str] | None = None) -> int:
     g.add_argument("--dt", type=date.fromisoformat, help="one landing date (IST)")
     g.add_argument("--all", action="store_true", help="every landing date on disk")
     g.add_argument("--compact", action="store_true", help="only compact existing partitions")
+    g.add_argument("--from", dest="date_from", type=date.fromisoformat, help="range start (IST)")
+    p.add_argument("--to", dest="date_to", type=date.fromisoformat, help="range end, inclusive")
     p.add_argument(
         "--landing", type=Path, default=Path(os.environ.get("LANDING_ROOT", "data/landing"))
     )
@@ -227,7 +229,12 @@ def main(argv: list[str] | None = None) -> int:
     if a.compact:
         log.info("compaction done partitions_compacted=%d", compact_all(a.bronze))
         return 0
-    dates = landing_dates(a.landing) if a.all else [a.dt]
+    if a.date_from:
+        end = a.date_to or a.date_from
+        dates = [d for d in landing_dates(a.landing) if a.date_from <= d <= end]
+    else:
+        dates = landing_dates(a.landing) if a.all else [a.dt]
+    log.info("bronze run landing_dates=%s", [d.isoformat() for d in dates])
     for d in dates:
         load_landing_date(d, a.landing, a.bronze)
     return 0

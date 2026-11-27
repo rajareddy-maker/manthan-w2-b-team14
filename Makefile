@@ -125,6 +125,14 @@ gx-validate: ## Run Great Expectations checkpoints (SUITE=sample by default)
 export-backlog: ## docs/scrum/product_backlog.md -> .xlsx
 	$(PY) scripts/export_backlog.py
 
+.PHONY: backfill
+backfill: ## Reprocess a date range via Airflow: make backfill START=2026-11-20 END=2026-11-26
+	bash scripts/airflow_trigger_wait.sh gridpulse_backfill '{"start":"$(START)","end":"$(END)"}' 2400
+
+.PHONY: dashboard
+dashboard: ## Create/update the Superset dashboard as code
+	python3 scripts/superset_dashboard.py
+
 .PHONY: demo
 demo: ## ONE command: setup, start stack, seed data, run the pipeline, print URLs
 	@bash scripts/demo.sh

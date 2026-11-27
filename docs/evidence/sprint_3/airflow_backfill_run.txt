@@ -1,0 +1,13 @@
+[trigger] gridpulse_backfill run_id=manual__20261127T172440_16315 conf={"start":"2026-11-20","end":"2026-11-26"}
+[trigger] gridpulse_backfill manual__20261127T172440_16315 -> success in 174s
+
+[exited with code 0]
+       dag_id       | logical_date_ist | status  | duration_s | bronze_rows | quarantined_rows | duplicate_rate_pct | completeness_pct | ingest_lag_p50_min | ingest_lag_p95_min | late_beyond_window_events 
+--------------------+------------------+---------+------------+-------------+------------------+--------------------+------------------+--------------------+--------------------+---------------------------
+ gridpulse_backfill | 2026-11-26       | success |        162 |     3392136 |             1520 |              1.281 |            99.47 |               35.3 |               58.6 |                         0
+(1 row)
+
+ severity | alert_type | scope | msg 
+----------+------------+-------+-----
+(0 rows)
+
