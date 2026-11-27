@@ -68,7 +68,8 @@ Ports: Airflow 8080 · Superset 8088 · Postgres 5433 (5432 is taken on the host
 4. Completeness per meter per day ≥ 90% (≥ 87 of 96 intervals) else `quality_flag = 'LOW_COMPLETENESS'`.
 
 ### Anomalies (defaults — change only via ADR)
-- **Spike**: interval kWh z-score > 3.0 vs the meter's trailing 30 days (min 96 points).
+- **Spike**: interval kWh z-score > 3.0 vs the meter's trailing 30 days (min 96 points)
+  **and** kWh ≥ 8 × trailing mean (ADR-006, proposed — z alone flags 4,998/5,000 meters).
 - **Tamper**: meter has 0 kWh for ≥ 48 h (192 intervals) while ≥ 70% of other meters on the same
   feeder have non-zero consumption in that window.
 - **Outage**: ≥ 30% of a feeder's meters missing the same interval (≥ 2 consecutive intervals).

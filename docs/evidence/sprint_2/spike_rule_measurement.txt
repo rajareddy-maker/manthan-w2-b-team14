@@ -1,0 +1,9 @@
+Spike rule measurement on the 7-day demo set (5,000 meters, intervals with >= 96 history points)
+evaluated intervals: 2845357
+rule                                    flagged intervals  meters  crafted meters caught  other meters flagged
+z > 3 (CLAUDE.md default)                           34932    4998                  5 / 5                  4993
+z > 3 and kwh >= 4 x trailing mean                    198     183                  5 / 5                   178
+z > 3 and kwh >= 6 x trailing mean                     16       8                  5 / 5                     3
+z > 3 and kwh >= 8 x trailing mean                     10       5                  5 / 5                     0
+
+crafted spike intervals: min z, min ratio = (17.8, 14.1)

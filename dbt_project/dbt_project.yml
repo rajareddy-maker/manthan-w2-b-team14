@@ -19,6 +19,8 @@ vars:
   lookback_days: 3
   spike_z_threshold: 3.0
   spike_history_days: 30
+  spike_min_points: 96
+  spike_min_multiple: 8  # ADR-006 (proposed): kWh >= 8x trailing mean, on top of z > 3
   tamper_zero_intervals: 192
   tamper_peer_active_share: 0.70
   outage_missing_share: 0.30

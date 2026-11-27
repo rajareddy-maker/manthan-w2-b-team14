@@ -23,3 +23,30 @@ models:
           - accepted_values:
               arguments:
                 values: ["no_previous_reading", "register_decrease"]
+
+  - name: int_anomalies_spike_detected
+    description: >
+      SPIKE events (FR-11, ADR-006): z > spike_z_threshold vs the meter's trailing 30 days
+      (>= 96 clean points) and kWh >= spike_min_multiple × trailing mean; consecutive intervals
+      merged into one event.
+    columns:
+      - name: meter_id
+        data_tests: [not_null]
+      - name: metric_value
+        data_tests: [not_null]
+
+  - name: int_anomalies_tamper_detected
+    description: >
+      Suspected TAMPER (FR-12): register flat for >= 192 intervals while >= 70% of feeder peers
+      consumed energy in the same window.
+    columns:
+      - name: meter_id
+        data_tests: [not_null]
+
+  - name: int_anomalies_outage_detected
+    description: >
+      OUTAGE (FR-13): >= 30% of a feeder's meters missing the same interval for >= 2 consecutive
+      intervals; one event per contiguous run.
+    columns:
+      - name: feeder_id
+        data_tests: [not_null]

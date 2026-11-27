@@ -85,3 +85,20 @@ models:
           - accepted_values:
               arguments:
                 values: ["OK", "LOW_COMPLETENESS", "REGISTER_DECREASE"]
+
+  - name: mart_anomalies
+    description: >
+      One row per anomaly event (SPIKE / TAMPER / OUTAGE) with window, metric vs threshold and
+      affected meters. meter_id is NULL for OUTAGE (feeder-level). Dashboard anomaly list (FR-18).
+    columns:
+      - name: anomaly_id
+        data_tests: [unique, not_null]
+      - name: anomaly_type
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ["SPIKE", "TAMPER", "OUTAGE"]
+      - name: feeder_id
+        data_tests: [not_null]
+      - name: start_ts
+        data_tests: [not_null]
