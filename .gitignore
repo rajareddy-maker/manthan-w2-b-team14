@@ -28,3 +28,4 @@ data_quality/gx/uncommitted/
 # demo video build artefacts (regenerate: python docs/demo/build_video.py)
 docs/demo/_build/
 docs/demo/narration.wav
+docs/demo/_build_v2/
