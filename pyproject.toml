@@ -27,6 +27,7 @@ addopts = "-q --strict-markers"
 markers = [
   "integration: needs the docker stack (make up)",
   "e2e: runs the full DAG",
+  "dbt: runs dbt build on DuckDB locally (no docker)",
 ]
 
 [tool.coverage.run]

@@ -85,6 +85,10 @@ format: ## Auto-format Python
 test: ## Unit tests with coverage (integration tests: make test-integration)
 	$(VBIN)/pytest tests/unit --cov --cov-report=term-missing --cov-report=xml:docs/evidence/coverage.xml
 
+.PHONY: test-dbt
+test-dbt: ## Crafted meter histories through landing -> bronze -> dbt build (DuckDB, no docker)
+	$(VBIN)/pytest tests/integration -m dbt
+
 .PHONY: test-integration
 test-integration: ## Integration + e2e tests (needs make up)
 	$(VBIN)/pytest tests/integration tests/e2e -m "integration or e2e"
