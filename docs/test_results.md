@@ -1,8 +1,67 @@
 # Test Results
 
-> Living document. Only real executed results are recorded here. Full execution summary and exit-criteria checklist are produced in Sprint 3 (Phase 5).
+> Living document. Only real executed results are recorded here. Test case catalogue: [test_plan.md §9](test_plan.md#9-test-case-catalogue-every-available-test).
 
-## Execution summary (final run, 27-Nov-2026)
+## 1. Latest execution — cross-host re-run (27-Nov-2026 18:31–18:33 IST)
+**Build:** `db9ccf4` (main after PR #5) · **Environment:** Ubuntu 26.04, local venv Python 3.14.4, DuckDB 2.0.1, dbt-core 1.12.7 / dbt-duckdb 1.11.1, GX 1.25.0 · **Docker stack:** not started (DEF-002 host; stack tests skip by design) · **Data:** 5,000 meters × 7 days, seed 42 · **Evidence:** [docs/evidence/test_run_ubuntu/](evidence/test_run_ubuntu/)
+
+| Test type | Executed | Passed | Failed | Skipped | Time | Evidence |
+|---|---|---|---|---|---|---|
+| Lint (ruff, black, sqlfluff) | 3 tools | 3 | 0 | 0 | 3 s | [01_lint.txt](evidence/test_run_ubuntu/01_lint.txt) |
+| Unit (pytest) | 54 | 54 | 0 | 0 | | [02_pytest_all.txt](evidence/test_run_ubuntu/02_pytest_all.txt) |
+| Crafted-history dbt integration (pytest) | 13 | 13 | 0 | 0 | | same |
+| Stack integration (pytest) | 0 | — | — | 6 (stack not running) | | same (`SKIPPED … stack Postgres/Superset not running`) |
+| **pytest total** | **67** | **67** | **0** | **6** | 9.7 s | coverage 74% → [coverage.xml](evidence/test_run_ubuntu/coverage.xml) |
+| Generator, 7 days | 1 | 1 | 0 | 0 | 3 s | [03_generate.txt](evidence/test_run_ubuntu/03_generate.txt) |
+| Bronze load | 1 | 1 | 0 | 0 | 5 s | [04_bronze.txt](evidence/test_run_ubuntu/04_bronze.txt) |
+| dbt build: 2 seeds + 16 models + 70 data tests (63 schema, 7 singular) | 88 | 88 | 0 | 0 | 7.2 s | [05_dbt_build.txt](evidence/test_run_ubuntu/05_dbt_build.txt), [dbt_run_results.json](evidence/test_run_ubuntu/dbt_run_results.json) |
+| Great Expectations (sample 5 + silver 6 + gold 5) | 16 | 16 | 0 | 0 | | [06_gx_suites.txt](evidence/test_run_ubuntu/06_gx_suites.txt) |
+| Ground truth vs generator manifest | 7 checks | 7 | 0 | 0 | | [07_reconciliation.txt](evidence/test_run_ubuntu/07_reconciliation.txt) |
+
+### 1.1 Executed cases (this run)
+| Test case | Requirement | Expected | Actual | Status |
+|---|---|---|---|---|
+| TC-ENV-03 | US-05 | lint clean | ruff `All checks passed!`; black `35 files would be left unchanged`; sqlfluff `All Finished!` | ✅ |
+| TC-GEN-01 | FR-23 | 5,000 meters × 7 days, same output as the Windows run | 1,023 files, 3,392,136 lines, 9,936 dups, 17,778 missing, 1,440 unknown, 25 negative — identical to Sprint 1/3 | ✅ |
+| TC-GEN-02 | FR-23 | generator unit tests | 12/12 passed | ✅ |
+| TC-ING-01/02/03 | FR-01…03 | every landed line in bronze with lineage | bronze 3,392,136 rows = 3,392,136 lines; unit tests 10/10 | ✅ |
+| TC-STO-01 | FR-14 | 1 file per dt/zone partition | 48 Parquet files / 48 partitions | ✅ |
+| TC-STO-02 | FR-15 | retention drops only partitions older than the window | `test_retention_drops_only_partitions_older_than_window`, `test_retention_cli` passed | ✅ |
+| TC-UNIT-01 | FR-04 | 1500 Wh = 1.5 kWh → 1.5000 | crafted test passed | ✅ |
+| TC-DUP-01 | FR-05 | (meter, ts) unique; triplicate kept once | crafted test + `assert_stg_readings_unique_meter_ts` passed | ✅ |
+| TC-ORD-01 | FR-06 | out-of-order files give ordered deltas | crafted test passed | ✅ |
+| TC-GAP-01 | FR-07 | gaps marked, delta kept once, 96-slot grid | 2 crafted tests + `assert_intervals_unique_meter_slot` passed | ✅ |
+| TC-TZ-01 | NFR-12 | naive timestamps read as IST | `test_naive_timestamps_are_ist` passed | ✅ |
+| TC-REC-01 | FR-08, NFR-11 | Σ hourly = Σ staging deltas; register span exact | both singular tests passed | ✅ |
+| TC-REC-02 | FR-09 | feeder daily = meter daily | singular test passed | ✅ |
+| TC-BILL-01 | FR-10 | billed kWh = register span; same total as the Windows run | crafted test passed; 5,000 rows, **445,848.1140 kWh** (= Sprint 3 value) | ✅ |
+| TC-DQ-01 | FR-19 | unknown meters quarantined | 1,472 = 1,440 injected + 32 in re-sent files (= Sprint 1) | ✅ |
+| TC-DQ-02 | FR-20 | negative energy quarantined; GX gate blocks it | 25 = 25 injected; `test_gx_gates_pass_clean_and_block_negative_energy` 2/2 | ✅ |
+| TC-DQ-03 | FR-21 | ROLLOVER formula; unflagged decrease → NULL + flag | crafted test + `assert_deltas_non_negative` passed | ✅ |
+| TC-DQ-04 | FR-22 | < 90% → LOW_COMPLETENESS; pct in 0–100 | crafted test + `assert_completeness_pct_in_range` passed | ✅ |
+| TC-DQ-05 | FR-29 | reason codes | invalid_json 3 (= 3 corrupt) · negative_energy 25 · off_grid 20 (= 20) · unknown_meter 1,472 | ✅ |
+| TC-DQ-06 / 07 | US-14 | GX silver + gold suites pass | silver 6/6 on 35,000 meter-days; gold 5/5 on 5,000 meter-months | ✅ |
+| TC-ANO-01 | FR-11 | exactly the 5 crafted spike meters | MTR-00052, 00441, 00553, 02033, 02832 = manifest | ✅ |
+| TC-ANO-02 | FR-12 | exactly the 3 crafted tamper meters | MTR-00254, 01760, 01902 = manifest | ✅ |
+| TC-ANO-03 | FR-13 | FDR-10 outage; control feeder FDR-11 (20%) silent | only FDR-10 flagged | ✅ |
+| TC-PUB-01 (logic) | US-12 AC3, NFR-11 | swap atomic, reconciliation check | 6/6 unit tests passed (live publish: Sprint 3 §5) | ✅ |
+| TC-OPS-02 (logic) | FR-25 | alert content, e-mail on/off, callback never raises | 4/4 passed (live drill: Sprint 3) | ✅ |
+| TC-ENV-02 | US-02 | backlog export | 10/10 passed | ✅ |
+| TC-UAT-18, TC-OPS-01, TC-PUB-02 (stack) | FR-18, FR-24 | stack integration tests | skipped — stack not running on this host; last pass Sprint 3 (Windows, 72 passed) | ⏭ |
+
+### 1.2 Exit criteria (status after this run)
+| Criterion | Status |
+|---|---|
+| 100% of Must FRs have a passing test | **Partly met** — 27 of 28 Must FRs (FR-01…FR-28) have a passing automated or recorded case ([RTM](rtm.md)); FR-16/17/18/24/25/26 rely on the Sprint 3 stack runs. FR-27 is partial: compose, smoke and one-command demo pass, CI not yet green |
+| ≥ 80% Python coverage | **Met** on the full suite with the stack (95%, Sprint 3). Without the stack: 74% here (Superset and stack-only paths are not exercised) |
+| Zero open Critical/High defects | **Met** — DEF-001…014 all Closed (DEF-002 closed on the Windows host; Ubuntu host not re-tested with the stack) |
+| Every Medium defect triaged | **Met** |
+| 7-day run within SLA | **Met** — Airflow backfill 174–225 s (Sprint 3); local pipeline here 15 s (generate 3 + bronze 5 + dbt 7) |
+| 10× performance run recorded | **Not met** — TC-PERF-01 not run |
+| CI green on PR | **Not met** — no workflow file in this checkout (`.github/workflows/` empty); push of `ci.yml` was blocked by token scope |
+| UAT signed off by PO | **Met for S0–S3** (96/111 pts); US-18…22 in review |
+
+## 2. Execution summary — Windows stack run (Sprint 3 final, 27-Nov-2026)
 **Build:** `21fe1b7` on `feature/US-17-handover-docs` · **Environment:** Windows 11, Docker Desktop 29.9.3 (VM 7.65 GB), Airflow 3.3.2 / Python 3.13 in containers; local venv Python 3.14.5 · **Data:** 5,000 meters × 7 days, seed 42 (3,392,136 events)
 
 | Test type | Executed | Passed | Failed | Blocked | Skipped | Evidence |
@@ -24,12 +83,12 @@
 
 **Unit-only coverage (the CI view, no stack): 73%** (53 passed; [pytest_unit_only_coverage.txt](evidence/sprint_3/pytest_unit_only_coverage.txt)). The first measurement was 70%; DEF-014 records the fix.
 
-### Exit criteria (from test_plan.md)
+### Exit criteria at that time (superseded by §1.2)
 | Criterion | Status |
 |---|---|
 | 100% of Must FRs have a passing test | Not met — see RTM (built FR-15…18, 24–27, 30 have run evidence; RTM rows not all updated) |
 | ≥ 80% Python coverage | **Met** — 95% full suite (unit-only 73%) |
-| Zero open Critical/High defects | **Met** — DEF-001…013 all Closed |
+| Zero open Critical/High defects | **Met** — DEF-001…013 all Closed (DEF-014 logged and closed afterwards) |
 | Every Medium defect triaged | **Met** |
 | 7-day run within SLA (≤ 15 min per day of data) | **Met** — 7-day backfill 174–225 s |
 | 10× performance run recorded | Not met — not run |

@@ -1,0 +1,7 @@
+# 2026-11-27 18:31:52 IST · host ntadmin · commit db9ccf4
+$ bash -c .venv/bin/ruff check . && .venv/bin/black --check . && .venv/bin/sqlfluff lint dbt_project/models dbt_project/tests
+All checks passed!
+All done! ✨ 🍰 ✨
+35 files would be left unchanged.
+All Finished!
+exit=0

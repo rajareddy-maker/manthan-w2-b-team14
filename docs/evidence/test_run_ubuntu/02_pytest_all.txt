@@ -1,0 +1,119 @@
+# 2026-11-27 18:31:55 IST · host ntadmin · commit db9ccf4
+$ .venv/bin/pytest tests/unit tests/integration -m not e2e -o addopts= -v -rs --cov --cov-report=term-missing --cov-report=xml:docs/evidence/test_run_ubuntu/coverage.xml
+============================= test session starts ==============================
+platform linux -- Python 3.14.4, pytest-9.2.0, pluggy-1.7.0 -- /home/rajareddy/Downloads/manthan-w2-b-team14/.venv/bin/python3
+cachedir: .pytest_cache
+rootdir: /home/rajareddy/Downloads/manthan-w2-b-team14
+configfile: pyproject.toml
+plugins: cov-7.1.0, Faker-40.63.0, platformdirs-4.14.8
+collecting ... collected 73 items
+
+tests/unit/test_alerting.py::test_build_alert_names_task_recipient_and_ist_date PASSED [  1%]
+tests/unit/test_alerting.py::test_email_disabled_without_smtp PASSED     [  2%]
+tests/unit/test_alerting.py::test_callback_records_and_never_raises PASSED [  4%]
+tests/unit/test_alerting.py::test_email_sent_via_smtp_when_configured PASSED [  5%]
+tests/unit/test_cli_entrypoints.py::test_generator_cli_writes_landing_seeds_manifest PASSED [  6%]
+tests/unit/test_cli_entrypoints.py::test_config_from_env_and_overrides PASSED [  8%]
+tests/unit/test_cli_entrypoints.py::test_config_rejects_invalid_topology[kwargs0] PASSED [  9%]
+tests/unit/test_cli_entrypoints.py::test_config_rejects_invalid_topology[kwargs1] PASSED [ 10%]
+tests/unit/test_cli_entrypoints.py::test_config_rejects_invalid_topology[kwargs2] PASSED [ 12%]
+tests/unit/test_cli_entrypoints.py::test_retention_cli PASSED            [ 13%]
+tests/unit/test_export_backlog.py::test_parse_fields_splits_inline_pairs PASSED [ 15%]
+tests/unit/test_export_backlog.py::test_parse_backlog_reads_all_story_parts PASSED [ 16%]
+tests/unit/test_export_backlog.py::test_write_workbook_has_header_filter_and_dropdowns PASSED [ 17%]
+tests/unit/test_export_backlog.py::test_real_backlog_every_story_has_acceptance_criteria PASSED [ 19%]
+tests/unit/test_export_backlog.py::test_points_are_fibonacci_ints[1] PASSED [ 20%]
+tests/unit/test_export_backlog.py::test_points_are_fibonacci_ints[2] PASSED [ 21%]
+tests/unit/test_export_backlog.py::test_points_are_fibonacci_ints[3] PASSED [ 23%]
+tests/unit/test_export_backlog.py::test_points_are_fibonacci_ints[5] PASSED [ 24%]
+tests/unit/test_export_backlog.py::test_points_are_fibonacci_ints[8] PASSED [ 26%]
+tests/unit/test_export_backlog.py::test_points_are_fibonacci_ints[13] PASSED [ 27%]
+tests/unit/test_generator.py::test_v1_line_is_valid_json PASSED          [ 28%]
+tests/unit/test_generator.py::test_v2_line_units[True-1.5-kWh] PASSED    [ 30%]
+tests/unit/test_generator.py::test_v2_line_units[False-1500-Wh] PASSED   [ 31%]
+tests/unit/test_generator.py::test_seeds_written PASSED                  [ 32%]
+tests/unit/test_generator.py::test_landing_layout_and_schema_versions PASSED [ 34%]
+tests/unit/test_generator.py::test_timestamps_on_15_min_grid_except_injected PASSED [ 35%]
+tests/unit/test_generator.py::test_defects_present PASSED                [ 36%]
+tests/unit/test_generator.py::test_crafted_anomalies_in_manifest PASSED  [ 38%]
+tests/unit/test_generator.py::test_tamper_meter_register_is_flat PASSED  [ 39%]
+tests/unit/test_generator.py::test_deterministic_for_same_seed PASSED    [ 41%]
+tests/unit/test_generator.py::test_different_seed_differs PASSED         [ 42%]
+tests/unit/test_generator.py::test_install_dates_do_not_depend_on_wall_clock PASSED [ 43%]
+tests/unit/test_landing_to_bronze.py::test_zone_from_filename[gw-Z01-20261120-10.jsonl-Z01] PASSED [ 45%]
+tests/unit/test_landing_to_bronze.py::test_zone_from_filename[gw-Z06-20261120-23-r1.jsonl-Z06] PASSED [ 46%]
+tests/unit/test_landing_to_bronze.py::test_zone_from_filename[random.jsonl-UNKNOWN] PASSED [ 47%]
+tests/unit/test_landing_to_bronze.py::test_every_line_preserved_with_lineage PASSED [ 49%]
+tests/unit/test_landing_to_bronze.py::test_raw_payload_unchanged PASSED  [ 50%]
+tests/unit/test_landing_to_bronze.py::test_reload_is_idempotent_and_one_file_per_partition PASSED [ 52%]
+tests/unit/test_landing_to_bronze.py::test_file_arrival_ts_from_mtime PASSED [ 53%]
+tests/unit/test_landing_to_bronze.py::test_empty_landing_date_is_noop PASSED [ 54%]
+tests/unit/test_landing_to_bronze.py::test_compact_partition_merges_files PASSED [ 56%]
+tests/unit/test_landing_to_bronze.py::test_landing_dates_sorted PASSED   [ 57%]
+tests/unit/test_production_tasks.py::test_retention_drops_only_partitions_older_than_window PASSED [ 58%]
+tests/unit/test_production_tasks.py::test_ops_window_is_lookback_inclusive PASSED [ 60%]
+tests/unit/test_production_tasks.py::test_ops_ddl_is_single_quote_free_do_block PASSED [ 61%]
+tests/unit/test_production_tasks.py::test_bronze_range_loads_only_dates_in_range PASSED [ 63%]
+tests/unit/test_production_tasks.py::test_gx_gates_pass_clean_and_block_negative_energy[False-True] PASSED [ 64%]
+tests/unit/test_production_tasks.py::test_gx_gates_pass_clean_and_block_negative_energy[True-False] PASSED [ 65%]
+tests/unit/test_publish_to_postgres.py::test_swap_is_one_transaction_with_primary_key PASSED [ 67%]
+tests/unit/test_publish_to_postgres.py::test_dsn_from_env PASSED         [ 68%]
+tests/unit/test_publish_to_postgres.py::test_dsn_requires_password PASSED [ 69%]
+tests/unit/test_publish_to_postgres.py::test_hourly_meter_fact_is_not_published PASSED [ 71%]
+tests/unit/test_publish_to_postgres.py::test_reconciled[d0-p0-True] PASSED [ 72%]
+tests/unit/test_publish_to_postgres.py::test_reconciled[d1-p1-False] PASSED [ 73%]
+tests/integration/test_dbt_crafted_histories.py::test_us10_ac1_units_converge_to_same_kwh PASSED [ 75%]
+tests/integration/test_dbt_crafted_histories.py::test_us10_ac2_triplicate_kept_once PASSED [ 76%]
+tests/integration/test_dbt_crafted_histories.py::test_us10_ac3_out_of_order_files_give_ordered_deltas PASSED [ 78%]
+tests/integration/test_dbt_crafted_histories.py::test_quarantine_reasons_and_snapping PASSED [ 79%]
+tests/integration/test_dbt_crafted_histories.py::test_naive_timestamps_are_ist PASSED [ 80%]
+tests/integration/test_dbt_crafted_histories.py::test_us11_ac1_gaps_marked_and_delta_kept_once PASSED [ 82%]
+tests/integration/test_dbt_crafted_histories.py::test_grid_is_complete PASSED [ 83%]
+tests/integration/test_dbt_crafted_histories.py::test_us11_ac2_rollover_and_unflagged_decrease PASSED [ 84%]
+tests/integration/test_dbt_crafted_histories.py::test_us12_quality_flags PASSED [ 86%]
+tests/integration/test_dbt_crafted_histories.py::test_us12_ac1_billing_equals_register_span PASSED [ 87%]
+tests/integration/test_dbt_crafted_histories.py::test_us13_ac1_spike_only_on_crafted_meter PASSED [ 89%]
+tests/integration/test_dbt_crafted_histories.py::test_us13_ac2_tamper_only_when_peers_active PASSED [ 90%]
+tests/integration/test_dbt_crafted_histories.py::test_us13_ac3_outage_needs_30pct_of_feeder PASSED [ 91%]
+tests/integration/test_stack_integration.py::test_publish_reconciles_and_is_idempotent SKIPPED [ 93%]
+tests/integration/test_stack_integration.py::test_publish_cli_rejects_unknown_table SKIPPED [ 94%]
+tests/integration/test_stack_integration.py::test_ops_metrics_written_for_a_run SKIPPED [ 95%]
+tests/integration/test_stack_integration.py::test_ops_metrics_cli SKIPPED [ 97%]
+tests/integration/test_stack_integration.py::test_failure_alert_recorded_in_warehouse SKIPPED [ 98%]
+tests/integration/test_stack_integration.py::test_superset_dashboard_as_code_is_idempotent SKIPPED [100%]
+
+================================ tests coverage ================================
+_______________ coverage: platform linux, python 3.14.4-final-0 ________________
+
+Name                                        Stmts   Miss  Cover   Missing
+-------------------------------------------------------------------------
+ingestion/__init__.py                           0      0   100%
+ingestion/extractors/__init__.py                0      0   100%
+ingestion/extractors/landing_to_bronze.py     125      7    94%   89, 179, 201, 230-231, 236, 244
+ingestion/extractors/retention.py              38      1    97%   55
+ingestion/generator/__init__.py                 0      0   100%
+ingestion/generator/__main__.py                36      1    97%   65
+ingestion/generator/config.py                  66      0   100%
+ingestion/generator/simulate.py               141      0   100%
+ingestion/generator/topology.py                65      0   100%
+ingestion/generator/writer.py                 136      0   100%
+ingestion/ops/__init__.py                       0      0   100%
+ingestion/ops/alerting.py                      55      8    85%   67-92
+ingestion/ops/metrics.py                       51     36    29%   79-147, 151-161, 165
+ingestion/publish/__init__.py                   0      0   100%
+ingestion/publish/to_postgres.py               78     45    42%   87-96, 102-104, 109-120, 125-146, 150-158, 162
+scripts/export_backlog.py                      98     18    82%   95-96, 142-157, 161
+scripts/superset_dashboard.py                  83     83     0%   8-319
+scripts/superset_first_chart.py                75     75     0%   10-151
+-------------------------------------------------------------------------
+TOTAL                                        1047    274    74%
+Coverage XML written to file docs/evidence/test_run_ubuntu/coverage.xml
+=========================== short test summary info ============================
+SKIPPED [1] tests/integration/test_stack_integration.py:78: stack Postgres not running
+SKIPPED [1] tests/integration/test_stack_integration.py:113: stack Postgres not running
+SKIPPED [1] tests/integration/test_stack_integration.py:122: stack Postgres not running
+SKIPPED [1] tests/integration/test_stack_integration.py:148: stack Postgres not running
+SKIPPED [1] tests/integration/test_stack_integration.py:180: stack Postgres not running
+SKIPPED [1] tests/integration/test_stack_integration.py:221: stack Superset not running
+======================== 67 passed, 6 skipped in 9.67s =========================
+exit=0

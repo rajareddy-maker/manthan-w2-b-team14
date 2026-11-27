@@ -1,6 +1,6 @@
 # Requirements Traceability Matrix (RTM)
 
-Status: **updated Sprint 3 (stack + US-23)**. Design/Code/Test columns are filled as stories complete. Test status: ⬜ not run · ✅ pass · ❌ fail.
+Status: **updated 27-Nov-2026 after the cross-host test re-run** (see test_results.md §1). Design/Code/Test columns are filled as stories complete. Test status: ⬜ not run · ✅ pass · ❌ fail.
 
 | Req ID | Story | Design (LLD section) | Code (repo path) | Test case(s) | Status |
 |---|---|---|---|---|---|
@@ -18,22 +18,22 @@ Status: **updated Sprint 3 (stack + US-23)**. Design/Code/Test columns are fille
 | FR-12 | US-13 | LLD §5 anomaly rules | dbt_project/models/marts/ | TC-ANO-02 (tamper) | ✅ |
 | FR-13 | US-13 | LLD §5 anomaly rules | dbt_project/models/marts/ | TC-ANO-03 (outage) | ✅ |
 | FR-14 | US-08, US-06 | ADR-003 | ingestion/extractors/landing_to_bronze.py (compact_partition) | TC-STO-01 | ✅ |
-| FR-15 | US-15, US-06 | ADR-003 | ingestion/extractors/retention | TC-STO-02 | ⬜ |
-| FR-16 | US-15 | LLD §1 DAG design | airflow/dags/ | TC-ORC-01 | ⬜ |
-| FR-17 | US-15 | LLD §1 backfill | airflow/dags/ | TC-ORC-02 | ⬜ |
-| FR-18 | US-16 | LLD §3 Superset contract | superset/ | TC-UAT-18 | ⬜ |
+| FR-15 | US-15, US-06 | ADR-003 | ingestion/extractors/retention | TC-STO-02 | ✅ unit (retention window + CLI); retention task in backfill runs |
+| FR-16 | US-15 | LLD §1 DAG design | airflow/dags/ | TC-ORC-01 | ✅ `gridpulse_daily` success in 312 s (evidence/sprint_3/airflow_daily_run.txt) |
+| FR-17 | US-15 | LLD §1 backfill | airflow/dags/ | TC-ORC-02 | ✅ `gridpulse_backfill` success in 174 s / 225 s + unit range test |
+| FR-18 | US-16 | LLD §3 Superset contract | superset/ | TC-UAT-18 | ✅ 4 tabs, 9 charts (evidence/sprint_3/superset_dashboard.txt) + idempotent stack test |
 | FR-19 | US-14 (quarantine live in S1) | LLD DQ design | dbt tests + data_quality/gx | TC-DQ-01 | ✅ |
 | FR-20 | US-14 (quarantine live in S1) | LLD DQ design | dbt tests + data_quality/gx | TC-DQ-02 | ✅ |
 | FR-21 | US-14 | LLD DQ design | dbt_project/tests/ | TC-DQ-03 | ✅ |
 | FR-22 | US-14 | LLD DQ design | dbt_project/models/marts/ | TC-DQ-04 | ✅ |
 | FR-23 | US-07 | LLD §3.1, ADR-004 | ingestion/generator/ | TC-GEN-01, TC-GEN-02 | ✅ |
-| FR-24 | US-19 | LLD monitoring | ops schema + DAG callbacks | TC-OPS-01 | ⬜ |
-| FR-25 | US-19 | LLD monitoring | airflow/dags/ alert task | TC-OPS-02 | ⬜ |
-| FR-26 | US-20 | docs/runbook.md | scripts/ | TC-OPS-03 (backfill + rollback drill) | ⬜ |
+| FR-24 | US-19 | LLD monitoring | ops schema + DAG callbacks | TC-OPS-01 | ✅ `ops.pipeline_runs` row (dup 1.28%, completeness 99.47%, lag p50 35 / p95 59 min) |
+| FR-25 | US-19 | LLD monitoring | airflow/dags/ alert task | TC-OPS-02 | ✅ alert drill FAILED as intended → CRITICAL in `ops.alerts`; 4 unit tests |
+| FR-26 | US-20 | docs/runbook.md | scripts/ | TC-OPS-03 (backfill + rollback drill) | ✅ both drills; rollback restored 5,000 rows / 445,848.1140 kWh |
 | FR-27 | US-04, US-18 | docs/architecture.md | docker-compose.yml, .github/workflows | TC-DEP-01 (clean start) | 🟡 stack + smoke + in-Docker pipeline ✅ (TC-ENV-07/08, TC-PIPE-01); CI + `make demo` in S4 |
 | FR-28 | US-06 | ADR-004, ADR-005 | — | review (ADR-004, ADR-005 written) | ✅ |
 | FR-29 | US-14 | LLD DQ design | dbt_project/models/ quarantine | TC-DQ-05 | ✅ |
-| FR-30 | US-21 | LLD §2 | dbt_project/models/marts/ | TC-UAT-30 | ⬜ |
-| NFR-03 | US-17 | — | — | TC-PERF-01 | ⬜ |
-| NFR-07 | US-08, US-15 | ADR-004 | — | TC-IDEM-01 | ✅ bronze (silver/gold in S3) |
+| FR-30 | US-21 | LLD §2 | dbt_project/models/marts/ | TC-UAT-30 | ✅ dbt not_null tests on `mart_feeder_voltage_daily` (3) |
+| NFR-03 | US-17 | — | — | TC-PERF-01 | 🟡 7-day run within SLA (174–225 s); 10× run not executed |
+| NFR-07 | US-08, US-15 | ADR-004 | — | TC-IDEM-01 | ✅ bronze reload + publish twice identical (TC-PUB-02) |
 | NFR-11 | US-12 | — | — | TC-REC-01 | ✅ |

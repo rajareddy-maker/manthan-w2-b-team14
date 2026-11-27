@@ -1,0 +1,12 @@
+# 2026-11-27 18:32:09 IST · host ntadmin · commit db9ccf4
+$ .venv/bin/python -m ingestion.extractors.landing_to_bronze --all
+INFO landing_to_bronze bronze run landing_dates=['2026-11-20', '2026-11-21', '2026-11-22', '2026-11-23', '2026-11-24', '2026-11-25', '2026-11-26', '2026-11-27']
+INFO landing_to_bronze bronze loaded landing_dt=2026-11-20 files=141 rows=455398 invalid_json=1 partitions=6 seconds=0.87
+INFO landing_to_bronze bronze loaded landing_dt=2026-11-21 files=145 rows=485334 invalid_json=0 partitions=6 seconds=0.72
+INFO landing_to_bronze bronze loaded landing_dt=2026-11-22 files=144 rows=475484 invalid_json=0 partitions=6 seconds=0.77
+INFO landing_to_bronze bronze loaded landing_dt=2026-11-23 files=145 rows=482931 invalid_json=0 partitions=6 seconds=0.73
+INFO landing_to_bronze bronze loaded landing_dt=2026-11-24 files=147 rows=493001 invalid_json=1 partitions=6 seconds=0.72
+INFO landing_to_bronze bronze loaded landing_dt=2026-11-25 files=143 rows=475028 invalid_json=1 partitions=6 seconds=0.71
+INFO landing_to_bronze bronze loaded landing_dt=2026-11-26 files=150 rows=498021 invalid_json=0 partitions=6 seconds=0.69
+INFO landing_to_bronze bronze loaded landing_dt=2026-11-27 files=8 rows=26939 invalid_json=0 partitions=6 seconds=0.07
+exit=0

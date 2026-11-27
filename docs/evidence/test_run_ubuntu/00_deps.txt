@@ -1,0 +1,3 @@
+# 2026-11-27 18:31:51 IST · host ntadmin · commit db9ccf4
+$ .venv/bin/pip install -q -r requirements-dev.txt -c constraints.txt
+exit=0

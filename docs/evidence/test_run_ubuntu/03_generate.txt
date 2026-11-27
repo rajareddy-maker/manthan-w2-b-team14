@@ -1,0 +1,6 @@
+# 2026-11-27 18:32:05 IST · host ntadmin · commit db9ccf4
+$ .venv/bin/python -m ingestion.generator --days 7
+INFO ingestion.generator.simulate simulated meters=5000 readings=673 missing=17778 duplicates=9936 specials=85
+INFO ingestion.generator.writer landing written out_dir=data/landing files=1023 lines=3392136
+INFO generator generator done start=2026-11-20 end=2026-11-26 meters=5000 files=1023 lines=3392136 seconds=3.0
+exit=0
