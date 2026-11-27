@@ -3,7 +3,7 @@
 | Sprint | Capacity (person-h) | Committed pts | Completed pts | Notes |
 |---|---|---|---|---|
 | S0 | 4.0 | 21 | — | in progress |
-| S1 | 4.0 | 23 | — | |
+| S1 | 4.0 | 23 | 19 (pending PO) | US-09 AC2 (4 pts) blocked by DEF-002 → S2 |
 | S2 | 10.0 | 26 | — | |
 | S3 | 7.0 | 26 | — | |
 | S4 | 5.0 | 15 | — | |

@@ -113,7 +113,7 @@ As a data engineer, I want a repo skeleton with Makefile, linting and pre-commit
 
 ## US-06: Architecture and ADRs
 **Epic:** E2 Architecture, design & walking skeleton **Req IDs:** FR-14, FR-15, FR-28
-**Priority:** Must **Points:** 5 **Sprint:** S1 **Owner:** Mahendra Umath **Status:** To do
+**Priority:** Must **Points:** 5 **Sprint:** S1 **Owner:** Mahendra Umath **Status:** In review
 
 **Story**
 As an architect, I want an architecture diagram and ADRs for partitioning, retention, late data and schema evolution, so that tool and storage choices are documented.
@@ -125,7 +125,7 @@ As an architect, I want an architecture diagram and ADRs for partitioning, reten
 
 ## US-07: Synthetic data generator with injected defects
 **Epic:** E2 Architecture, design & walking skeleton **Req IDs:** FR-23, FR-01, FR-02
-**Priority:** Must **Points:** 5 **Sprint:** S1 **Owner:** Sagar Kalthiya **Status:** To do
+**Priority:** Must **Points:** 5 **Sprint:** S1 **Owner:** Sagar Kalthiya **Status:** In review
 
 **Story**
 As a data engineer, I want a synthetic generator for 5,000 meters / 20 feeders / 6 zones, so that the pipeline can be tested without real data.
@@ -137,7 +137,7 @@ As a data engineer, I want a synthetic generator for 5,000 meters / 20 feeders /
 
 ## US-08: Bronze ingestion for both schema versions with compaction
 **Epic:** E2 Architecture, design & walking skeleton **Req IDs:** FR-01, FR-02, FR-03, FR-14, NFR-07
-**Priority:** Must **Points:** 5 **Sprint:** S1 **Owner:** Sagar Kalthiya **Status:** To do
+**Priority:** Must **Points:** 5 **Sprint:** S1 **Owner:** Sagar Kalthiya **Status:** In review
 
 **Story**
 As a data engineer, I want landing files loaded into bronze Parquet partitioned by date and zone, with the raw payload and schema version kept, so that raw data is preserved and queryable by time.
@@ -149,7 +149,7 @@ As a data engineer, I want landing files loaded into bronze Parquet partitioned 
 
 ## US-09: LLD, star schema DDL and walking skeleton
 **Epic:** E2 Architecture, design & walking skeleton **Req IDs:** FR-08…FR-13, FR-16, FR-18
-**Priority:** Must **Points:** 8 **Sprint:** S1 **Owner:** Mahendra Umath **Status:** To do
+**Priority:** Must **Points:** 8 **Sprint:** S1 **Owner:** Mahendra Umath **Status:** In progress
 
 **Story**
 As a data engineer, I want an LLD (components, data model, interfaces) and a walking skeleton from one source to one chart, so that development has a clear spec and integration risk is retired early.
@@ -160,7 +160,7 @@ As a data engineer, I want an LLD (components, data model, interfaces) and a wal
 
 ## US-10: Staging — kWh, IST, dedup, ordering
 **Epic:** E3 Normalisation & consumption **Req IDs:** FR-04, FR-05, FR-06, NFR-12
-**Priority:** Must **Points:** 5 **Sprint:** S2 **Owner:** Shantanu Kale **Status:** To do
+**Priority:** Must **Points:** 5 **Sprint:** S2 **Owner:** Shantanu Kale **Status:** In progress
 
 **Story**
 As an analyst, I want events normalised to kWh in IST with duplicates removed and readings ordered, so that every downstream number is consistent.

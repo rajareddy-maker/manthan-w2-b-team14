@@ -1,0 +1,17 @@
+version: 2
+
+models:
+  - name: mart_zone_completeness_daily
+    description: >
+      Completeness % per zone per IST day: distinct valid on-grid intervals received ÷
+      (meters in master × 96). low_completeness_meter_days counts meters below 90% (incl. silent
+      meters). Feeds the "completeness per zone" dashboard tab (FR-18, FR-22).
+    columns:
+      - name: interval_date_ist
+        data_tests: [not_null]
+      - name: zone_id
+        data_tests: [not_null]
+      - name: completeness_pct
+        data_tests: [not_null]
+      - name: intervals_expected
+        data_tests: [not_null]

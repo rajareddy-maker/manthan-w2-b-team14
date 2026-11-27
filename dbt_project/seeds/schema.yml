@@ -1,0 +1,48 @@
+version: 2
+
+seeds:
+  - name: meter_master
+    description: >
+      Meter master (DQ rule 1 reference). One row per installed meter with its feeder, zone,
+      firmware schema version, reporting unit and register rollover point. Written by the generator.
+    config:
+      column_types:
+        meter_id: varchar
+        feeder_id: varchar
+        zone_id: varchar
+        schema_version: smallint
+        unit: varchar
+        install_date: date
+        register_max_kwh: decimal(18,4)
+    columns:
+      - name: meter_id
+        data_tests: [unique, not_null]
+      - name: feeder_id
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('feeder_zone')
+                field: feeder_id
+      - name: zone_id
+        data_tests: [not_null]
+      - name: schema_version
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: [1, 2]
+      - name: unit
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ["Wh", "kWh"]
+      - name: register_max_kwh
+        data_tests: [not_null]
+
+  - name: feeder_zone
+    description: Feeder to zone mapping with zone display names.
+    columns:
+      - name: feeder_id
+        data_tests: [unique, not_null]
+      - name: zone_id
+        data_tests: [not_null]

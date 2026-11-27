@@ -23,7 +23,7 @@ The generator reproduces all of these, and `_manifest.json` lists every late fil
 ## Decision
 1. **Daily run for logical date D** (Airflow data interval `D 00:00 → D+1 00:00 IST`, runs about 01:30 IST on D+1):
    1. Load landing `dt ∈ [D−3, D+1]` into bronze. Each partition is replaced atomically, so this is idempotent (ADR-003).
-   2. Rebuild silver and gold for **reading dates `[D−3, D]`**: dbt incremental models with `delete+insert` on `reading_date_ist`.
+   2. Rebuild silver and gold for **reading dates `[D−3, D]`**: dbt incremental models with `delete+insert` on `interval_date_ist`.
       - The model also reads the day before the window (`D−4`) so the first delta of the window has its previous register.
    3. A reading date is considered final when it leaves the window (D−4).
 2. **Duplicates:** the dedup key is (`meter_id`, `reading_ts`). Keep the row with the earliest `ingested_at`, then `file_arrival_ts`, `source_file`, `line_no`. Dropped duplicates are counted per run (ops metric `duplicate_rate`).

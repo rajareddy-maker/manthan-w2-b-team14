@@ -43,5 +43,8 @@ exclude_rules = ["AM04", "ST06", "RF04"]
 apply_dbt_builtins = true
 load_macros_from_path = "dbt_project/macros"
 
+[tool.sqlfluff.templater.jinja.macros]
+env_var = "{% macro env_var(name, default='') %}{{ default }}{% endmacro %}"
+
 [tool.sqlfluff.rules.capitalisation.keywords]
 capitalisation_policy = "lower"

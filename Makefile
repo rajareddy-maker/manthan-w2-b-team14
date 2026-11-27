@@ -3,18 +3,22 @@ SHELL := /bin/bash
 .DEFAULT_GOAL := help
 
 VENV      := .venv
-PY        := $(VENV)/bin/python
+# Windows (Git Bash) venvs use Scripts/, Linux/macOS use bin/
+VBIN      := $(VENV)/$(if $(filter Windows_NT,$(OS)),Scripts,bin)
+PY        := $(VBIN)/python
 COMPOSE   := docker compose
 EXEC      := $(COMPOSE) exec -T airflow-scheduler
 RUNPY     := /opt/gridpulse-venv/bin/python
 DBT_FLAGS := --project-dir dbt_project --profiles-dir dbt_project
 # LOCAL=1 runs dbt/GX in the local .venv instead of the Airflow container (used by CI).
 ifdef LOCAL
-  DBT := cd $(CURDIR) && $(VENV)/bin/dbt
+  DBT := cd $(CURDIR) && $(VBIN)/dbt
   GXPY := $(PY)
+  APPPY := $(PY)
 else
   DBT := $(EXEC) bash -c 'cd /opt/gridpulse && /opt/gridpulse-venv/bin/dbt "$$@"' dbt
   GXPY := $(EXEC) $(RUNPY)
+  APPPY := $(EXEC) bash -c 'cd /opt/gridpulse && $(RUNPY) "$$@"' py
 endif
 
 .PHONY: help
@@ -32,7 +36,7 @@ $(PY):
 setup: env $(PY) ## Local venv with pinned deps + pre-commit hooks
 	$(PY) -m pip install -q --upgrade pip==25.1.1
 	$(PY) -m pip install -q -r requirements-dev.txt -c constraints.txt
-	@if [ -d .git ]; then $(VENV)/bin/pre-commit install -f >/dev/null && echo "pre-commit installed"; fi
+	@if [ -d .git ]; then $(VBIN)/pre-commit install -f >/dev/null && echo "pre-commit installed"; fi
 
 .PHONY: lock
 lock: ## Regenerate constraints.txt from the local venv
@@ -68,22 +72,34 @@ smoke: ## Verify every service end to end
 
 .PHONY: lint
 lint: ## ruff + black --check + sqlfluff
-	$(VENV)/bin/ruff check .
-	$(VENV)/bin/black --check .
-	@if ls dbt_project/models/*/*.sql >/dev/null 2>&1; then $(VENV)/bin/sqlfluff lint dbt_project/models dbt_project/tests; else echo "sqlfluff: no models yet"; fi
+	$(VBIN)/ruff check .
+	$(VBIN)/black --check .
+	@if ls dbt_project/models/*/*.sql >/dev/null 2>&1; then $(VBIN)/sqlfluff lint dbt_project/models dbt_project/tests; else echo "sqlfluff: no models yet"; fi
 
 .PHONY: format
 format: ## Auto-format Python
-	$(VENV)/bin/ruff check --fix .
-	$(VENV)/bin/black .
+	$(VBIN)/ruff check --fix .
+	$(VBIN)/black .
 
 .PHONY: test
 test: ## Unit tests with coverage (integration tests: make test-integration)
-	$(VENV)/bin/pytest tests/unit --cov --cov-report=term-missing --cov-report=xml:docs/evidence/coverage.xml
+	$(VBIN)/pytest tests/unit --cov --cov-report=term-missing --cov-report=xml:docs/evidence/coverage.xml
 
 .PHONY: test-integration
 test-integration: ## Integration + e2e tests (needs make up)
-	$(VENV)/bin/pytest tests/integration tests/e2e -m "integration or e2e"
+	$(VBIN)/pytest tests/integration tests/e2e -m "integration or e2e"
+
+.PHONY: generate
+generate: ## Synthetic landing data + meter master seeds (DAYS=7 default)
+	$(APPPY) -m ingestion.generator --days $(or $(DAYS),7)
+
+.PHONY: bronze
+bronze: ## Load every landing date into bronze Parquet (DT=YYYY-MM-DD for one date)
+	$(APPPY) -m ingestion.extractors.landing_to_bronze $(if $(DT),--dt $(DT),--all)
+
+.PHONY: dbt-build
+dbt-build: ## dbt build (seeds + models + tests)
+	$(DBT) build $(DBT_FLAGS)
 
 .PHONY: dbt-debug
 dbt-debug: ## dbt debug

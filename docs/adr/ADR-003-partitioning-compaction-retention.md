@@ -22,7 +22,7 @@
 ## Decision
 1. **Partitioning — option A.**
    - Layout: `data/lake/bronze/dt=YYYY-MM-DD/zone=Zxx/part-0.parquet`, where `dt` is the IST date the file arrived.
-   - Silver and gold (DuckDB tables) are keyed by reading date (`reading_date_ist`), so business queries prune on reading time.
+   - Silver and gold (DuckDB tables) are keyed by reading date (`interval_date_ist`, the IST date of the interval a reading closes), so business queries prune on reading time.
 2. **Compaction.** The extractor rebuilds a whole `dt` partition in a temp directory, then swaps it in atomically.
    - Each `dt/zone` holds **exactly one** zstd Parquet file: 144 small files/day become 6.
    - `compact_partition()` (and `python -m ingestion.extractors.landing_to_bronze --compact`) merges any partition with more than one file, for example after a manual drop-in.

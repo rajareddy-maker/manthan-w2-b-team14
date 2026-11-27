@@ -1,0 +1,92 @@
+10:51:35  Running with dbt=1.12.7
+10:51:36  Registered adapter: duckdb=1.11.1
+10:51:38  Unable to do partial parsing because saved manifest not found. Starting full parse.
+10:51:41  [WARNING]: Configuration paths exist in your dbt_project.yml file which do not apply to any resources.
+There are 1 unused configuration paths:
+- models.gridpulse.intermediate
+10:51:42  Found 4 models, 30 data tests, 2 seeds, 513 macros
+10:51:42  
+10:51:42  Concurrency: 2 threads (target='dev')
+10:51:42  
+10:51:43  1 of 36 START seed file main.feeder_zone ....................................... [RUN]
+10:51:43  2 of 36 START seed file main.meter_master ...................................... [RUN]
+10:51:43  1 of 36 OK loaded seed file main.feeder_zone ................................... [INSERT 20 in 0.19s]
+10:51:43  3 of 36 START test not_null_feeder_zone_feeder_id .............................. [RUN]
+10:51:43  2 of 36 OK loaded seed file main.meter_master .................................. [INSERT 5000 in 0.21s]
+10:51:43  4 of 36 START test not_null_feeder_zone_zone_id ................................ [RUN]
+10:51:43  4 of 36 PASS not_null_feeder_zone_zone_id ...................................... [PASS in 0.08s]
+10:51:43  3 of 36 PASS not_null_feeder_zone_feeder_id .................................... [PASS in 0.11s]
+10:51:43  5 of 36 START test unique_feeder_zone_feeder_id ................................ [RUN]
+10:51:43  6 of 36 START test accepted_values_meter_master_schema_version__1__2 ........... [RUN]
+10:51:43  6 of 36 PASS accepted_values_meter_master_schema_version__1__2 ................. [PASS in 0.04s]
+10:51:43  7 of 36 START test accepted_values_meter_master_unit__Wh__kWh .................. [RUN]
+10:51:43  5 of 36 PASS unique_feeder_zone_feeder_id ...................................... [PASS in 0.06s]
+10:51:43  8 of 36 START test not_null_meter_master_feeder_id ............................. [RUN]
+10:51:43  8 of 36 PASS not_null_meter_master_feeder_id ................................... [PASS in 0.04s]
+10:51:43  9 of 36 START test not_null_meter_master_meter_id .............................. [RUN]
+10:51:43  7 of 36 PASS accepted_values_meter_master_unit__Wh__kWh ........................ [PASS in 0.06s]
+10:51:43  10 of 36 START test not_null_meter_master_register_max_kwh ..................... [RUN]
+10:51:43  9 of 36 PASS not_null_meter_master_meter_id .................................... [PASS in 0.05s]
+10:51:43  11 of 36 START test not_null_meter_master_zone_id .............................. [RUN]
+10:51:43  10 of 36 PASS not_null_meter_master_register_max_kwh ........................... [PASS in 0.06s]
+10:51:43  12 of 36 START test relationships_meter_master_feeder_id__feeder_id__ref_feeder_zone_  [RUN]
+10:51:43  11 of 36 PASS not_null_meter_master_zone_id .................................... [PASS in 0.05s]
+10:51:43  13 of 36 START test unique_meter_master_meter_id ............................... [RUN]
+10:51:43  12 of 36 PASS relationships_meter_master_feeder_id__feeder_id__ref_feeder_zone_  [PASS in 0.06s]
+10:51:43  13 of 36 PASS unique_meter_master_meter_id ..................................... [PASS in 0.04s]
+10:51:43  14 of 36 START sql table model main_staging.stg_meter__readings_validated ...... [RUN]
+10:51:59  14 of 36 OK created sql table model main_staging.stg_meter__readings_validated . [OK in 15.52s]
+10:51:59  16 of 36 START test not_null_stg_meter__readings_validated_raw_payload ......... [RUN]
+10:51:59  15 of 36 START test accepted_values_stg_meter__readings_validated_reject_reason__invalid_json__unknown_schema__missing_or_unparseable_field__unknown_unit__negative_energy__off_grid__unknown_meter  [RUN]
+10:51:59  16 of 36 PASS not_null_stg_meter__readings_validated_raw_payload ............... [PASS in 0.17s]
+10:51:59  17 of 36 START test not_null_stg_meter__readings_validated_source_file ......... [RUN]
+10:51:59  15 of 36 PASS accepted_values_stg_meter__readings_validated_reject_reason__invalid_json__unknown_schema__missing_or_unparseable_field__unknown_unit__negative_energy__off_grid__unknown_meter  [PASS in 0.20s]
+10:51:59  17 of 36 PASS not_null_stg_meter__readings_validated_source_file ............... [PASS in 0.06s]
+10:51:59  19 of 36 START sql view model main_staging.stg_meter__readings ................. [RUN]
+10:51:59  18 of 36 START sql view model main_staging.stg_meter__quarantine ............... [RUN]
+10:51:59  19 of 36 OK created sql view model main_staging.stg_meter__readings ............ [OK in 0.23s]
+10:51:59  20 of 36 START test accepted_values_stg_meter__readings_schema_version__1__2 ... [RUN]
+10:51:59  18 of 36 OK created sql view model main_staging.stg_meter__quarantine .......... [OK in 0.24s]
+10:51:59  21 of 36 START test accepted_values_stg_meter__readings_status__OK__ROLLOVER__POWER_FAIL__ERROR  [RUN]
+10:51:59  20 of 36 PASS accepted_values_stg_meter__readings_schema_version__1__2 ......... [PASS in 0.12s]
+10:51:59  22 of 36 START test assert_stg_readings_unique_meter_ts ........................ [RUN]
+10:51:59  21 of 36 PASS accepted_values_stg_meter__readings_status__OK__ROLLOVER__POWER_FAIL__ERROR  [PASS in 0.15s]
+10:51:59  23 of 36 START test not_null_stg_meter__readings_feeder_id ..................... [RUN]
+10:52:00  23 of 36 PASS not_null_stg_meter__readings_feeder_id ........................... [PASS in 0.21s]
+10:52:00  24 of 36 START test not_null_stg_meter__readings_interval_date_ist ............. [RUN]
+10:52:00  24 of 36 PASS not_null_stg_meter__readings_interval_date_ist ................... [PASS in 0.16s]
+10:52:00  25 of 36 START test not_null_stg_meter__readings_meter_id ...................... [RUN]
+10:52:00  22 of 36 PASS assert_stg_readings_unique_meter_ts .............................. [PASS in 0.48s]
+10:52:00  26 of 36 START test not_null_stg_meter__readings_reading_ts .................... [RUN]
+10:52:00  25 of 36 PASS not_null_stg_meter__readings_meter_id ............................ [PASS in 0.11s]
+10:52:00  26 of 36 PASS not_null_stg_meter__readings_reading_ts .......................... [PASS in 0.07s]
+10:52:00  27 of 36 START test not_null_stg_meter__readings_register_kwh .................. [RUN]
+10:52:00  28 of 36 START test not_null_stg_meter__readings_zone_id ....................... [RUN]
+10:52:00  27 of 36 PASS not_null_stg_meter__readings_register_kwh ........................ [PASS in 0.07s]
+10:52:00  29 of 36 START test not_null_stg_meter__quarantine_raw_payload ................. [RUN]
+10:52:00  28 of 36 PASS not_null_stg_meter__readings_zone_id ............................. [PASS in 0.09s]
+10:52:00  30 of 36 START test not_null_stg_meter__quarantine_reject_reason ............... [RUN]
+10:52:00  29 of 36 PASS not_null_stg_meter__quarantine_raw_payload ....................... [PASS in 0.09s]
+10:52:00  31 of 36 START sql table model main_marts.mart_zone_completeness_daily ......... [RUN]
+10:52:00  30 of 36 PASS not_null_stg_meter__quarantine_reject_reason ..................... [PASS in 0.07s]
+10:52:00  31 of 36 OK created sql table model main_marts.mart_zone_completeness_daily .... [OK in 0.25s]
+10:52:00  32 of 36 START test assert_completeness_pct_in_range ........................... [RUN]
+10:52:00  33 of 36 START test not_null_mart_zone_completeness_daily_completeness_pct ..... [RUN]
+10:52:00  32 of 36 PASS assert_completeness_pct_in_range ................................. [PASS in 0.08s]
+10:52:00  33 of 36 PASS not_null_mart_zone_completeness_daily_completeness_pct ........... [PASS in 0.08s]
+10:52:00  34 of 36 START test not_null_mart_zone_completeness_daily_interval_date_ist .... [RUN]
+10:52:00  35 of 36 START test not_null_mart_zone_completeness_daily_intervals_expected ... [RUN]
+10:52:01  34 of 36 PASS not_null_mart_zone_completeness_daily_interval_date_ist .......... [PASS in 0.07s]
+10:52:01  36 of 36 START test not_null_mart_zone_completeness_daily_zone_id .............. [RUN]
+10:52:01  35 of 36 PASS not_null_mart_zone_completeness_daily_intervals_expected ......... [PASS in 0.11s]
+10:52:01  36 of 36 PASS not_null_mart_zone_completeness_daily_zone_id .................... [PASS in 0.07s]
+10:52:01  
+10:52:01  Finished running 2 seeds, 2 table models, 30 data tests, 2 view models in 0 hours 0 minutes and 19.05 seconds (19.05s).
+10:52:01  
+10:52:01  Completed successfully
+10:52:01  
+10:52:01  Done. PASS=36 WARN=0 ERROR=0 SKIP=0 NO-OP=0 REUSED=0 TOTAL=36
+
+real	0m39.932s
+user	0m0.000s
+sys	0m0.109s
