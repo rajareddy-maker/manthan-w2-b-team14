@@ -1,0 +1,7 @@
+INFO ingestion.generator.simulate simulated meters=5000 readings=673 missing=17778 duplicates=9936 specials=85
+INFO ingestion.generator.writer landing written out_dir=data\landing files=1023 lines=3392136
+INFO generator generator done start=2026-11-20 end=2026-11-26 meters=5000 files=1023 lines=3392136 seconds=14.4
+
+real	0m15.654s
+user	0m0.015s
+sys	0m0.047s
