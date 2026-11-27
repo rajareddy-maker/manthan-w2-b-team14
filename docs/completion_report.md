@@ -80,11 +80,11 @@ Expected:
 | Criterion (master prompt Phase 5 exit criteria) | Status |
 |---|---|
 | 100% of Must requirements have a passing test | ❌ Not met: 24/33 rows ✅ in RTM |
-| ≥ 80% Python coverage | 🟡 90% last measured (Sprint 2); not re-measured after the final-hour code |
+| ≥ 80% Python coverage | ✅ Met: 95% full suite, 72 tests (unit-only CI view 73%) |
 | Zero open Critical/High defects | ✅ Met: DEF-001…012 all Closed |
 | Every Medium defect triaged | ✅ Met |
 | Performance within SLA (≤ 15 min/day) | 🟡 7-day backfill in 3–4 min, but the 10× performance test was not run |
-| UAT signed off | ❌ S2/S3 stories await PO acceptance |
+| UAT signed off | ✅ S0–S3 accepted by PO (96/111 pts); US-18…22 in review |
 | CI green on PR | ❌ CI not on GitHub yet |
 | `make demo` on a fresh clone, timed | ❌ Not run |
 
@@ -94,7 +94,7 @@ Expected:
 - The repo is bind-mounted from a OneDrive folder, so container I/O is about 4× slower than native.
 - `data/` should move to a named volume and out of sync for production.
 - Alerts go to `ops.alerts` + logs only; there is no email/Slack (A9).
-- **Task-failure alerts (US-26) are done.** An `on_failure_callback` on every DAG writes a CRITICAL `task_failed` row to `ops.alerts` and a `failed` row to `ops.pipeline_runs`, naming `ALERT_EMAIL` = sagar.kalthiya@nucleusteq.com. The drill passed (`alert_failure_drill.txt`). E-mail delivery needs an SMTP server (`SMTP_HOST`); none is configured, so the e-mail is skipped and logged. Data alerts do work: `late_beyond_window` fired correctly on both daily runs (5,971 readings more than 3 days late).
+- **Task-failure alerts (US-19) are done.** An `on_failure_callback` on every DAG writes a CRITICAL `task_failed` row to `ops.alerts` and a `failed` row to `ops.pipeline_runs`, naming `ALERT_EMAIL` = sagar.kalthiya@nucleusteq.com. The drill passed (`alert_failure_drill.txt`). E-mail delivery needs an SMTP server (`SMTP_HOST`); none is configured, so the e-mail is skipped and logged. Data alerts do work: `late_beyond_window` fired correctly on both daily runs (5,971 readings more than 3 days late).
 - Spike detection needs ≥ 96 clean history points, so meters with less than ~1 day of history are not checked.
 
 **Open risks:**

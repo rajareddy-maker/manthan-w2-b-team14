@@ -1,6 +1,6 @@
 # GridPulse — Progress
 
-**Current sprint:** S3 (Phases 4 + 5) — in progress · S2 in review (awaiting PO APPROVED) · ADR-006 accepted
+**Current sprint:** S4 (Phases 6 + 7) — S0, S1, S2, S3 APPROVED by PO (27-Nov-2026). Accepted 96/111 pts; US-18…22 in review.
 **PO:** Mahendra Umath · **Builder:** Claude session · Last update: 27-Nov-2026 (S1 + S2 built on Sagar Kalthiya's Windows 11 host)
 S0 and S1 were APPROVED by the PO on 27-Nov-2026 (relayed by Sagar Kalthiya).
 

@@ -82,8 +82,8 @@ format: ## Auto-format Python
 	$(VBIN)/black .
 
 .PHONY: test
-test: ## Unit tests with coverage (integration tests: make test-integration)
-	$(VBIN)/pytest tests/unit --cov --cov-report=term-missing --cov-report=xml:docs/evidence/coverage.xml
+test: ## Unit + dbt + stack integration tests with coverage (stack tests skip if the stack is down)
+	$(VBIN)/pytest tests/unit tests/integration -m "not e2e" --cov --cov-report=term-missing --cov-report=xml:docs/evidence/coverage.xml
 
 .PHONY: test-dbt
 test-dbt: ## Crafted meter histories through landing -> bronze -> dbt build (DuckDB, no docker)

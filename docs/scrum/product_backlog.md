@@ -78,7 +78,7 @@ As a data engineer, I want a system check script, so that I know my machine can 
 
 ## US-04: Full stack in Docker Compose
 **Epic:** E1 Inception & setup **Req IDs:** FR-27
-**Priority:** Must **Points:** 8 **Sprint:** S0 **Owner:** Raja Rao Reddy **Status:** In review
+**Priority:** Must **Points:** 8 **Sprint:** S0 **Owner:** Raja Rao Reddy **Status:** Done
 
 **Story**
 As a data engineer, I want the full stack in Docker Compose, so that every tool runs locally.
@@ -161,7 +161,7 @@ As a data engineer, I want an LLD (components, data model, interfaces) and a wal
 
 ## US-10: Staging — kWh, IST, dedup, ordering
 **Epic:** E3 Normalisation & consumption **Req IDs:** FR-04, FR-05, FR-06, NFR-12
-**Priority:** Must **Points:** 5 **Sprint:** S2 **Owner:** Shantanu Kale **Status:** In review
+**Priority:** Must **Points:** 5 **Sprint:** S2 **Owner:** Shantanu Kale **Status:** Done
 
 **Story**
 As an analyst, I want events normalised to kWh in IST with duplicates removed and readings ordered, so that every downstream number is consistent.
@@ -173,7 +173,7 @@ As an analyst, I want events normalised to kWh in IST with duplicates removed an
 
 ## US-11: Interval grid, gaps and register deltas
 **Epic:** E3 Normalisation & consumption **Req IDs:** FR-07, FR-21
-**Priority:** Must **Points:** 5 **Sprint:** S2 **Owner:** Shantanu Kale **Status:** In review
+**Priority:** Must **Points:** 5 **Sprint:** S2 **Owner:** Shantanu Kale **Status:** Done
 
 **Story**
 As a billing analyst, I want each meter's 15-min grid with gaps marked and consumption derived from register deltas, so that missing data is visible and never invented.
@@ -184,7 +184,7 @@ As a billing analyst, I want each meter's 15-min grid with gaps marked and consu
 
 ## US-12: Consumption marts and publish to Postgres
 **Epic:** E3 Normalisation & consumption **Req IDs:** FR-08, FR-09, FR-10, NFR-11
-**Priority:** Must **Points:** 5 **Sprint:** S2 **Owner:** Shantanu Kale **Status:** In review
+**Priority:** Must **Points:** 5 **Sprint:** S2 **Owner:** Shantanu Kale **Status:** Done
 
 **Story**
 As a billing analyst / network engineer, I want hourly and daily kWh per meter, feeder and zone plus a monthly billing table, so that I can bill and monitor load from ready tables.
@@ -196,7 +196,7 @@ As a billing analyst / network engineer, I want hourly and daily kWh per meter, 
 
 ## US-13: Anomaly detection — spike, tamper, outage
 **Epic:** E4 Anomalies, quality & orchestration **Req IDs:** FR-11, FR-12, FR-13
-**Priority:** Must **Points:** 8 **Sprint:** S2 **Owner:** Rituja Kekatpure **Status:** In review
+**Priority:** Must **Points:** 8 **Sprint:** S2 **Owner:** Rituja Kekatpure **Status:** Done
 
 **Story**
 As a revenue-protection / ops engineer, I want spike, suspected-tamper and outage flags, so that problems are found before customers complain.
@@ -208,7 +208,7 @@ As a revenue-protection / ops engineer, I want spike, suspected-tamper and outag
 
 ## US-14: DQ rules, quarantine and GX gates
 **Epic:** E4 Anomalies, quality & orchestration **Req IDs:** FR-19, FR-20, FR-21, FR-22, FR-29
-**Priority:** Must **Points:** 5 **Sprint:** S3 **Owner:** Rituja Kekatpure **Status:** To do
+**Priority:** Must **Points:** 5 **Sprint:** S3 **Owner:** Rituja Kekatpure **Status:** Done
 
 **Story**
 As a data steward, I want the PRD's DQ rules enforced with quarantine and GX checkpoints between layers, so that bad data stops before the marts.
@@ -220,7 +220,7 @@ As a data steward, I want the PRD's DQ rules enforced with quarantine and GX che
 
 ## US-15: Daily Airflow DAG with retries, backfill and retention
 **Epic:** E4 Anomalies, quality & orchestration **Req IDs:** FR-15, FR-16, FR-17, NFR-05, NFR-07
-**Priority:** Must **Points:** 5 **Sprint:** S3 **Owner:** Raja Rao Reddy **Status:** In review
+**Priority:** Must **Points:** 5 **Sprint:** S3 **Owner:** Raja Rao Reddy **Status:** Done
 
 **Story**
 As a data engineer, I want a scheduled daily DAG with retries, a 3-day lookback, a date-range backfill and retention tasks, so that the pipeline runs unattended and can be replayed.
@@ -232,7 +232,7 @@ As a data engineer, I want a scheduled daily DAG with retries, a 3-day lookback,
 
 ## US-16: Superset network operations dashboard
 **Epic:** E5 Analytics & testing **Req IDs:** FR-18
-**Priority:** Must **Points:** 8 **Sprint:** S3 **Owner:** Ishika Sadhwani **Status:** In review
+**Priority:** Must **Points:** 8 **Sprint:** S3 **Owner:** Ishika Sadhwani **Status:** Done
 
 **Story**
 As a network operations engineer, I want a dashboard with feeder consumption, anomaly list, completeness % per zone and pipeline health, so that I can monitor the network daily.
@@ -243,7 +243,7 @@ As a network operations engineer, I want a dashboard with feeder consumption, an
 
 ## US-17: Test plan, automated tests and published results
 **Epic:** E5 Analytics & testing **Req IDs:** all Must FRs, NFR-03, NFR-11
-**Priority:** Must **Points:** 8 **Sprint:** S3 **Owner:** Ishika Sadhwani **Status:** To do
+**Priority:** Must **Points:** 8 **Sprint:** S3 **Owner:** Ishika Sadhwani **Status:** Done
 
 **Story**
 As QA / PO, I want unit, reconciliation, duplicate/out-of-order, anomaly and performance tests with a test plan and real results, so that each requirement can be signed off.
@@ -277,7 +277,7 @@ As an on-call engineer, I want ingest lag, completeness, duplicate rate and run 
 
 ## US-20: Runbook, backfill and rollback drill, README, data dictionary
 **Epic:** E6 Deployment & operations **Req IDs:** FR-26
-**Priority:** Must **Points:** 3 **Sprint:** S4 **Owner:** Ishika Sadhwani **Status:** To do
+**Priority:** Must **Points:** 3 **Sprint:** S4 **Owner:** Ishika Sadhwani **Status:** In review
 
 **Story**
 As a new team member, I want a README, data dictionary and ops runbook with a practised backfill and rollback, so that I can run and maintain the platform.
@@ -288,7 +288,7 @@ As a new team member, I want a README, data dictionary and ops runbook with a pr
 
 ## US-21: Voltage quality view for v2 meters
 **Epic:** E6 Deployment & operations **Req IDs:** FR-30
-**Priority:** Could **Points:** 2 **Sprint:** S4 **Owner:** Sagar Kalthiya **Status:** To do
+**Priority:** Could **Points:** 2 **Sprint:** S4 **Owner:** Sagar Kalthiya **Status:** In review
 
 **Story**
 As a network engineer, I want min/max/avg voltage per feeder per day from v2 meters, so that I can see voltage quality issues.
@@ -298,7 +298,7 @@ As a network engineer, I want min/max/avg voltage per feeder per day from v2 met
 
 ## US-22: Retrospective, roadmap and artifact checklist
 **Epic:** E6 Deployment & operations **Req IDs:** —
-**Priority:** Should **Points:** 2 **Sprint:** S4 **Owner:** Mahendra Umath **Status:** To do
+**Priority:** Should **Points:** 2 **Sprint:** S4 **Owner:** Mahendra Umath **Status:** In review
 
 **Story**
 As the PO, I want a retrospective, known limitations, future roadmap and a confirmed artifact checklist, so that next steps are agreed.
@@ -308,7 +308,7 @@ As the PO, I want a retrospective, known limitations, future roadmap and a confi
 
 ## US-23: Publish marts to Postgres and show them in Superset (walking-skeleton serving leg)
 **Epic:** E3 Normalisation & consumption **Req IDs:** FR-08, FR-09, FR-10, FR-18, FR-27
-**Priority:** Must **Points:** 7 **Sprint:** S3 **Owner:** Raja Rao Reddy **Status:** In review
+**Priority:** Must **Points:** 7 **Sprint:** S3 **Owner:** Raja Rao Reddy **Status:** Done
 
 **Story**
 As a billing analyst / network engineer, I want the DuckDB marts published to the Postgres warehouse and visible in Superset, so that I can query and chart them without touching the lake.

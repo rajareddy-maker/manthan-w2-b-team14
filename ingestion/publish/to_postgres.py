@@ -34,7 +34,8 @@ PUBLISHED: dict[str, tuple[tuple[str, ...], str | None]] = {
     "mart_feeder_voltage_daily": (("feeder_id", "interval_date_ist"), None),
 }
 SOURCE_SCHEMA = "lake.main_marts"
-TARGET_SCHEMA = "marts"
+# PUBLISH_SCHEMA lets integration tests publish to a scratch schema, never the live marts.
+TARGET_SCHEMA = os.environ.get("PUBLISH_SCHEMA", "marts")
 
 
 @dataclass(frozen=True)
