@@ -81,6 +81,11 @@ Code and data roll back separately.
      docker compose exec -T airflow-scheduler bash -c \
        'cd /opt/gridpulse && $GRIDPULSE_PYTHON -m ingestion.publish.to_postgres'
      ```
+   - **Drill performed 27-Nov-2026:**
+     1. Snapshot taken (371,616 bytes), then `truncate marts.mart_billing_monthly` to simulate a bad publish.
+     2. `pg_restore` ran.
+     3. Billing was back to 5,000 rows and 445,848.1140 kWh, and `bi_reader` could still read it.
+     - Evidence: `docs/evidence/sprint_3/runbook_rollback_drill.txt`.
 3. **Bad bronze partition:** bronze is never edited.
    - Fix or replace the landing files for that arrival date.
    - Reload with `python -m ingestion.extractors.landing_to_bronze --dt YYYY-MM-DD`; the partition swap is atomic.
