@@ -220,7 +220,7 @@ As a data steward, I want the PRD's DQ rules enforced with quarantine and GX che
 
 ## US-15: Daily Airflow DAG with retries, backfill and retention
 **Epic:** E4 Anomalies, quality & orchestration **Req IDs:** FR-15, FR-16, FR-17, NFR-05, NFR-07
-**Priority:** Must **Points:** 5 **Sprint:** S3 **Owner:** Raja Rao Reddy **Status:** To do
+**Priority:** Must **Points:** 5 **Sprint:** S3 **Owner:** Raja Rao Reddy **Status:** In review
 
 **Story**
 As a data engineer, I want a scheduled daily DAG with retries, a 3-day lookback, a date-range backfill and retention tasks, so that the pipeline runs unattended and can be replayed.
@@ -232,7 +232,7 @@ As a data engineer, I want a scheduled daily DAG with retries, a 3-day lookback,
 
 ## US-16: Superset network operations dashboard
 **Epic:** E5 Analytics & testing **Req IDs:** FR-18
-**Priority:** Must **Points:** 8 **Sprint:** S3 **Owner:** Ishika Sadhwani **Status:** To do
+**Priority:** Must **Points:** 8 **Sprint:** S3 **Owner:** Ishika Sadhwani **Status:** In review
 
 **Story**
 As a network operations engineer, I want a dashboard with feeder consumption, anomaly list, completeness % per zone and pipeline health, so that I can monitor the network daily.
@@ -255,7 +255,7 @@ As QA / PO, I want unit, reconciliation, duplicate/out-of-order, anomaly and per
 
 ## US-18: CI on every pull request + clean-start proof
 **Epic:** E6 Deployment & operations **Req IDs:** FR-27
-**Priority:** Must **Points:** 3 **Sprint:** S4 **Owner:** Raja Rao Reddy **Status:** To do
+**Priority:** Must **Points:** 3 **Sprint:** S4 **Owner:** Raja Rao Reddy **Status:** In review
 
 **Story**
 As a data engineer, I want CI running lint, unit tests, dbt build and GX on every PR, plus a proven clean start, so that only tested code merges.
@@ -266,7 +266,7 @@ As a data engineer, I want CI running lint, unit tests, dbt build and GX on ever
 
 ## US-19: Ops metrics and completeness-drop alert
 **Epic:** E6 Deployment & operations **Req IDs:** FR-24, FR-25
-**Priority:** Must **Points:** 5 **Sprint:** S4 **Owner:** Rituja Kekatpure **Status:** To do
+**Priority:** Must **Points:** 5 **Sprint:** S4 **Owner:** Rituja Kekatpure **Status:** In review
 
 **Story**
 As an on-call engineer, I want ingest lag, completeness, duplicate rate and run duration recorded, with an alert when completeness drops, so that I hear about problems first.

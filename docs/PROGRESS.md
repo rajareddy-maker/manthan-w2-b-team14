@@ -55,6 +55,17 @@ The user's other compose project `airflow` is stopped (volumes kept). Restart it
 ## Open blockers
 - None. DEF-002, DEF-005 and DEF-006 are closed.
 
+## Production build (27-Nov-2026, final hour) — built, docs/tests deferred by PO request
+| Story | What runs | Evidence |
+|---|---|---|
+| US-15 | `gridpulse_daily` (01:30 IST, 3-day lookback) + `gridpulse_backfill` (start/end): ingest → dbt build → publish → ops metrics/alerts → retention; 2 retries; `duckdb` pool | backfill 2026-11-20..26 **success in 174 s** (`evidence/sprint_3/airflow_backfill_run.txt`) |
+| US-19 | `ops.pipeline_runs` (rows, quarantine, dup rate 1.28%, completeness 99.47%, lag p50 35 / p95 59 min) + `ops.alerts` (completeness < 90%, late data) | same |
+| US-16 | Superset dashboard `/superset/dashboard/gridpulse/`: 4 tabs, 9 charts, created by `scripts/superset_dashboard.py` | `evidence/sprint_3/superset_dashboard.txt` |
+| US-18 | `.github/workflows/ci.yml` — committed locally, **not pushed**: gh token lacks `workflow` scope (`gh auth refresh -s workflow`) | — |
+| demo | `bash scripts/demo.sh` (Docker only, no make) | — |
+
+**Deferred (come back after submission):** US-14 GX gates · US-17 test plan + performance test · US-20 runbook + drill · US-21 voltage view · US-22 retro · sprint/RTM/test_results updates for this hour.
+
 ## Next steps
 1. PO: Sprint 2 review → APPROVED; review US-04 + US-23 evidence.
 2. Open stacked PRs (on request) and squash-merge in order after review.
